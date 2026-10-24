@@ -1,0 +1,37 @@
+{
+ "id": "/app/resepsionis",
+ "name": "One Bliss Resepsionis",
+ "short_name": "Resepsionis",
+ "lang": "id",
+ "start_url": "/resepsionis-lama3.html",
+ "scope": "/",
+ "display": "standalone",
+ "orientation": "any",
+ "background_color": "#0a0a0a",
+ "theme_color": "#0a0a0a",
+ "icons": [
+  {
+   "src": "/icons/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/icons/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/icons/icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "description": "Konsol resepsionis ONE BLISS.",
+ "categories": [
+  "travel",
+  "business"
+ ]
+}

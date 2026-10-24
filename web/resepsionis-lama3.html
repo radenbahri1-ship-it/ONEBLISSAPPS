@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="id"><head><script src="/hs/net.js"></script><script src="/hs/draft.js"></script><script src="/hs/ic.js"></script><script src="/hs/rs.js"></script><script src="/hs/akun.js"></script><script src="/hs/staf.js"></script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="/manifest-staf.webmanifest"><meta name="theme-color" content="#0a0a0a"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Resepsionis"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="icon" href="/icons/icon-192.png"><title>E-Resepsionis · Dasbor</title>
+<style>
+/* ===== TEMA: ubah warna di sini ===== */
+:root{--bg:#0a0a0a;--bg2:#14110e;--card:#14110e;--bd:#2c2722;--tx:#ffffff;--mu:#a9a193;--ac:#b69a6b;--ok:#34d399;--er:#fb7185;--wn:#fbbf24}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--tx);font:14px/1.5 'Segoe UI',system-ui,sans-serif;background:var(--bg)}
+header{display:flex;align-items:center;gap:12px;padding:16px 24px;border-bottom:1px solid var(--bd);backdrop-filter:blur(8px);position:sticky;top:0;z-index:5;background:#0a0a0acc}
+.logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--ac),#8a7248);display:grid;place-items:center;font-size:20px}
+h1{font-size:17px;margin:0}h1 small{display:block;color:var(--mu);font-weight:400;font-size:12px}
+.sp{flex:1}.chip{padding:4px 12px;border-radius:99px;font-size:12px;border:1px solid var(--bd);background:var(--bg2)}
+.chip i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 8px var(--ok)}
+main{display:grid;grid-template-columns:1fr 360px;gap:18px;padding:20px 24px;max-width:1300px;margin:auto}
+@media(max-width:980px){main{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,var(--card),#111b30);border:1px solid var(--bd);border-radius:16px;padding:18px;margin-bottom:18px}
+h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.room{background:var(--bg2);border:1px solid var(--bd);border-radius:14px;padding:14px;transition:.2s}
+.room.occ{border-color:#6b5a3a}.room b{font-size:22px}
+.rh{display:flex;justify-content:space-between;align-items:center}
+.st{font-size:11px;padding:2px 9px;border-radius:99px;background:#ffffff12}.st.on{background:#34d39922;color:var(--ok)}
+.kv{display:flex;justify-content:space-between;margin-top:8px;color:var(--mu);font-size:13px}.kv span:last-child{color:var(--tx)}
+.mono{font-family:Consolas,Menlo,monospace;letter-spacing:.06em}
+.btn{border:1px solid var(--bd);background:#ffffff0a;color:var(--tx);padding:8px 12px;border-radius:10px;font:inherit;cursor:pointer;transition:.15s}
+.btn:hover{border-color:var(--ac);background:#b69a6b1a}.btn.p{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}.btn.d{background:var(--er);border-color:var(--er);color:#2a0710;font-weight:600}
+.acts{display:flex;gap:6px;margin-top:12px}.acts .btn{flex:1;padding:7px 4px;font-size:13px}
+.alert{display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;margin-bottom:10px;background:linear-gradient(90deg,#fb718533,#fb71850d);border:1px solid var(--er);animation:pl 1s infinite alternate}
+@keyframes pl{to{box-shadow:0 0 18px #fb718566}}.alert .t{flex:1}
+.live{border:1px solid var(--ok);background:linear-gradient(180deg,#34d3991a,transparent);border-radius:12px;padding:14px;margin-bottom:10px}
+.wave{display:flex;gap:3px;align-items:center;height:44px;margin:10px 0}.wave i{flex:1;background:linear-gradient(var(--ac),#8a7248);border-radius:3px;height:5px;transition:height .1s}
+.empty{color:var(--mu);text-align:center;padding:14px}
+.qrbox{display:flex;gap:14px;align-items:center}canvas{background:#fff;border:5px solid #fff;border-radius:8px;image-rendering:pixelated}
+.qrbox a{color:var(--ac);word-break:break-all;font-size:12px}
+.topo{display:flex;align-items:center;gap:6px;font-size:11px;text-align:center}.node{flex:1;border:1px solid var(--bd);border-radius:10px;padding:8px 4px;transition:.25s;background:var(--bg2)}
+.node.hot{border-color:var(--ac);box-shadow:0 0 14px #b69a6b66}.node.bad{border-color:var(--er);box-shadow:0 0 14px #fb718588}.ar{color:var(--mu)}
+#log{background:#0a0806;border:1px solid var(--bd);border-radius:10px;height:260px;overflow:auto;padding:10px;font:12px/1.6 Consolas,Menlo,monospace;color:#9de6c1}
+#log .e{color:#ff9aa6}#log .w{color:#fcd779}#log .i{color:#8fbfff}
+.reg{background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:10px}.reg b{font-size:15px}.reg small{display:block;color:var(--mu)}.reg .acts{margin-top:10px}
+.cnt{margin-left:6px;font-size:11px;padding:1px 8px;border-radius:99px;background:var(--ac);color:#fff}
+
+/* ===== Percantik + foto kamar ===== */
+.room{padding:12px;box-shadow:0 8px 24px #0005}.room:hover{transform:translateY(-3px);border-color:var(--ac)}
+.ph{height:128px;border-radius:10px;background:center/cover;margin-bottom:10px;position:relative;border:1px solid var(--bd)}.ph.big{height:190px;margin:12px 0}
+.pr{position:absolute;right:8px;bottom:8px;background:#0a0a0acc;backdrop-filter:blur(6px);padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600}
+.ty{display:block;color:var(--mu);font-size:12px;margin-top:-2px}.room .acts{display:grid;grid-template-columns:1fr 1fr}
+.card{box-shadow:0 10px 30px #0004}.grid{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+dialog{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:18px;padding:20px;width:min(440px,92vw)}dialog::backdrop{background:#000a;backdrop-filter:blur(3px)}
+dialog h3{margin:0}dialog label{display:block;margin:10px 0 4px;font-size:12px;color:var(--mu)}
+dialog input,dialog textarea{width:100%;padding:10px;border-radius:10px;border:1px solid var(--bd);background:#1d1813;color:var(--tx);font:inherit}
+.sw{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--mu);cursor:pointer}.sw input{accent-color:var(--ac);width:16px;height:16px}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;font-size:13px}.bar .btn{padding:6px 12px;font-size:13px}.room.hid{opacity:.65}
+.room input,.room textarea{width:100%;padding:8px;border-radius:8px;border:1px solid var(--bd);background:#1d1813;color:var(--tx);font:inherit}
+
+/* ===== Tema hotel (sama seperti halaman tamu) ===== */
+header.hd{display:block;position:static;text-align:center;padding:20px 16px 14px;background:#050505;border-bottom:1px solid var(--bd);backdrop-filter:none}
+.stars{color:var(--ac);letter-spacing:6px;font-size:11px}.lg{font:600 28px Georgia,'Times New Roman',serif;letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.tg{color:var(--mu);font:12px Georgia,serif;letter-spacing:.2em;text-transform:uppercase}.hr{display:flex;gap:10px;justify-content:center;align-items:center;margin-top:12px}
+.card,.room,.reg,.node,.btn,.alert,.live,dialog,.ph,#log,.empty,select,input,textarea,.chip,.pr,.st,.cnt,canvas{border-radius:0!important}
+.chip,.st,.cnt,.pr{border-radius:99px!important}
+.card{background:var(--card);box-shadow:none}
+h2{font:300 14px 'Segoe UI',sans-serif;letter-spacing:.16em;color:#fff}h2:after{content:'';display:block;width:34px;border-top:2px solid var(--ac);margin:10px 0 0}
+.room b,dialog h3{font-family:Georgia,'Times New Roman',serif}.room b{font-weight:700}
+.btn.p{color:#fff}.btn.d{color:#fff}.btn:disabled{opacity:.4;cursor:not-allowed}
+.er{color:var(--er)}p.m{color:var(--mu);margin:4px 0 10px;font-size:13px}.okc{color:var(--ok)}
+dialog{background:var(--card);border:1px solid var(--ac);width:min(480px,94vw);max-height:92vh;overflow:auto}
+#rdlg .kv{border-bottom:1px solid var(--bd);padding-bottom:6px}#rdlg .acts{flex-wrap:wrap}#rdlg .acts .btn{flex:1 1 30%}
+.pin{font:700 34px Consolas,Menlo,monospace;letter-spacing:.28em;text-align:center;color:var(--ac);margin:6px 0}
+.sent{text-align:center}.sent canvas{display:block;margin:10px auto}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#2a2219;border:1px solid var(--ac);padding:10px 18px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;max-width:90%;text-align:center;z-index:99}.toast.s{opacity:1}
+.reg .sub{display:block;color:var(--mu);font-size:12px}
+.room input[type=checkbox],.sw input{width:16px!important;padding:0}.room .sw{justify-content:flex-start}
+.room.hk-dirty{border-color:var(--er)!important;box-shadow:0 0 14px #fb718544}.room.hk-doing{border-color:var(--wn)!important}.room.hk-clean{border-color:var(--ok)!important}.st.hk-dirty{background:#fb718533;color:var(--er)}.st.hk-doing{background:#fbbf2433;color:var(--wn)}.st.hk-clean{background:#34d39922;color:var(--ok)}.room.hk-insp{border-color:#a78bfa!important}.st.hk-insp{background:#a78bfa33;color:#c4b5fd}
+/* ===== SIDEBAR (sama di tamu & resepsionis) ===== */
+header.hd{position:fixed!important;left:0;top:0;bottom:0;width:236px;display:flex!important;flex-direction:column;align-items:stretch;text-align:left!important;padding:24px 16px 18px!important;background:#050506!important;color:#fff;border:0!important;border-right:1px solid #3a3a40!important;overflow-y:auto;z-index:30;transition:transform .25s;backdrop-filter:none!important}
+header.hd .stars{color:var(--gd,#e2ae2f);letter-spacing:6px;font-size:11px}
+header.hd .logo,header.hd .lg{font:700 22px/1.2 Georgia,'Times New Roman',serif;color:#fff!important;letter-spacing:.04em;text-transform:uppercase;margin-top:6px;width:auto;height:auto;background:none;border-radius:0;display:block}
+header.hd .tg{color:var(--gd,#e2ae2f)!important;font:11px Georgia,serif;letter-spacing:.18em;text-transform:uppercase;margin-top:6px}
+header.hd nav{display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:2px;margin:22px 0 0;flex:1;justify-content:flex-start}
+header.hd nav a{display:block;padding:11px 12px;color:#cfc9bd;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:0;border-left:3px solid transparent;cursor:pointer;text-decoration:none}
+header.hd nav a:hover,header.hd nav a.on{color:#fff;background:#ffffff0d;border-color:transparent;border-left-color:var(--gd,#e2ae2f)}
+header.hd .srv{margin-top:auto;padding:14px 12px 0;color:#9a958a}
+.tb{display:none}
+body{padding-left:236px}
+@media(max-width:899px){body{padding-left:0;padding-top:52px}
+.tb{display:flex;position:fixed;top:0;left:0;right:0;height:52px;align-items:center;gap:12px;padding:0 14px;background:#050506;border-bottom:2px solid var(--gd,#e2ae2f);z-index:25;color:#fff;font:700 12px 'Segoe UI',system-ui,sans-serif;letter-spacing:.14em}
+.tb button{background:none;border:1px solid var(--gd,#e2ae2f);color:var(--gd,#e2ae2f);font-size:20px;line-height:1;padding:4px 11px;border-radius:8px;cursor:pointer}
+header.hd{transform:translateX(-100%);width:262px;z-index:40}header.hd.open{transform:none;box-shadow:0 0 40px #000c}
+#scrim{position:fixed;inset:0;background:#000a;opacity:0;pointer-events:none;transition:.25s;z-index:35}#scrim.on{opacity:1;pointer-events:auto}}
+@media(min-width:900px){#scrim{display:none}}
+
+/* ===== TEMA FLYER (sama dengan halaman tamu) ===== */
+:root{--ac:#e2ae2f;--gd:#e2ae2f;--bg:#0b0b0d;--bg2:#0e0e10;--card:#161618;--bd:#3a3a40;--gg:linear-gradient(180deg,#ffe58a,#e0a62a)}
+body{background:#0b0b0d}html{scroll-behavior:smooth}.card{scroll-margin-top:16px}
+main{max-width:1280px}
+.pill{display:table;margin:22px auto 0;padding:9px 30px;border-radius:99px;background:var(--gg);color:#1b1405;font:800 14px 'Segoe UI',system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 4px 14px #e2ae2f44}
+.card{background:#161618!important;border:1px solid #3a3a40;border-radius:16px!important;box-shadow:none}
+.room,.reg,.node,.alert,.live,#log,.empty,.ph{border-radius:10px!important}
+.btn,select,input,textarea,canvas{border-radius:8px!important}dialog{border-radius:16px!important}
+.btn:hover{border-color:var(--ac);background:#e2ae2f1a}
+.btn.p,.cnt,.pr{background:var(--gg)!important;color:#1b1405!important;border:0!important;font-weight:700}.pr{backdrop-filter:none}
+h2{font:800 12px 'Segoe UI',system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--ac)}
+.room{background:#0e0e10;border-color:#3a3a40}.room.occ{border-color:var(--ac)}
+header.hd .hr{display:flex;flex-direction:column;align-items:stretch;gap:8px;margin-top:14px}
+header.hd .hr .chip{text-align:center}
+
+/* ===== NOTIFIKASI ===== */
+.toast{top:18px!important;bottom:auto!important;border-radius:12px!important;background:#161618!important;border:1px solid #3a3a40!important;border-left:5px solid #e2ae2f!important;padding:13px 20px!important;font-size:15px!important;font-weight:600;box-shadow:0 12px 34px #000b;transform:translate(-50%,-14px)!important;z-index:150!important;color:#fff}
+.toast.s{transform:translate(-50%,0)!important}
+#ntf{position:fixed;top:14px;right:14px;z-index:200;display:flex;flex-direction:column;gap:10px;width:min(390px,calc(100vw - 28px));pointer-events:none}
+.nt{pointer-events:auto;display:flex;gap:12px;align-items:flex-start;background:#121214;border:1px solid #3a3a40;border-left:6px solid var(--nc,#e2ae2f);border-radius:14px;padding:14px 14px 14px 12px;box-shadow:0 14px 40px #000c;animation:ntin .35s cubic-bezier(.2,1.4,.4,1);cursor:pointer;color:#fff}
+.nt.sk{animation:ntin .35s cubic-bezier(.2,1.4,.4,1),ntp 1s .35s infinite alternate}
+.nt i{font-style:normal;font-size:30px;line-height:1;flex:none}
+.nt b{display:block;font:800 12px 'Segoe UI',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--nc,#e2ae2f)}
+.nt span{display:block;font-size:15px;font-weight:600;line-height:1.35;margin-top:3px;word-break:break-word}
+.nt u{display:block;text-decoration:none;font-size:11px;color:#8d887e;margin-top:4px}
+@keyframes ntin{from{opacity:0;transform:translateX(40px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes ntp{to{box-shadow:0 0 0 3px var(--nc,#e2ae2f),0 14px 40px #000c}}
+@media(max-width:899px){#ntf{top:62px;right:7px;left:7px;width:auto}.toast{top:64px!important}}
+/* tampilan kamar ringkas */#rooms.grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}#rooms .room{padding:8px;font-size:12px;box-shadow:none}#rooms .room:hover{transform:none}#rooms .room b{font-size:16px}#rooms .ph{height:54px;margin-bottom:6px}#rooms .ph.big{height:54px}#rooms .kv{margin-top:3px;font-size:11.5px}#rooms .ty{font-size:11px}#rooms .st{font-size:11px;padding:2px 7px}#rooms .acts{gap:4px;margin-top:6px}#rooms .acts .btn{padding:4px 6px;font-size:11.5px}#rooms .sw{font-size:11.5px;margin-top:6px}</style></head><body>
+<script>
+/* ===== Mesin notifikasi: bunyi beda tiap jenis + suara bicara + banner ===== */
+(()=>{
+const T={bell:{ic:'🔔',c:'#f59e0b',t:'Panggilan Bell',sk:1,w:1800},call:{ic:'📞',c:'#34d399',t:'Panggilan Suara Masuk',sk:1,w:1500},sos:{ic:'🚨',c:'#ef4444',t:'DARURAT / SOS',sk:1,w:2900},
+reg:{ic:'📝',c:'#e2ae2f',t:'Pendaftaran Tamu',w:1200},req:{ic:'🛎️',c:'#60a5fa',t:'Permintaan Layanan',w:700},chat:{ic:'💬',c:'#a78bfa',t:'Pesan Baru',w:600},
+late:{ic:'⏱️',c:'#fb7185',t:'Perlu Perhatian',w:1300},ok:{ic:'✅',c:'#34d399',t:'Berhasil',w:600},no:{ic:'⛔',c:'#fb7185',t:'Ditolak',w:700},wake:{ic:'⏰',c:'#e2ae2f',t:'Wake-up Call',sk:1,w:3200}};
+let NAC=null,BT='',tf=0,last={};
+const AC=()=>{try{NAC=NAC||new(window.AudioContext||window.webkitAudioContext)();if(NAC.state==='suspended')NAC.resume();return NAC}catch(e){return null}};
+const tn=(f,t,d,ty,v,f2)=>{const a=AC();if(!a)return;const o=a.createOscillator(),g=a.createGain(),s=a.currentTime+t;o.type=ty||'sine';o.frequency.setValueAtTime(f,s);if(f2)o.frequency.linearRampToValueAtTime(f2,s+d);g.gain.setValueAtTime(.0001,s);g.gain.exponentialRampToValueAtTime(v||.3,s+.02);g.gain.exponentialRampToValueAtTime(.0001,s+d);o.connect(g);g.connect(a.destination);o.start(s);o.stop(s+d+.05)};
+const P={
+bell:()=>{for(let i=0;i<2;i++){tn(659,i*1.3,.9,'triangle',.5);tn(523,i*1.3+.45,1,'triangle',.5)}},
+call:()=>{for(let i=0;i<3;i++)[0,.5].forEach(x=>{tn(440,i*1.4+x,.4,'sine',.4);tn(480,i*1.4+x,.4,'sine',.4)})},
+sos:()=>{for(let i=0;i<8;i++)tn(i%2?770:960,i*.35,.34,'sawtooth',.45)},
+reg:()=>{[523,659,784].forEach((f,i)=>tn(f,i*.14,.25,'triangle',.45));tn(1047,.45,.7,'triangle',.45)},
+req:()=>{[988,784,659].forEach((f,i)=>tn(f,i*.18,.2,'square',.2))},
+chat:()=>{tn(900,0,.12,'sine',.4);tn(1350,.14,.2,'sine',.4)},
+late:()=>{tn(330,0,.5,'square',.22);tn(330,.7,.5,'square',.22)},
+ok:()=>{tn(784,0,.15,'sine',.35);tn(1047,.15,.45,'sine',.35)},
+no:()=>{tn(300,0,.25,'sawtooth',.28);tn(220,.28,.4,'sawtooth',.28)},
+wake:()=>{for(let i=0;i<6;i++){tn(880,i*.5,.18,'square',.3);tn(880,i*.5+.22,.18,'square',.3)}}};
+const say=t=>{try{const s=window.speechSynthesis;if(!s||!t)return;s.cancel();const u=new SpeechSynthesisUtterance(String(t).replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\uFE0F]/gu,'').replace(/\bSOS\b/g,'S O S').trim());u.lang='id-ID';u.rate=.95;u.volume=1;const v=(s.getVoices()||[]).find(v=>/^id/i.test(v.lang));if(v)u.voice=v;s.speak(u)}catch(e){}};
+const box=()=>{let b=document.getElementById('ntf');if(!b){b=document.createElement('div');b.id='ntf';document.body.appendChild(b)}return b};
+const banner=(d,msg,sticky)=>{const b=box(),n=document.createElement('div');n.className='nt'+(sticky?' sk':'');n.style.setProperty('--nc',d.c);
+n.innerHTML='<i>'+d.ic+'</i><div><b>'+d.t+'</b><span></span><u>'+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+' · klik untuk menutup</u></div>';n.querySelector('span').textContent=msg;
+const rm=()=>{n.style.transition='.25s';n.style.opacity=0;n.style.transform='translateX(30px)';setTimeout(()=>n.remove(),260)};n.onclick=rm;b.prepend(n);while(b.children.length>4)b.lastChild.remove();setTimeout(rm,sticky?45000:7000)};
+const flash=m=>{if(!document.hidden)return;BT=BT||document.title;clearInterval(tf);let k=0;tf=setInterval(()=>{document.title=k++%2?BT:'🔔 '+m},900);const f=()=>{if(!document.hidden){clearInterval(tf);document.title=BT;BT='';document.removeEventListener('visibilitychange',f)}};document.addEventListener('visibilitychange',f)};
+window.notify=(type,msg,o)=>{o=o||{};const d=T[type]||T.req,k=type+msg,now=Date.now();if(last[k]&&now-last[k]<1500)return;last[k]=now;
+const mute=typeof muted!=='undefined'&&muted;
+if(!mute){try{P[type]&&P[type]()}catch(e){}if(o.say!==false)setTimeout(()=>say(o.say||msg),d.w)}
+banner(d,msg,d.sk);
+try{navigator.vibrate&&navigator.vibrate(type=='sos'?[300,100,300,100,300]:o.vib||[200,100,200])}catch(e){}
+try{fetch('/hs/pushevt',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({t:d.t,m:msg,k:type})})}catch(e){}flash(msg);try{if(document.hidden&&window.Notification&&Notification.permission==='granted')(window.HS_NOTIFY?HS_NOTIFY(d.t,msg,type):new Notification(d.t,{body:msg,tag:type}))}catch(e){}
+const a=NAC;if(!mute&&a&&a.state!=='running'&&!notify.h){notify.h=1;banner({ic:'🔇',c:'#fbbf24',t:'Suara belum aktif'},'Klik di mana saja pada halaman ini sekali agar bunyi & suara bicara aktif.',0)}};
+const unlock=()=>{AC();try{window.speechSynthesis&&window.speechSynthesis.getVoices();const u=new SpeechSynthesisUtterance(' ');u.volume=0;window.speechSynthesis.speak(u)}catch(e){}try{window.Notification&&Notification.permission==='default'&&Notification.requestPermission()}catch(e){}};
+['pointerdown','keydown'].forEach(e=>addEventListener(e,unlock,{once:true}));
+})();
+</script>
+<div class="tb"><button id="mb" aria-label="Menu">☰</button><span>MENU</span></div><div id="scrim"></div>
+<header class="hd"><div class="stars">★ ★ ★ ★ ★</div><div class="lg" id="hn"></div><div class="tg">E-Resepsionis · Dasbor</div>
+<nav><a href="#cRooms">🛏️ Kamar & Smart Room</a><a href="#cReg">📝 Pendaftaran Tamu</a><a href="#cAcc">👤 Akun Aplikasi</a><a href="#cRev">⭐ Rating & Ulasan</a><a href="#cVis">💬 Chat Calon Tamu</a><a href="#cCall">📞 Panggilan Masuk</a><a href="#cStaff">👥 Karyawan & QR</a><a href="#cHk">🧹 Housekeeping</a><a href="#cPromo">🎁 Promosi & Galeri</a><a href="#cTopo">🔌 Topologi</a><a href="#cLog">📜 Log Sistem</a></nav>
+<div class="hr"><span class="chip"><i></i>Server aktif</span><button class="btn" id="tst">🔊 Tes bunyi & suara</button><button class="btn" id="mute">🔔 Suara ON</button></div></header>
+<div class="pill">Dasbor Resepsionis</div>
+<main>
+<div>
+<div class="card" id="cRooms"><h2>Kamar & Smart Room</h2><div class="bar"><span id="catN" style="color:var(--mu)"></span><input id="rq" placeholder="Cari no./tipe" style="width:140px;padding:6px 10px;border-radius:8px;border:1px solid var(--bd);background:#1d1813;color:var(--tx)"><select id="rs" style="padding:6px;border-radius:8px;border:1px solid var(--bd);background:#1d1813;color:var(--tx)"><option value="">Semua</option><option value="free">Kosong</option><option value="occ">Terisi</option><option value="dirty">Kotor</option><option value="doing">Sedang dibersihkan</option><option value="clean">Bersih</option><option value="VCI">VCI · Siap dijual</option><option value="VC">VC · Bersih, menunggu cek</option><option value="VD">VD · Kosong kotor</option><option value="CIP">CIP · Sedang dibersihkan</option><option value="OC">OC · Terisi bersih</option><option value="OD">OD · Terisi kotor</option><option value="DND">DND · Jangan diganggu</option><option value="MUR">MUR · Minta dibersihkan</option><option value="DO">DO · Check-out hari ini</option><option value="OVS">OVS · Lewat jam check-out</option><option value="EA">EA · Datang hari ini</option><option value="SO">SO · Sleep Out</option><option value="SKP">SKP · Skipper</option><option value="OOS">OOS · Out of Service</option><option value="OOO">OOO · Out of Order</option><option value="BLK">BLK · Blocked</option><option value="hid">Disembunyikan</option></select><span class="sp"></span><button class="btn" onclick="showAll(true)">👁 Tampilkan semua kamar</button><button class="btn" onclick="showAll(false)">🚫 Sembunyikan semua</button></div><div id="rsRecap"></div><div class="grid" id="rooms"></div></div>
+<div class="card" id="cStaff"><h2>Karyawan & QR ID</h2><p class="m">Tiap karyawan punya QR pribadi untuk membuka tab karyawan (<b>karyawan-lama3.html</b>). Housekeeping wajib scan QR untuk mulai & selesai membersihkan.</p><div class="bar"><input id="sNm" placeholder="Nama (mis. Adi)" style="width:160px;padding:6px 10px;border:1px solid var(--bd);background:#1d1813;color:var(--tx)"><select id="sRl" style="padding:6px;border:1px solid var(--bd);background:#1d1813;color:var(--tx)"></select><button class="btn p" onclick="addStaff()">+ Tambah karyawan</button></div><div id="staffL"></div></div>
+<div class="card" id="cHk"><h2>Kebersihan kamar (Housekeeping)</h2><div class="bar"><select id="hkSel" style="padding:6px;border:1px solid var(--bd);background:#1d1813;color:var(--tx)"></select><button class="btn" onclick="hkDirty()">Tandai kotor</button></div><div id="hkB"></div><div id="hkL" style="margin-top:12px;color:var(--mu);font-size:12px"></div></div>
+<div class="card" id="cPromo"><h2>Promosi & galeri (tampil di bagian bawah halaman tamu)</h2><div class="grid" id="promoBox"></div></div>
+<div class="card" id="cTopo"><h2>Topologi & aliran paket</h2>
+<div class="topo"><div class="node" id="nT">📱 HP Tamu<br>Zona Publik<br>wss://</div><span class="ar">→</span><div class="node" id="nS">🖥️ Gatekeeper<br>PC Resepsionis<br>token + whitelist</div><span class="ar">→</span><div class="node" id="nI">🔌 ESP32-S3<br>Zona Lokal<br>HTTP</div></div>
+<div class="node" id="nX" style="margin-top:8px;text-align:center;font-size:11px">🌳 Lampu Taman · 📹 CCTV — terisolasi, tidak bisa dijangkau tamu</div></div>
+<div class="card" id="cLog"><h2>Log sistem</h2><div id="log"></div></div>
+</div>
+<aside>
+<div class="card" id="cReg"><h2>Pendaftaran tamu <span class="cnt" id="regN">0</span></h2><div id="regs"></div></div>
+<div class="card" id="cResv"><h2>Reservasi mendatang <span class="cnt" id="rvN">0</span></h2><div id="resvL"></div></div>
+<div class="card"><h2>Permintaan kirim ulang PIN <span class="cnt" id="rsN">0</span></h2><div id="rsq"></div></div>
+<div class="card" id="cAcc"><h2>👤 Akun Aplikasi <span class="cnt" id="accN" style="display:none">0</span></h2><p class="m" style="margin:0 0 8px">Tamu / pengunjung yang mendaftar di aplikasi. Atur persetujuan otomatis atau manual di sini. Diproses server, tidak perlu halaman ini terus terbuka.</p><div id="accBox"></div></div>
+<div class="card" id="cRev"><h2>⭐ Rating & Ulasan</h2><p class="m" style="margin:0 0 8px">Rating & ulasan tamu: dari kamar (rating menginap) dan dari aplikasi tamu (Tulis Ulasan & obrolan). Tamu hanya bisa membalas; menyembunyikan / menghapus hanya di sini.</p>
+<h3 style="margin:10px 0 6px;font-size:14px;color:var(--gd,#e2ae2f)">Rating menginap (per kamar)</h3><div id="rvS"></div>
+<h3 style="margin:16px 0 6px;font-size:14px;color:var(--gd,#e2ae2f)">Ulasan & obrolan dari aplikasi tamu</h3><div id="revBox"></div></div>
+<div class="card" id="cVis"><h2>💬 Chat calon tamu <span class="cnt" id="vN">0</span></h2><p class="m" style="margin:0 0 8px">Pertanyaan dari beranda tamu sebelum reservasi.</p><div id="visL"><div class="empty">Belum ada chat</div></div></div>
+<div class="card" id="cCall"><h2>Panggilan masuk</h2><div id="alarms"></div><div id="call"></div><div class="empty" id="none">Tidak ada panggilan</div></div>
+<div class="card" id="cQr"><h2>QR Code kamar</h2><div class="qrbox"><canvas id="qr" width="132" height="132"></canvas><div><b id="qrT">-</b><br><span style="color:var(--mu);font-size:12px">Klik tautan untuk membuka tab HP Tamu:</span><br><a id="qrU" target="_blank">-</a></div></div></div>
+</aside></main>
+<dialog id="sdlg"><h3 id="sT"></h3><div class="sent"><canvas id="sQ"></canvas><p class="m" id="sS"></p></div><div class="acts"><button class="btn" onclick="sdlg.close()">Tutup</button><button class="btn p" onclick="printQ()">🖨 Cetak</button></div></dialog>
+<dialog id="odlg" style="width:min(780px,96vw)"><h3>⚙ Pengaturan Owner</h3><div class="bar" id="oT" style="margin-top:12px"></div><div id="oB"></div><div class="acts"><button class="btn p" onclick="odlg.close()">Selesai</button></div></dialog>
+<dialog id="rdlg"><div id="rBody"></div></dialog><div class="toast" id="toast"></div>
+<dialog id="dlg"><h3 id="dT"></h3><div class="ph big" id="dPh"></div><input type="file" id="dF" accept="image/*" hidden>
+<div class="acts"><button type="button" class="btn" id="dPick">📷 Pilih foto kamar</button><button type="button" class="btn" id="dDel">Hapus foto</button></div>
+<label>Tipe kamar</label><input id="dTy"><label>Harga per malam (Rp)</label><input id="dPr" type="number"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label>Maks. tamu</label><input id="dMx" type="number" min="1"></div><div><label>Luas (m²)</label><input id="dSz" type="number"></div></div><label>Fasilitas (pisahkan koma)</label><input id="dFa"><label>Deskripsi</label><textarea id="dDe" rows="3"></textarea><label class="sw"><input type="checkbox" id="dAll"> Terapkan ke semua kamar bertipe sama (foto, harga, fasilitas, dll.)</label>
+<div class="acts" style="margin-top:14px"><button type="button" class="btn" id="dCx">Batal</button><button type="button" class="btn p" id="dOk">Simpan</button></div></dialog>
+<script>
+/* ===== KONFIGURASI: ubah di sini ===== */
+const HOTEL_NAME='Nama Hotel Anda', GUEST_PAGE='tamu-lama3.html', CHANNEL='hotel-sim', DOOR_RELOCK_MS=4000;
+const ROOM_TYPES=[
+ {from:101,to:115,type:'Standard Room',price:320000,max:2,size:18,facs:'AC, WiFi, TV',desc:'Kamar ringkas dan bersih, cocok untuk menginap singkat.'},
+ {from:116,to:127,type:'Deluxe Room',price:450000,max:2,size:24,facs:'AC, WiFi, TV, Air panas',desc:'Kamar nyaman dengan tempat tidur queen dan jendela besar.'},
+ {from:128,to:132,type:'Family Room',price:620000,max:4,size:32,facs:'AC, WiFi, TV, 2 tempat tidur',desc:'Luas untuk keluarga, dua tempat tidur dan area duduk.'},
+ {from:133,to:135,type:'Suite',price:850000,max:3,size:40,facs:'AC, WiFi, Smart TV, Bathtub',desc:'Suite premium dengan ruang tamu terpisah.'}];
+const DEFAULT_ROOMS={};ROOM_TYPES.forEach(t=>{for(let n=t.from;n<=t.to;n++)DEFAULT_ROOMS[n]={ip:'192.168.1.'+n,type:t.type,price:t.price,max:t.max,size:t.size,facs:t.facs,desc:t.desc}});
+const WHITELIST=['bell','ic_request','ic_end','door','light'];
+/* ===================================== */
+const $=id=>document.getElementById(id), ch=new BroadcastChannel(CHANNEL), tell=m=>ch.postMessage(m);
+const rnd=()=>String(Math.floor(Math.random()*1e6)).padStart(6,'0');
+/* ===== Pembuat QR Code (byte mode, level M, versi 1-10) ===== */
+const QRM=(text)=>{const data=[...new TextEncoder().encode(text)],EC=[0,10,16,26,18,24,16,18,22,22,26],NB=[0,1,1,1,2,2,4,4,4,5,5];
+ const raw=v=>{let r=(16*v+128)*v+64;if(v>=2){const a=(v/7|0)+2;r-=(25*a-10)*a-55;if(v>=7)r-=36}return r>>3};
+ let ver=1;for(;ver<=10;ver++){const cap=raw(ver)-EC[ver]*NB[ver],cb=ver<10?8:16;if(4+cb+8*data.length<=cap*8)break}
+ if(ver>10)throw new Error('QR: data terlalu panjang');
+ const cap=raw(ver)-EC[ver]*NB[ver],bits=[],put=(v,n)=>{for(let i=n-1;i>=0;i--)bits.push((v>>>i)&1)};
+ put(4,4);put(data.length,ver<10?8:16);data.forEach(b=>put(b,8));put(0,Math.min(4,cap*8-bits.length));while(bits.length%8)bits.push(0);
+ for(let p=0xEC;bits.length<cap*8;p^=0xEC^0x11)put(p,8);
+ const cw=[];for(let i=0;i<bits.length;i+=8)cw.push(parseInt(bits.slice(i,i+8).join(''),2));
+ const mul=(x,y)=>{let z=0;for(let i=7;i>=0;i--){z=(z<<1)^((z>>>7)*0x11D);z^=((y>>>i)&1)*x}return z};
+ const ne=EC[ver],gen=Array(ne).fill(0);gen[ne-1]=1;for(let i=0,root=1;i<ne;i++){for(let j=0;j<ne;j++){gen[j]=mul(gen[j],root);if(j+1<ne)gen[j]^=gen[j+1]}root=mul(root,2)}
+ const rem=d=>{const r=Array(ne).fill(0);for(const b of d){const f=b^r.shift();r.push(0);gen.forEach((c,i)=>r[i]^=mul(c,f))}return r};
+ const nb=NB[ver],tot=raw(ver),sl=(tot/nb|0),ns=nb-tot%nb,blocks=[];
+ for(let i=0,k=0;i<nb;i++){const len=sl-ne+(i<ns?0:1),d=cw.slice(k,k+len);k+=len;blocks.push({d,e:rem(d)})}
+ const all=[];for(let i=0;i<blocks[nb-1].d.length;i++)blocks.forEach((b,j)=>{if(i<b.d.length)all.push(b.d[i])});
+ for(let i=0;i<ne;i++)blocks.forEach(b=>all.push(b.e[i]));
+ const N=ver*4+17,M=[...Array(N)].map(()=>Array(N).fill(false)),F=[...Array(N)].map(()=>Array(N).fill(false)),sf=(x,y,d)=>{M[y][x]=d;F[y][x]=true};
+ for(let i=0;i<N;i++){sf(6,i,i%2==0);sf(i,6,i%2==0)}
+ const finder=(cx,cy)=>{for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){const d=Math.max(Math.abs(dx),Math.abs(dy)),x=cx+dx,y=cy+dy;if(x>=0&&x<N&&y>=0&&y<N)sf(x,y,d!=2&&d!=4)}};
+ finder(3,3);finder(N-4,3);finder(3,N-4);
+ if(ver>1){const na=(ver/7|0)+2,st=ver==32?26:Math.ceil((ver*4+4)/(na*2-2))*2,pos=[6];for(let p=N-7;pos.length<na;p-=st)pos.splice(1,0,p);
+  pos.forEach((a,i)=>pos.forEach((b,j)=>{if((i==0&&j==0)||(i==0&&j==na-1)||(i==na-1&&j==0))return;for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++)sf(a+dx,b+dy,Math.max(Math.abs(dx),Math.abs(dy))!=1)}))}
+ const fmt=m=>{const d=(0<<3)|m;let r=d;for(let i=0;i<10;i++)r=(r<<1)^((r>>>9)*0x537);const b=((d<<10)|r)^0x5412,g=i=>((b>>>i)&1)==1;
+  for(let i=0;i<=5;i++)sf(8,i,g(i));sf(8,7,g(6));sf(8,8,g(7));sf(7,8,g(8));for(let i=9;i<15;i++)sf(14-i,8,g(i));
+  for(let i=0;i<8;i++)sf(N-1-i,8,g(i));for(let i=8;i<15;i++)sf(8,N-15+i,g(i));sf(8,N-8,true)};
+ fmt(0);
+ if(ver>=7){let r=ver;for(let i=0;i<12;i++)r=(r<<1)^((r>>>11)*0x1F25);const b=(ver<<12)|r;for(let i=0;i<18;i++){const d=((b>>>i)&1)==1,a=N-11+i%3,c=i/3|0;sf(a,c,d);sf(c,a,d)}}
+ for(let i=0,right=N-1;right>=1;right-=2){if(right==6)right=5;for(let v=0;v<N;v++)for(let j=0;j<2;j++){const x=right-j,up=((right+1)&2)==0,y=up?N-1-v:v;if(!F[y][x]&&i<all.length*8){M[y][x]=((all[i>>>3]>>>(7-(i&7)))&1)==1;i++}}}
+ const mk=(m,x,y)=>[(x+y)%2==0,y%2==0,x%3==0,(x+y)%3==0,((x/3|0)+(y/2|0))%2==0,x*y%2+x*y%3==0,(x*y%2+x*y%3)%2==0,((x+y)%2+x*y%3)%2==0][m];
+ const apply=m=>{for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(!F[y][x]&&mk(m,x,y))M[y][x]=!M[y][x]};
+ const pen=()=>{let p=0;const line=g=>{let run=1;for(let i=1;i<N;i++){if(g(i)==g(i-1)){run++;if(run==5)p+=3;else if(run>5)p++}else run=1}
+   for(let i=0;i+10<N;i++){const s=[...Array(11)].map((_,k)=>g(i+k)?1:0).join('');if(s=='10111010000'||s=='00001011101')p+=40}};
+  for(let y=0;y<N;y++)line(i=>M[y][i]);for(let x=0;x<N;x++)line(i=>M[i][x]);
+  for(let y=0;y<N-1;y++)for(let x=0;x<N-1;x++)if(M[y][x]==M[y][x+1]&&M[y][x]==M[y+1][x]&&M[y][x]==M[y+1][x+1])p+=3;
+  let dk=0;M.forEach(r=>r.forEach(c=>dk+=c));p+=(Math.abs(dk*20-N*N*10)/(N*N)|0)*10;return p};
+ let best=0,bp=1e9;for(let m=0;m<8;m++){apply(m);fmt(m);const p=pen();if(p<bp){bp=p;best=m}apply(m)}
+ apply(best);fmt(best);return M};
+function qrDraw(cv,text,px){const M=QRM(text),q=4,n=M.length+q*2,s=Math.max(2,Math.floor(px/n));cv.width=cv.height=n*s;const c=cv.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,n*s,n*s);c.fillStyle='#000';M.forEach((r,y)=>r.forEach((d,x)=>{if(d)c.fillRect((x+q)*s,(y+q)*s,s,s)}));cv.style.width=cv.style.height=n*s+'px'}
+
+$('hn').textContent=HOTEL_NAME;
+const toast=t=>{$('toast').textContent=t;$('toast').classList.add('s');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('s'),2800)};
+let rooms=(()=>{let s={},ph=[];try{s=JSON.parse(localStorage.getItem('hs_rooms'))||{};ph=JSON.parse(localStorage.getItem('hs_ph'))||[]}catch(e){}
+ const r={};for(const n in DEFAULT_ROOMS)r[n]={...DEFAULT_ROOMS[n],photo:'',show:true,token:rnd(),door:true,light:false,guest:false};
+ for(const n in s){const o={...s[n]};if(o.pi>=0&&ph[o.pi])o.photo=ph[o.pi];delete o.pi;r[n]={photo:'',show:true,door:true,light:false,...(r[n]||{}),...o}}
+ try{if(!localStorage.getItem('hs_ready35')){for(const n in r){r[n].guest=false;r[n].show=true;r[n].name='';r[n].door=true;r[n].light=false}localStorage.setItem('hs_ready35','1');localStorage.removeItem('hs_regs')}}catch(e){}
+ return r})();
+const old={};let regs=(()=>{try{return JSON.parse(localStorage.getItem('hs_regs'))||[]}catch(e){return[]}})();/* ===== RESERVASI BERBASIS TANGGAL: kamar baru dianggap terisi pada tanggal yang dipesan, bukan sejak disetujui ===== */
+const ymd=d=>{const x=d||new Date();return new Date(x.getTime()-x.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
+const addDay=(s,n)=>{const d=new Date(s+'T00:00');d.setDate(d.getDate()+n);return ymd(d)};
+const dOk=s=>/^\d{4}-\d{2}-\d{2}$/.test(String(s||''))&&!isNaN(new Date(s+'T00:00'));
+let resv=(()=>{try{const x=JSON.parse(localStorage.getItem('hs_resv'));return Array.isArray(x)?x:[]}catch(e){return[]}})();
+const saveResv=()=>{try{localStorage.setItem('hs_resv',JSON.stringify(resv))}catch(e){}};
+const ovl=(a,b,c,d)=>a<d&&c<b;
+/* rentang tanggal terpakai satu kamar: tamu yang sedang menginap + reservasi mendatang (check-out tidak ikut dihitung) */
+const roomBusy=(n,skip)=>{const r=rooms[n],L=[],T=ymd();if(!r)return L;
+ if(r.guest){const a=r.cin&&r.cin<T?r.cin:T,b=r.cout&&r.cout>T?r.cout:addDay(T,1);L.push([a,b])}
+ resv.forEach(x=>{if(String(x.room)===String(n)&&x.rid!==skip)L.push([x.cin,x.cout])});return L};
+const roomFreeFor=(n,cin,cout,skip)=>!!rooms[n]&&!rooms[n].oo&&!roomBusy(n,skip).some(([a,b])=>ovl(cin,cout,a,b));
+let rsq=[],curReg=null,alarms=[],call=null,muted=false,tk,wv,secs=0,qrRoom=Object.keys(rooms)[0];
+const save=()=>{try{{const ph=[];const ser={};for(const n in rooms){const o={...rooms[n]};let i=-1;if(o.photo){i=ph.indexOf(o.photo);if(i<0)i=ph.push(o.photo)-1}o.photo='';o.pi=i;ser[n]=o}localStorage.setItem('hs_rooms',JSON.stringify(ser));localStorage.setItem('hs_ph',JSON.stringify(ph))}localStorage.setItem('hs_regs',JSON.stringify(regs));localStorage.setItem('hs_promos',JSON.stringify(promos))}catch(e){try{log('Penyimpanan browser penuh: kecilkan/kurangi foto kamar','e')}catch(_){}}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const SCN=(t,wide)=>{const T={'Standard Room':{w:'#4a3a2e',w2:'#241c16',b:'#e2d3b6',a:'#9a7a4c',n:1},'Deluxe Room':{w:'#35474d',w2:'#162126',b:'#ece7dc',a:'#4f9a9b',n:1},'Family Room':{w:'#4a382d',w2:'#21191a',b:'#efe3cb',a:'#b5623a',n:2},'Suite':{w:'#3a312a',w2:'#15110e',b:'#f4e9d2',a:'#c9a96b',n:1,s:1}},c=T[t]||T['Standard Room'];let s=7;const R=()=>(s=(s*9301+49297)%233280)/233280;
+let o='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+c.w+'"/><stop offset="1" stop-color="'+c.w2+'"/></linearGradient><linearGradient id="k" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1633"/><stop offset=".6" stop-color="#3a3a6e"/><stop offset="1" stop-color="#e59a6a"/></linearGradient><linearGradient id="f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3322"/><stop offset="1" stop-color="#120c08"/></linearGradient><linearGradient id="c" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="'+c.a+'"/><stop offset=".5" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="'+c.a+'"/></linearGradient><radialGradient id="g"><stop offset="0" stop-color="#ffd48a" stop-opacity=".95"/><stop offset="1" stop-color="#ffd48a" stop-opacity="0"/></radialGradient><radialGradient id="v" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></radialGradient></defs>';
+o+='<rect width="800" height="600" fill="url(#w)"/><rect y="400" width="800" height="200" fill="url(#f)"/><rect y="396" width="800" height="6" fill="#0006"/>';
+o+='<rect x="238" y="58" width="324" height="226" fill="#120d09"/><rect x="246" y="66" width="308" height="210" fill="url(#k)"/><circle cx="500" cy="104" r="15" fill="#fff3d0"/>';
+for(let x=246,h;x<554;x+=h){const w=18+R()*26|0;h=w;const bh=40+R()*95|0,y=276-bh;o+='<rect x="'+x+'" y="'+y+'" width="'+Math.min(w,554-x)+'" height="'+bh+'" fill="#0b0f22"/>';for(let i=0;i<7;i++)if(R()>.45)o+='<rect x="'+(x+3+R()*(w-9)|0)+'" y="'+(y+5+R()*(bh-12)|0)+'" width="3" height="4" fill="#ffd77a"/>'}
+o+='<rect x="396" y="66" width="8" height="210" fill="#120d09"/><rect x="246" y="160" width="308" height="6" fill="#120d09"/>';
+o+='<rect x="196" y="46" width="60" height="300" fill="url(#c)"/><rect x="544" y="46" width="60" height="300" fill="url(#c)"/><rect x="186" y="40" width="428" height="8" fill="#0009"/>';
+const n=c.n,bw=n==1?360:240,gap=n==1?0:30,x0=400-(n*bw+(n-1)*gap)/2;
+o+='<ellipse cx="400" cy="520" rx="330" ry="46" fill="'+c.a+'" opacity=".3"/>';
+for(let i=0;i<n;i++){const x=x0+i*(bw+gap);o+='<rect x="'+(x-12)+'" y="292" width="'+(bw+24)+'" height="90" rx="10" fill="'+c.a+'"/><rect x="'+(x-12)+'" y="292" width="'+(bw+24)+'" height="90" rx="10" fill="#0004"/><rect x="'+x+'" y="378" width="'+bw+'" height="40" fill="#1d130c"/><rect x="'+(x+14)+'" y="318" width="'+(bw/2-20)+'" height="46" rx="14" fill="#fff" opacity=".92"/><rect x="'+(x+bw/2+6)+'" y="318" width="'+(bw/2-20)+'" height="46" rx="14" fill="#f0eadc"/><rect x="'+(x-4)+'" y="350" width="'+(bw+8)+'" height="62" rx="8" fill="'+c.b+'"/><rect x="'+(x-4)+'" y="384" width="'+(bw+8)+'" height="18" fill="'+c.a+'"/><rect x="'+(x-4)+'" y="404" width="'+(bw+8)+'" height="8" fill="#0003"/>'}
+const lx=[x0-86,x0+n*bw+(n-1)*gap+16];lx.forEach(x=>{o+='<circle cx="'+(x+35)+'" cy="318" r="95" fill="url(#g)"/><rect x="'+x+'" y="352" width="70" height="66" rx="4" fill="#3a2616"/><rect x="'+(x+32)+'" y="326" width="6" height="26" fill="#c9a96b"/><path d="M'+(x+16)+' 328 L'+(x+54)+' 328 L'+(x+46)+' 296 L'+(x+24)+' 296Z" fill="#ffe3a8"/>'});
+if(c.s){o+='<rect x="30" y="360" width="120" height="58" rx="10" fill="#6b5a45"/><rect x="30" y="338" width="120" height="30" rx="10" fill="#7d6a52"/>';[330,470,640].forEach(x=>o+='<line x1="'+x+'" y1="0" x2="'+x+'" y2="30" stroke="#c9a96b"/><circle cx="'+x+'" cy="36" r="10" fill="#ffe3a8"/><circle cx="'+x+'" cy="36" r="36" fill="url(#g)" opacity=".5"/>')}
+o+='<rect width="800" height="600" fill="url(#v)"/></svg>';return 'data:image/svg+xml;utf8,'+encodeURIComponent(o)};
+
+const PH="data:image/svg+xml;utf8,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="600" height="360"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#27427a"/><stop offset="1" stop-color="#6d4bd6"/></linearGradient></defs><rect width="600" height="360" fill="url(#g)"/><text x="300" y="190" font-size="64" text-anchor="middle">🛏️</text><text x="300" y="250" font-size="22" fill="#fff9" text-anchor="middle" font-family="sans-serif">Foto kamar belum ditambahkan</text></svg>');
+const rp=n=>Number(n||0).toLocaleString('id-ID');
+const pub=n=>{const r=rooms[n];return{type:r.type,price:r.price,facs:r.facs,desc:r.desc,photo:r.photo,max:r.max,size:r.size,free:!r.guest&&!r.oo&&!(window.CFG&&CFG.blockDirty!==0&&['dirty','doing','insp'].includes(r.hk)),dirty:!!(window.CFG&&CFG.blockDirty!==0&&['dirty','doing','insp'].includes(r.hk))}};
+const DEF_PROMOS=[{title:'Paket Bulan Madu',text:'Dekorasi kamar romantis, sarapan untuk dua, dan late check-out.',img:''},{title:'Menginap 3 Malam Bayar 2',text:'Nikmati malam ketiga gratis untuk semua tipe kamar.',img:''},{title:'Sarapan Gratis',text:'Sarapan prasmanan setiap pagi untuk pemesanan langsung.',img:''}];
+let promos=(()=>{try{const s=JSON.parse(localStorage.getItem('hs_promos'));if(Array.isArray(s))return s}catch(e){}return []})();
+let lastA='',rf={q:'',st:''};
+const avail=force=>{const v=Object.keys(rooms).filter(n=>rooms[n].show!==false),P=[],cat={};v.forEach(n=>{const c=pub(n);let i=-1;if(c.photo){i=P.indexOf(c.photo);if(i<0)i=P.push(c.photo)-1}c.photo='';c.pi=i;cat[n]=c});
+ const T0=ymd(),book={};v.forEach(n=>{const b=roomBusy(n).filter(x=>x[1]>T0);if(b.length)book[n]=b});let rev=null;try{rev=window.revPub?window.revPub():null}catch(e){}
+ const msg={type:'avail',rooms:v.filter(n=>!rooms[n].guest&&!rooms[n].oo&&!(window.CFG&&CFG.blockDirty!==0&&['dirty','doing','insp'].includes(rooms[n].hk))),all:v,catalog:cat,photos:P,promos,book,today:T0,rev,vc:(window.CFG&&CFG.vcOn===0)?0:1,ia:(()=>{try{const c=IC.norm(CFG.ic);return c.on&&c.app&&c.res?1:0}catch(e){return 0}})()},k=JSON.stringify(msg);if(!force&&k===lastA)return;lastA=k;tell(msg)};
+function renderPromos(){$('promoBox').innerHTML=promos.map((p,i)=>`<div class="room"><div class="ph" style="background-image:url('${p.img||PH}')"></div><input value="${esc(p.title)}" onchange="pm(${i},'title',this.value)" placeholder="Judul promo"><textarea rows="2" onchange="pm(${i},'text',this.value)" placeholder="Teks promosi" style="margin-top:6px">${esc(p.text)}</textarea><div class="acts"><button class="btn" onclick="pimg(${i})">📷 Gambar</button><button class="btn" onclick="pm(${i},'img','');renderPromos()">Hapus gambar</button></div></div>`).join('')}
+window.pm=(i,k,v)=>{promos[i][k]=v;save();avail()};
+window.pimg=i=>{const f=document.createElement('input');f.type='file';f.accept='image/*';f.onchange=()=>f.files[0]&&shrink(f.files[0],d=>{pm(i,'img',d);renderPromos()});f.click()};
+function shrink(file,cb){const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.72))};im.src=rd.result};rd.readAsDataURL(file)}
+window.vis=(n,v)=>{rooms[n].show=v;log(`Kamar ${n}: ${v?'ditampilkan di':'disembunyikan dari'} katalog tamu`,'i');render()};
+window.showAll=v=>{for(const n in rooms)rooms[n].show=v;log(v?'Semua kamar kosong ditampilkan di katalog':'Semua kamar disembunyikan dari katalog','i');render()};
+let eN=null,eP='';const prev=()=>$('dPh').style.backgroundImage=`url('${eP||PH}')`;
+window.edit=n=>{eN=n;const r=rooms[n];eP=r.photo||'';$('dT').textContent='Kamar '+n;$('dTy').value=r.type||'';$('dPr').value=r.price||'';$('dMx').value=r.max||'';$('dAll').checked=false;$('dSz').value=r.size||'';$('dFa').value=r.facs||'';$('dDe').value=r.desc||'';prev();$('dlg').showModal()};
+$('dPick').onclick=()=>$('dF').click();$('dF').onchange=e=>{const f=e.target.files[0];if(f)shrink(f,d=>{eP=d;prev()});e.target.value=''};
+$('dDel').onclick=()=>{eP='';prev()};$('dCx').onclick=()=>$('dlg').close();
+$('dOk').onclick=()=>{const d={type:$('dTy').value.trim()||'Kamar',price:+$('dPr').value||0,max:+$('dMx').value||2,size:+$('dSz').value||0,facs:$('dFa').value,desc:$('dDe').value,photo:eP},old=rooms[eN].type;
+ if($('dAll').checked){let c=0;for(const n in rooms)if(rooms[n].type===old||n==eN){Object.assign(rooms[n],d);c++}log(`${c} kamar bertipe "${old}" diperbarui`,'i')}else{Object.assign(rooms[eN],d);log(`Kamar ${eN}: info & foto diperbarui`,'i')}
+ $('dlg').close();render()};
+const beep=(t,m)=>window.notify(t||'req',m||'Ada notifikasi baru');
+$('tst').onclick=()=>window.notify('bell','Tes. Panggilan dari kamar 101');$('mute').onclick=()=>{muted=!muted;$('mute').textContent='🔔 Suara '+(muted?'OFF':'ON')};
+function log(t,c=''){const d=document.createElement('div');d.className=c;d.textContent=new Date().toLocaleTimeString('id-ID')+'  '+t;$('log').appendChild(d);$('log').scrollTop=1e9}
+const flash=(id,c)=>{$(id).classList.add(c);setTimeout(()=>$(id).classList.remove(c),700)};
+const trace=(p,bad)=>[...p].forEach((x,i)=>setTimeout(()=>flash({T:'nT',S:'nS',I:'nI',X:'nX'}[x],bad&&i==p.length-1?'bad':'hot'),i*300));
+const st=r=>({door:r.door,light:r.light});
+const push=n=>tell({type:'state',to:n,state:st(rooms[n])});
+
+function render(){
+ $('rooms').innerHTML=Object.entries(rooms).filter(([n,r])=>(!rf.q||n.includes(rf.q)||(r.type||'').toLowerCase().includes(rf.q))&&(!rf.st||(RS.LIST.includes(rf.st)?RS.match(r,rf.st):rf.st=='occ'?r.guest:rf.st=='free'?!r.guest:['dirty','doing','insp','clean'].includes(rf.st)?r.hk==rf.st:r.show===false))).map(([n,r])=>`<div class="room ${r.guest?'occ':''} ${r.show===false?'hid':''}"><div class="ph" style="background-image:url('${r.photo||SCN(r.type)}')"><span class="pr">Rp ${rp(r.price)}</span></div><div class="rh"><div><b>${n}</b><small class="ty">${esc(r.type)} · maks ${r.max||'-'} tamu</small></div><span class="st ${r.guest?'on':''}">${r.guest?'Terisi':'Kosong'}</span></div>
+ <div class="kv"><span>ESP32-S3</span><span class="mono">${r.ip}</span></div><div class="kv"><span>Tamu</span><span>${r.guest?esc(r.name||'-'):'-'}</span></div>${r.guest&&r.phone?`<div class="kv"><span>No. HP</span><span>${esc(r.phone)}</span></div><div class="kv"><span>Menginap</span><span>${esc(r.cin||'-')} → ${esc(r.cout||'-')}</span></div>`:''}<div class="kv"><span>PIN</span><span class="mono">${r.token}</span></div>
+ <div class="kv"><span>Pintu</span><span>${r.door?'🔒 Terkunci':'🔓 Terbuka'}</span></div><div class="kv"><span>Lampu</span><span>${r.light?'💡 ON':'⚫ OFF'}</span></div>
+ ${`<label class="sw"><input type="checkbox" ${r.show!==false?'checked':''} onchange="vis(${n},this.checked)">Tampil di katalog tamu</label>`}<div class="acts"><button class="btn" onclick="edit(${n})">📷 Foto & info</button><button class="btn" onclick="qr(${n})">QR</button><button class="btn" onclick="chk(${n})">${r.guest?'Check-out':'Check-in'}</button><button class="btn" onclick="regen(${n})">PIN baru</button>${r.guest&&r.rid?`<button class="btn p" style="grid-column:1/-1" onclick="resend(${n})">📨 Kirim ulang PIN & QR ke tamu</button>`:''}</div></div>`).join('');
+ $('alarms').innerHTML=alarms.map((a,i)=>`<div class="alert"><div class="t"><b>🔔 Kamar ${a}</b><br><small>Memanggil resepsionis</small></div><button class="btn p" onclick="ack(${i})">Tanggapi</button></div>`).join('');
+ $('call').innerHTML=!call?'':call.s=='ring'?`<div class="alert"><div class="t"><b>🎙️ Panggilan Suara ${call.vid?'Calon Tamu '+esc(call.name||''):'Kamar '+call.room}</b><br><small>Panggilan masuk</small></div><button class="btn p" onclick="accept()">Angkat</button><button class="btn d" onclick="endCall('ditolak resepsionis')">Tolak</button></div>`
+ :`<div class="live"><b style="color:var(--ok)">● Terhubung — ${call.vid?'Calon tamu '+esc(call.name||''):'Kamar '+call.room}</b> <span id="tm" class="mono" style="float:right">00:00</span><div class="wave">${'<i></i>'.repeat(26)}</div><button class="btn" id="mt" style="width:100%;margin-bottom:6px" onclick="toggleMic()">🎤 Mikrofon ${micOn?'ON':'OFF (dimatikan)'}</button><button class="btn d" style="width:100%" onclick="endCall('diakhiri resepsionis')">Akhiri panggilan</button></div>`;
+ $('none').style.display=alarms.length||call?'none':'block';
+ $('catN').textContent=Object.values(rooms).filter(x=>x.show!==false).length+' dari '+Object.keys(rooms).length+' kamar tampil di katalog tamu';$('regN').textContent=regs.length;$('regs').innerHTML=regs.length?regs.map((g,i)=>`<div class="reg"><b>${esc(g.name)}</b><small>Kamar ${esc(g.room)} · ${esc(g.cin)} → ${esc(g.cout)}</small><small>📞 ${esc(g.phone)} · ${esc(g.pax)} tamu</small><div class="acts"><button class="btn p" onclick="openReg(${i})">Lihat detail</button></div></div>`).join(''):'<div class="empty">Belum ada pendaftaran</div>';
+ $('rsN').textContent=rsq.length;$('rsq').innerHTML=rsq.length?rsq.map((q,i)=>`<div class="reg"><b>🔑 Kamar ${esc(q.room)} · ${esc(q.name||'-')}</b><small>Tamu meminta PIN & QR dikirim ulang</small><div class="acts"><button class="btn p" onclick="sendRs(${i})">Kirim ulang</button><button class="btn" onclick="dropRs(${i})">Abaikan</button></div></div>`).join(''):'<div class="empty">Tidak ada permintaan</div>';avail();
+ const r=rooms[qrRoom];$('qrT').textContent='Kamar '+qrRoom;const u=guestUrl(qrRoom);$('qrU').href=u;$('qrU').textContent=u;qrDraw($('qr'),u,150);save()}
+window.qr=n=>{qrRoom=n;render()};
+window.regen=n=>{const r=rooms[n];old[n]=r.token;r.token=rnd();log(`Kamar ${n}: PIN diganti → ${r.token}`,'i');tell({type:'revoked',to:n});if(r.guest&&r.rid)tell({type:'stay_ok',rid:r.rid,room:n,token:r.token,name:r.name,cin:r.cin,cout:r.cout});render()};
+window.chk=n=>{const r=rooms[n];if(!r.guest){if(r.oo){toast(`Kamar ${n} OO / bermasalah — tidak bisa dijual`);log(`Check-in kamar ${n} ditolak: OO / bermasalah`,'e');return}const I=RS.info(r);if(!I.sell&&!confirm(`Kamar ${n} belum siap dijual (${I.why}). Tetap check-in?`))return}r.hkCode='';r.so=0;r.skp=0;if(r.guest){const rid=r.rid;r.guest=false;r.door=true;r.light=false;r.name='';r.phone='';r.pax='';r.cin='';r.cout='';r.rid='';log(`Kamar ${n}: check-out → PIN & QR tamu dihapus`,'i');tell({type:'checkout',room:n,rid})}else{r.guest=true;r.door=true;log(`Kamar ${n}: check-in (manual)`,'i')}regen(n)};
+const guestUrl=n=>new URL(GUEST_PAGE+`?room=${n}&token=${rooms[n].token}`,window.HS_PUBLIC||location.href).href;
+const sendCred=(n,x={})=>{const r=rooms[n];tell({type:'reg_approved',rid:r.rid,stayRid:r.rid,room:n,token:r.token,name:r.name,cin:r.cin,cout:r.cout,...x})};
+window.resend=n=>{sendCred(n,{resend:true});log(`PIN & QR kamar ${n} dikirim ulang ke tamu`,'w');toast(`PIN & QR kamar ${n} dikirim ulang`)};
+window.sendRs=i=>{const q=rsq[i],r=rooms[q.room];if(r&&r.guest&&r.rid){sendCred(q.room,{rid:q.reqid,stayRid:r.rid,resend:true});log(`PIN & QR kamar ${q.room} dikirim ulang (permintaan tamu)`,'w');toast('Terkirim ke tamu')}rsq.splice(i,1);render()};
+window.dropRs=i=>{const q=rsq[i];tell({type:'resend_fail',rid:q.reqid,why:'Permintaan belum bisa diproses. Silakan hubungi resepsionis.'});rsq.splice(i,1);render()};
+window.ack=i=>{log(`Bell kamar ${alarms[i]} ditanggapi`);tell({type:'ack',to:alarms[i]});alarms.splice(i,1);render()};
+
+/* ===== Panggilan suara asli (WebRTC). Signaling lewat pesan 'rtc' di saluran yang sama ===== */
+let pc=null,lstream=null,rAudio=null,lvlL=0,lvlR=0,stL=null,stR=null,micOn=true;
+const iceCfg=()=>({iceServers:(window.HS_ICE&&window.HS_ICE.length)?window.HS_ICE:[{urls:'stun:stun.l.google.com:19302'}]});
+const gatherDone=p=>new Promise(res=>{if(p.iceGatheringState=='complete')return res();const f=()=>{if(p.iceGatheringState=='complete'){p.removeEventListener('icegatheringstatechange',f);res()}};p.addEventListener('icegatheringstatechange',f);setTimeout(res,4000)});
+function levelOf(stream,cb){try{const c=new(window.AudioContext||window.webkitAudioContext)(),an=c.createAnalyser();an.fftSize=256;c.createMediaStreamSource(stream).connect(an);const d=new Uint8Array(an.frequencyBinCount),t=setInterval(()=>{an.getByteFrequencyData(d);let s=0;for(const v of d)s+=v;cb(s/d.length/255)},100);return()=>{clearInterval(t);try{c.close()}catch(e){}}}catch(e){return()=>{}}}
+function rtcStop(){try{pc&&pc.close()}catch(e){}pc=null;if(lstream){lstream.getTracks().forEach(t=>t.stop());lstream=null}if(rAudio){rAudio.srcObject=null;rAudio.remove();rAudio=null}stL&&stL();stR&&stR();stL=stR=null;lvlL=lvlR=0;micOn=true}
+window.toggleMic=()=>{micOn=!micOn;if(lstream)lstream.getAudioTracks().forEach(t=>t.enabled=micOn);const b=$('mt');if(b)b.textContent='🎤 Mikrofon '+(micOn?'ON':'OFF (dimatikan)')};
+async function rtcStart(room){
+ rtcStop();
+ if(!window.isSecureContext||!navigator.mediaDevices){log('Mikrofon diblokir browser: buka halaman ini lewat http://localhost:8088 atau HTTPS (bukan http://IP-komputer)','e')}
+ const p=pc=new RTCPeerConnection(iceCfg());
+ rAudio=document.createElement('audio');rAudio.autoplay=true;rAudio.playsInline=true;document.body.appendChild(rAudio);
+ p.ontrack=e=>{const s=e.streams[0]||new MediaStream([e.track]);rAudio.srcObject=s;rAudio.play().catch(()=>{});stR&&stR();stR=levelOf(s,v=>lvlR=v)};
+ p.onconnectionstatechange=()=>{log('Panggilan suara: '+p.connectionState,p.connectionState=='failed'?'e':'i');if(p.connectionState=='failed'&&pc===p)endCall('koneksi suara gagal (jaringan tamu mungkin butuh server TURN)')};
+ try{lstream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});if(pc!==p){lstream.getTracks().forEach(t=>t.stop());return}lstream.getTracks().forEach(t=>p.addTrack(t,lstream));stL=levelOf(lstream,v=>lvlL=v)}
+ catch(e){log('Mikrofon resepsionis tidak bisa dipakai ('+(e.name||e)+') — hanya bisa mendengar tamu','e');p.addTransceiver('audio',{direction:'recvonly'})}
+ try{await p.setLocalDescription(await p.createOffer());await gatherDone(p)}catch(e){return log('WebRTC offer gagal: '+e.message,'e')}
+ if(pc!==p||!call||call.room!=room)return;
+ tell(call.vid?{type:'visit_r',vid:call.vid,k:'offer',sdp:p.localDescription.sdp,ice:iceCfg().iceServers}:{type:'rtc',to:room,k:'offer',sdp:p.localDescription.sdp,ice:iceCfg().iceServers})}
+window.accept=()=>{call.s='live';secs=0;tell(call.vid?{type:'visit_r',vid:call.vid,k:'live'}:{type:'call_live',to:call.room});log('Panggilan suara tersambung — membuka jalur suara (WebRTC)','w');rtcStart(call.room);
+ tk=setInterval(()=>{secs++;const t=$('tm');if(t)t.textContent=String(secs/60|0).padStart(2,'0')+':'+String(secs%60).padStart(2,'0')},1000);
+ wv=setInterval(()=>document.querySelectorAll('.wave i').forEach(i=>i.style.height=(5+Math.min(1,Math.max(lvlL,lvlR)*5)*Math.random()*38)+'px'),110);render()};
+window.endCall=why=>{rtcStop();if(!call)return;log('Panggilan suara '+why);tell(call.vid?{type:'visit_r',vid:call.vid,k:'end',why}:{type:'call_end',to:call.room,why});call=null;clearInterval(tk);clearInterval(wv);render()};
+
+
+const nights=(a,b)=>Math.max(1,Math.round((new Date(b)-new Date(a))/864e5)||1);
+const dfmt=d=>{try{return new Date(d+'T00:00').toLocaleDateString('id-ID',{weekday:'short',day:'numeric',month:'short',year:'numeric'})}catch(e){return d}};
+let sentOpen=false;
+window.openReg=i=>{const g=regs[i];if(!g)return;sentOpen=false;curReg=g.rid;drawReg(g);if(!$('rdlg').open)$('rdlg').showModal()};
+function drawReg(g){const r=rooms[g.room]||{},n=nights(g.cin,g.cout),busy=!rooms[g.room]||!roomFreeFor(g.room,g.cin,g.cout),fut=g.cin>ymd(),over=r.max&&+g.pax>r.max;
+ $('rBody').innerHTML=`<div class="ph big" style="background-image:url('${r.photo||SCN(r.type)}')"><span class="pr">Rp ${rp(r.price)} / malam</span></div>
+ <h3>Pendaftaran tamu baru</h3><p class="m">${fut?'Reservasi untuk tanggal mendatang: kamar tetap kosong sampai tanggal check-in. PIN & QR dikirim saat check-in.':'Periksa data tamu. Setelah disetujui, PIN & QR dikirim ke HP tamu.'}</p>
+ <div class="kv"><span>Kamar</span><span>${esc(r.type||'-')} – ${esc(g.room)}</span></div>
+ <div class="kv"><span>Nama tamu</span><span>${esc(g.name)}</span></div>
+ <div class="kv"><span>No. HP</span><span>${esc(g.phone)}</span></div>
+ <div class="kv"><span>Jumlah tamu</span><span class="${over?'er':''}">${esc(g.pax)} orang${r.max?' (maks. '+r.max+')':''}</span></div>
+ <div class="kv"><span>Check-in</span><span>${dfmt(g.cin)}</span></div>
+ <div class="kv"><span>Check-out</span><span>${dfmt(g.cout)}</span></div>
+ <div class="kv"><span>Lama menginap</span><span>${n} malam</span></div>
+ <div class="kv"><span>Estimasi biaya</span><span><b>Rp ${rp(n*(r.price||0))}</b></span></div>
+ ${busy?'<p class="er" style="margin:10px 0 0">'+(rooms[g.room]&&rooms[g.room].oo?'Kamar sedang OO / bermasalah dan tidak bisa dijual — tolak atau pindahkan tamu ke kamar lain.':'Kamar sudah terisi/dipesan pada tanggal tersebut — pendaftaran ini tidak bisa disetujui.')+'</p>':''}
+ <div class="acts"><button class="btn" onclick="closeReg()">Nanti</button><button class="btn d" onclick="rejectReg()">Tolak</button><button class="btn p" ${busy?'disabled':''} onclick="approveReg()">${fut?'✔ Setujui reservasi':'✔ Setujui & kirim PIN/QR'}</button></div>`}
+window.closeReg=()=>{curReg=null;sentOpen=false;$('rdlg').close()};
+window.rejectReg=()=>{const i=regs.findIndex(g=>g.rid===curReg);if(i<0)return closeReg();const g=regs[i];tell({type:'reg_rejected',rid:g.rid,why:'Pendaftaran ditolak resepsionis.'});log(`Pendaftaran ${g.name} ditolak`,'e');regs.splice(i,1);closeReg();render()};
+window.approveReg=()=>{const i=regs.findIndex(g=>g.rid===curReg);if(i<0)return closeReg();const g=regs[i],r=rooms[g.room];if(!r||!roomFreeFor(g.room,g.cin,g.cout)){log(`Kamar ${g.room} sudah terisi/dipesan pada ${g.cin} → ${g.cout}, tidak bisa disetujui`,'e');return drawReg(g)}
+ if(g.cin>ymd()&&!g.now){resv.push({rid:g.rid,room:g.room,name:g.name,phone:g.phone,pax:g.pax,cin:g.cin,cout:g.cout,vc:g.vc||'',t:Date.now()});saveResv();
+  tell({type:'reg_approved',rid:g.rid,future:1,rm:g.room,name:g.name,cin:g.cin,cout:g.cout});log(`Reservasi ${g.name} → kamar ${g.room} (${g.cin} → ${g.cout}) disetujui; kamar tetap kosong sampai check-in`,'i');regs.splice(i,1);render();showResvSent(g);return}
+ r.guest=true;r.hkCode='';r.so=0;r.skp=0;r.name=g.name;r.phone=g.phone;r.pax=g.pax;r.cin=g.cin;r.cout=g.cout;r.rid=g.rid;r.door=true;r.light=false;old[g.room]=r.token;r.token=rnd();
+ log(`Check-in ${g.name} → kamar ${g.room} (PIN ${r.token}) — PIN & QR dikirim ke tamu`,'i');sendCred(g.room);regs.splice(i,1);render();showSent(g.room)};
+function showResvSent(g){sentOpen=true;$('rBody').innerHTML=`<div class="sent"><h3>✔ Reservasi disetujui</h3><p class="m">Kamar ${esc(g.room)} untuk ${esc(g.name)} dipesan ${dfmt(g.cin)} → ${dfmt(g.cout)}. Kamar tetap tampil kosong untuk tanggal lain. PIN & QR dikirim otomatis saat check-in (hari H pukul ${esc(CFG.cin||'14:00')}), atau tekan Check-in sekarang di daftar Reservasi.</p><div class="acts"><button class="btn p" onclick="closeReg()">Selesai</button></div></div>`}
+function showSent(n){sentOpen=true;const r=rooms[n];$('rBody').innerHTML=`<div class="sent"><h3>✔ Disetujui & terkirim</h3><p class="m">PIN & QR Kamar ${esc(n)} sudah dikirim ke HP ${esc(r.name)}. Tersimpan di HP tamu sampai check-out.</p><div class="pin">${r.token}</div><canvas id="rQr"></canvas><div class="acts"><button class="btn" onclick="resend(${n})">📨 Kirim ulang</button><button class="btn p" onclick="closeReg()">Selesai</button></div></div>`;qrDraw($('rQr'),guestUrl(n),200)}
+ch.onmessage=e=>{const m=e.data;if(m.type=='hello'){tell({type:'pong'});if(m.need)avail(true);return}
+ if(m.type=='reg_cancel'){const rv=resv.find(x=>x.rid===m.rid);if(rv){const dg=x=>String(x||'').replace(/\D/g,'');if(m.phone&&dg(m.phone)===dg(rv.phone)){window.cancelResv(rv.rid,'Dibatalkan oleh tamu');toast('Tamu membatalkan reservasi')}return}regs=regs.filter(g=>g.rid!==m.rid);if(curReg===m.rid&&$('rdlg').open){$('rdlg').close();curReg=null;toast('Tamu membatalkan pendaftaran')}render();return}
+ if(m.type=='stay_check'){const rv=resv.find(x=>x.rid===m.rid);if(rv){tell({type:'reg_approved',rid:rv.rid,future:1,rm:rv.room,name:rv.name,cin:rv.cin,cout:rv.cout});return}const r=rooms[m.room];if(r&&r.guest&&r.rid&&r.rid===m.rid)tell({type:'stay_ok',rid:m.rid,room:m.room,token:r.token,name:r.name,cin:r.cin,cout:r.cout});else tell({type:'stay_gone',rid:m.rid,room:m.room});return}
+ if(m.type=='reg_status'){const rv=resv.find(x=>x.rid===m.rid);if(rv){tell({type:'reg_approved',rid:rv.rid,future:1,rm:rv.room,name:rv.name,cin:rv.cin,cout:rv.cout});return}const e=Object.keys(rooms).find(n=>rooms[n].guest&&rooms[n].rid===m.rid);if(e)sendCred(e);else if(!regs.some(g=>g.rid===m.rid))tell({type:'reg_rejected',rid:m.rid,why:'Pendaftaran tidak ditemukan atau sudah ditolak.'});return}
+ if(m.type=='resend_req'){const r=rooms[m.room],dg=x=>String(x||'').replace(/\D/g,'');
+  if(r&&r.guest&&r.rid&&dg(m.phone)&&dg(r.phone)===dg(m.phone)){rsq=rsq.filter(x=>x.room!=m.room);rsq.push({reqid:m.reqid,room:m.room,name:r.name});log(`Kamar ${m.room}: tamu meminta PIN & QR dikirim ulang`,'w');beep('reg',`Kamar ${m.room}: tamu meminta PIN dan QR dikirim ulang`);render()}
+  else{tell({type:'resend_fail',rid:m.reqid,why:'Nomor kamar atau No. HP tidak cocok dengan data check-in.'});log(`Permintaan kirim ulang kamar ${m.room} ditolak: data tidak cocok`,'e')}return}
+ if(m.type=='register'){const r=rooms[m.room];if(regs.some(g=>g.rid===m.rid))return;
+  if(r&&r.oo){tell({type:'reg_rejected',rid:m.rid,why:`Kamar ${m.room} sedang tidak tersedia. Silakan pilih kamar lain.`});log(`Pendaftaran ${m.name} ditolak: kamar ${m.room} OO / bermasalah`,'e');return}
+  if(r&&+m.pax>(r.max||99)){tell({type:'reg_rejected',rid:m.rid,why:`Kamar ${m.room} maksimal ${r.max} tamu.`});log(`Pendaftaran ${m.name} ditolak: melebihi kapasitas kamar ${m.room}`,'e');return}
+  if(!dOk(m.cin)||!dOk(m.cout)||m.cout<=m.cin){tell({type:'reg_rejected',rid:m.rid,why:'Tanggal check-in/check-out tidak valid.'});return}
+  if(m.cin<ymd()){tell({type:'reg_rejected',rid:m.rid,why:'Tanggal check-in sudah lewat.'});return}
+  if(!m.name||!r||!roomFreeFor(m.room,m.cin,m.cout)){tell({type:'reg_rejected',rid:m.rid,why:'Kamar sudah terisi atau dipesan pada tanggal tersebut. Pilih tanggal atau kamar lain.'});log(`Pendaftaran ${m.name||'?'} ditolak otomatis: kamar ${m.room} tidak tersedia pada ${m.cin} → ${m.cout}`,'e');return}
+  regs.push({rid:m.rid,name:String(m.name).slice(0,60),phone:String(m.phone).slice(0,20),pax:m.pax,room:m.room,cin:m.cin,cout:m.cout});
+  log(`Pendaftaran baru: ${m.name} → kamar ${m.room}`,'w');beep('reg',`Pendaftaran baru dari ${m.name} untuk kamar ${m.room}`);render();if((!$('rdlg').open||sentOpen)&&!$('dlg').open)openReg(regs.length-1);return}
+ if(m.type=='login'){const r=rooms[m.room];
+  if(r&&r.guest&&r.token===m.token){log(`Tamu kamar ${m.room} login OK`,'w');trace('TS');tell({type:'login_ok',to:m.room,token:m.token,state:st(r),info:pub(m.room)})}
+  else{log(`Login DITOLAK kamar ${m.room}: PIN salah / kamar kosong`,'e');trace('TS',1);tell({type:'login_fail',to:m.room,token:m.token})}return}
+ if(m.type=='cmd')gate(m)};
+function deny(m,why){log('DITOLAK: '+why,'e');tell({type:'denied',to:m.room,why})}
+function gate(m){log(`wss ← ${JSON.stringify({room:m.room,cmd:m.cmd})}`,'i');
+ if(m.cmd==='direct_http'){trace('TI',1);return log('DITOLAK: HP tamu tidak punya rute ke 192.168.1.x (beda zona)','e'),tell({type:'denied',why:'Tidak ada rute ke jaringan lokal'})}
+ const r=rooms[m.room];if(!r||!r.guest)return deny(m,'kamar tidak dikenal / kosong'),trace('TS',1);
+ if(m.token!==r.token)return deny(m,`token tidak valid kamar ${m.room}`),trace('TS',1);
+ if(m.sessionRoom&&m.sessionRoom!=m.room)return deny(m,`sesi kamar ${m.sessionRoom} mencoba kamar ${m.room}`),trace('TS',1);
+ if(!WHITELIST.includes(m.cmd))return deny(m,`perintah "${m.cmd}" tidak ada di whitelist`),trace('TSX',1);
+ log(`OK kamar ${m.room} → ${m.cmd}`,'w');
+ if(m.cmd=='bell'){trace('TS');alarms.push(m.room);beep('bell',`Panggilan bell dari kamar ${m.room}`);log('🔔 Bell masuk (opsional: HTTP ke lampu sirine meja)')}
+ else if(m.cmd=='ic_request'){if(call)return deny(m,'panggilan suara sibuk');trace('TS');call={room:m.room,s:'ring'};beep('call',`Panggilan suara dari kamar ${m.room}`)}
+ else if(m.cmd=='ic_end')endCall('diakhiri tamu');
+ else if(m.cmd=='door'){trace('TSI');log(`HTTP → ${r.ip}/relay?door=open`);r.door=false;push(m.room);setTimeout(()=>{r.door=true;log(`Kamar ${m.room}: pintu terkunci otomatis`);push(m.room);render()},(window.CFG?CFG.relock*1000:DOOR_RELOCK_MS))}
+ else if(m.cmd=='light'){trace('TSI');r.light=!r.light;log(`HTTP → ${r.ip}/relay?light=${+r.light}`)}
+ push(m.room);render()}
+$('rq').oninput=e=>{rf.q=e.target.value.toLowerCase();render()};$('rs').onchange=e=>{rf.st=e.target.value;render()};
+render();renderPromos();log('Server siap. Buka tamu.html di tab lain dan login dengan PIN dari kartu kamar.','i');
+/* ===== KARYAWAN, QR ID & KEBERSIHAN KAMAR ===== */
+const EMP_PAGE='karyawan-lama3.html',ROLES=['Housekeeping','Resepsionis','Teknisi','Laundry','Keamanan','Lainnya'];
+const ld=k=>{try{return JSON.parse(localStorage.getItem(k))||[]}catch(e){return[]}};
+let staff=ld('hs_staff'),hklog=ld('hs_hklog');
+const sv=()=>{try{localStorage.setItem('hs_staff',JSON.stringify(staff));localStorage.setItem('hs_hklog',JSON.stringify(hklog.slice(-200)))}catch(e){}save()};
+const hkey=n=>rooms[n].hkey||(rooms[n].hkey=rnd());
+const empUrl=x=>new URL(EMP_PAGE+`?emp=${x.id}&token=${x.token}`,location.href).href;
+const nowS=()=>new Date().toLocaleString('id-ID',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+const HKS={dirty:'Kotor',doing:'Sedang dibersihkan',insp:'Menunggu cek',clean:'Bersih'};
+$('sRl').innerHTML=ROLES.map(r=>`<option>${r}</option>`).join('');
+$('hkSel').innerHTML=Object.keys(rooms).map(n=>`<option>${n}</option>`).join('');
+function showQ(t,sub,text){$('sT').textContent=t;$('sS').textContent=sub;qrDraw($('sQ'),text,240);$('sdlg').showModal()}
+window.printQ=()=>{const w=open('','_blank');if(!w)return toast('Pop-up diblokir');w.document.write(`<body style="font-family:sans-serif;text-align:center"><h2>${esc($('sT').textContent)}</h2><img src="${$('sQ').toDataURL()}"><p>${esc($('sS').textContent)}</p><script>onload=()=>print()<\/script>`);w.document.close()};
+window.addStaff=()=>{const nm=$('sNm').value.trim();if(!nm)return toast('Isi nama karyawan');staff.push({id:'K'+String(Date.now()).slice(-5),name:nm.slice(0,40),role:$('sRl').value,token:rnd()+rnd(),on:true,last:''});$('sNm').value='';log(`Karyawan baru: ${nm} (${$('sRl').value})`,'i');sv();renderStaff()};
+window.staffQr=i=>{const x=staff[i];showQ(x.name,x.role+' · ID '+x.id+' — scan di tab karyawan',empUrl(x))};
+window.staffNew=i=>{staff[i].token=rnd()+rnd();log(`QR ID ${staff[i].name} diganti (QR lama tidak berlaku)`,'w');sv();renderStaff();staffQr(i)};
+window.staffOn=i=>{staff[i].on=!staff[i].on;sv();renderStaff()};
+window.staffDel=i=>{if(confirm('Hapus karyawan '+staff[i].name+'?')){log('Karyawan dihapus: '+staff[i].name,'w');staff.splice(i,1);sv();renderStaff()}};
+window.hkDirty=()=>{const n=$('hkSel').value;if(rooms[n].guest)return toast('Kamar masih terisi tamu');rooms[n].hk='dirty';rooms[n].hkBy='';log(`Kamar ${n} ditandai kotor`,'i');sv();renderStaff();render()};
+function renderStaff(){
+ $('staffL').innerHTML=staff.length?staff.map((x,i)=>`<div class="reg"><b>${esc(x.name)}</b><small>${esc(x.role)} · ID ${x.id} · ${x.on?'Aktif':'Nonaktif'}${x.last?' · '+esc(x.last):''}</small><div class="acts"><button class="btn p" onclick="staffQr(${i})">QR ID</button><button class="btn" onclick="staffNew(${i})">QR baru</button><button class="btn" onclick="staffOn(${i})">${x.on?'Nonaktifkan':'Aktifkan'}</button><button class="btn d" onclick="staffDel(${i})">Hapus</button></div></div>`).join(''):'<div class="empty">Belum ada karyawan</div>';
+ const h=Object.entries(rooms).filter(([n,r])=>r.hk);
+ $('hkB').innerHTML=h.length?h.map(([n,r])=>`<div class="kv"><span>Kamar ${n}</span><span><span class="st ${r.hk=='clean'?'on':''}">${HKS[r.hk]}</span> ${r.hkBy?esc(r.hkBy):''}</span></div>`).join(''):'<div class="empty">Belum ada kamar kotor / dibersihkan</div>';
+ $('hkL').innerHTML='<b>Riwayat:</b><br>'+(hklog.slice(-10).reverse().map(l=>`${esc(l.n)} · kamar ${l.room} · ${new Date(l.a).toLocaleTimeString('id-ID')} → ${new Date(l.b).toLocaleTimeString('id-ID')} (${Math.max(1,Math.round((l.b-l.a)/6e4))} mnt)${l.note?' · '+esc(l.note):''}`).join('<br>')||'-')}
+const _chk=window.chk;window.chk=n=>{const was=rooms[n].guest;_chk(n);if(was){rooms[n].hk='dirty';rooms[n].hkBy='';log(`Kamar ${n} kotor → menunggu Housekeeping`,'w');sv();renderStaff()}};
+ch.addEventListener('message',e=>{const m=e.data;if(!m||!String(m.type).startsWith('emp_')||m.type=='emp_res')return;
+ const x=staff.find(a=>a.id===m.emp),R=(o)=>tell({type:'emp_res',to:m.emp,k:m.type,...o});
+ if(!x||!x.on||x.token!==m.token){log(`Karyawan DITOLAK: ID ${m.emp} QR tidak valid/nonaktif`,'e');return R({ok:false,msg:'QR karyawan tidak valid atau dinonaktifkan'})}
+ if(m.type=='emp_login'){x.last='login '+nowS();sv();log(`Karyawan ${x.name} (${x.role}) login`,'w');renderStaff();return R({ok:true,name:x.name,role:x.role})}
+ if(m.type=='emp_att'){x.last=(m.act=='in'?'masuk ':'pulang ')+nowS();sv();log(`Absen ${m.act=='in'?'masuk':'pulang'}: ${x.name}`,'w');renderStaff();return R({ok:true,msg:'Absen '+(m.act=='in'?'masuk':'pulang')+' tercatat'})}
+ if(m.type=='emp_sync'){const o={};for(const n in rooms)if(rooms[n].hk)o[n]={hk:rooms[n].hk,by:rooms[n].hkBy};return R({ok:true,rooms:o})}
+ if(m.type=='emp_hk'){const r=rooms[m.room],rs=(ok,msg)=>R({ok,msg,room:m.room,act:m.act});
+  if(x.role!='Housekeeping')return rs(false,'Hanya Housekeeping yang bisa membersihkan kamar');
+  if(!r||(m.act=='start'&&m.key!==hkey(m.room)))return rs(false,'Kamar tidak valid');
+  if(m.act=='start'){if(r.guest)return rs(false,'Kamar masih terisi tamu');if(r.hk=='doing'&&r.hkId!==x.id)return rs(false,'Sedang dibersihkan '+r.hkBy);if(r.hk!='dirty'&&r.hk!='doing')return rs(false,'Kamar tidak ada di daftar kotor');
+   r.hk='doing';r.hkBy=x.name;r.hkId=x.id;r.hkAt=Date.now();log(`${x.name} mulai bersihkan kamar ${m.room}`,'w');sv();renderStaff();render();return rs(true,'Mulai membersihkan kamar '+m.room)}
+  if(m.act=='done'){if(r.hk!='doing'||r.hkId!==x.id)return rs(false,'Anda tidak sedang membersihkan kamar ini');
+   hklog.push({n:x.name,room:m.room,a:r.hkAt,b:Date.now(),note:String(m.note||'').slice(0,120)});r.hk=hkNext();log(`${x.name} SELESAI membersihkan kamar ${m.room}`,'i');sv();renderStaff();render();return rs(true,'Kamar '+m.room+' selesai, tercatat atas nama '+x.name)}}});
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='hk_evt'||(m.act!='done'&&m.act!='mark'))return;const r=rooms[m.room];if(!r)return;
+ const cd=['VD','VC','OD','OC','OO','OOS','SO','SKP'].includes(m.code)?m.code:'',nt=String(m.note||'').slice(0,200);
+ if((cd=='OO'||cd=='OOS')&&!r.oo)setOOState(m.room,true,nt,m.name,cd=='OO'?'OOO':'OOS');else if(cd&&cd!='OO'&&cd!='OOS'&&r.oo)log(`${m.name} menandai kamar ${m.room} ${cd}, tetapi blokir ${r.ooT||'OOO'} hanya bisa dibuka resepsionis/owner`,'w');
+ if(cd=='SO')r.so=1;else if(cd=='SKP')r.skp=1;else if(['OC','OD','VC','VD'].includes(cd))r.so=0;
+ if(m.act=='mark'){if(cd)r.hkCode=cd;r.hkNote=nt;log(`${m.name} lapor kamar ${m.room}: ${cd||'-'}${nt?' · '+nt:''}`,(cd=='OO'||cd=='OOS'||cd=='SKP')?'w':'i');sv();renderStaff();render();return}
+ if(r.hk!='doing'||(r.hkId&&r.hkId!==m.emp))return;
+ if(cd)r.hkCode=cd;r.hkNote=nt;hklog.push({n:m.name,room:m.room,a:r.hkAt||Date.now(),b:Date.now(),note:((cd?'['+cd+'] ':'')+nt).slice(0,120)});r.hk=hkNext();
+ log(`${m.name} SELESAI kamar ${m.room}${cd?' ('+cd+')':''} → ${r.hk=='insp'?'menunggu cek supervisor':'siap dijual'}`,'i');sv();renderStaff();render()});
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='hk_evt'||m.act!='start')return;const r=rooms[m.room];if(!r||r.guest)return;
+ if(r.hk=='doing'&&r.hkId&&r.hkId!==m.emp)return;if(r.hk!='doing'||r.hkId!==m.emp){r.hk='doing';r.hkBy=m.name;r.hkId=m.emp;r.hkAt=Date.now()}
+ log(`${m.name} masuk kamar ${m.room} lewat dasbor kamar + PIN HK (pintu dibuka, lampu menyala)`,'w');sv();renderStaff();render()});
+renderStaff();
+/* ===== PENGATURAN OWNER ===== */
+window.CFG={pin:'1234',name:HOTEL_NAME,tax:0,svc:0,wk:0,cin:'14:00',cout:'12:00',relock:4,vc:[],...(()=>{try{return JSON.parse(localStorage.getItem('hs_cfg'))||{}}catch(e){return{}}})()};
+const saveCfg=()=>{try{localStorage.setItem('hs_cfg',JSON.stringify(CFG))}catch(e){}};
+$('hn').textContent=CFG.name;let oTab='h';
+const types=()=>[...new Set(Object.values(rooms).map(r=>r.type))];
+const IS='padding:8px;border:1px solid var(--bd);background:#1d1813;color:var(--tx);width:100%';
+const cf=(k,l,t='number')=>`<div><label style="font-size:12px;color:var(--mu)">${l}</label><input style="${IS}" type="${t}" value="${esc(CFG[k])}" onchange="setC('${k}',this.value)"></div>`;
+const g2=h=>`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px">${h}</div>`;
+if($('ownBtn'))$('ownBtn').onclick=()=>{const ME=window.OBME,own=ME&&ME.ok&&!ME.local&&ME.role==='owner';const p=own?CFG.pin:prompt('PIN (Owner / Manajer):');if(p===null)return;OR=p===CFG.pin?'owner':(CFG.mgr&&p===CFG.mgr)?'manager':'';if(!OR){log('Pengaturan: PIN salah','e');return toast('PIN salah')}log('Owner: '+OR+' membuka pengaturan','w');oTab='h';drawO();$('odlg').showModal()};
+window.setC=(k,v)=>{CFG[k]=['name','cin','cout'].includes(k)?v:Math.max(0,Number(v)||0);if(k=='name')$('hn').textContent=v;saveCfg();log(`Owner: ${k} → ${v}`,'i')};
+window.setTP=i=>{const t=types()[i],v=+$('tp'+i).value;if(v<0)return;let c=0;for(const n in rooms)if(rooms[n].type==t){rooms[n].price=v;c++}log(`Owner: harga ${t} → Rp ${rp(v)} (${c} kamar)`,'w');render();drawO();toast('Harga '+t+' diperbarui')};
+window.bulk=d=>{const p=+$('pc').value;if(!p||!confirm(`${d>0?'Naikkan':'Turunkan'} SEMUA harga kamar ${p}%?`))return;for(const n in rooms)rooms[n].price=Math.max(0,Math.round(rooms[n].price*(1+d*p/100)/1000)*1000);log(`Owner: semua harga ${d>0?'naik':'turun'} ${p}%`,'w');render();drawO()};
+window.addVc=()=>{const c=$('vk').value.trim().toUpperCase().replace(/\s/g,''),v=+$('vv').value;if(!c||!(v>0))return toast('Isi kode & nilai voucher');if(CFG.vc.some(x=>x.code===c))return toast('Kode sudah ada');
+ CFG.vc.push({code:c,t:$('vt').value,v,min:+$('vm').value||1,exp:$('vd').value,q:+$('vq').value||0,used:0,on:true});saveCfg();log('Owner: voucher '+c+' dibuat','i');drawO()};
+window.vcOn=i=>{CFG.vc[i].on=!CFG.vc[i].on;saveCfg();drawO()};window.vcDel=i=>{if(confirm('Hapus voucher '+CFG.vc[i].code+'?')){log('Owner: voucher '+CFG.vc[i].code+' dihapus','w');CFG.vc.splice(i,1);saveCfg();drawO()}};
+window.setPin=()=>{const n=$('np').value.trim();if(!/^\d{4,8}$/.test(n))return toast('PIN 4-8 angka');CFG.pin=n;saveCfg();log('Owner: PIN diganti','w');$('np').value='';toast('PIN owner diganti')};
+window.exp=()=>{const o={cfg:CFG,prices:Object.fromEntries(Object.entries(rooms).map(([n,r])=>[n,r.price]))},a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o,null,1)],{type:'application/json'}));a.download='pengaturan-hotel.json';a.click()};
+window.imp=f=>{if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const o=JSON.parse(rd.result);Object.assign(CFG,o.cfg);for(const n in o.prices)if(rooms[n])rooms[n].price=+o.prices[n];saveCfg();$('hn').textContent=CFG.name;render();drawO();toast('Pengaturan dipulihkan')}catch(e){toast('File tidak valid')}};rd.readAsText(f)};
+window.rstCfg=()=>{if(confirm('Reset semua pengaturan owner (voucher, pajak, PIN)? Harga kamar tidak berubah.')){localStorage.removeItem('hs_cfg');location.reload()}};
+function drawO(){$('oT').innerHTML=[['h','💰 Harga & Pajak'],['v','🎟 Voucher'],['a','🏨 Hotel & Aturan'],['k','🔐 Keamanan & Data']].map(([k,l])=>`<button class="btn ${oTab==k?'p':''}" onclick="oTab='${k}';drawO()">${l}</button>`).join('');let b='';
+ if(oTab=='h')b='<p class="m">Harga per tipe berlaku ke semua kamar bertipe sama dan langsung tampil di katalog tamu. Harga per kamar tetap bisa diubah lewat "Foto & info".</p>'+types().map((t,i)=>{const L=Object.values(rooms).filter(r=>r.type==t),ps=[...new Set(L.map(r=>r.price))];return `<div class="kv"><span>${esc(t)} · ${L.length} kamar${ps.length>1?' <small>(harga bervariasi)</small>':''}</span><span><input id="tp${i}" type="number" value="${ps[0]}" style="${IS};width:120px;padding:6px"> <button class="btn" onclick="setTP(${i})">Terapkan</button></span></div>`}).join('')+`<div class="bar" style="margin-top:14px">Ubah semua harga: <input id="pc" type="number" value="10" style="${IS};width:70px;padding:6px">%<button class="btn" onclick="bulk(1)">Naikkan</button><button class="btn" onclick="bulk(-1)">Turunkan</button></div>`+g2(cf('wk','Tambahan akhir pekan Jum/Sab (%)')+cf('svc','Service charge (%)')+cf('tax','Pajak / PPN (%)'))+'<p class="m">Dipakai pada rincian biaya saat menyetujui pendaftaran tamu.</p>';
+ if(oTab=='v')b=g2(`<div><label>Kode</label><input id="vk" style="${IS}" placeholder="HEMAT10"></div><div><label>Jenis</label><select id="vt" style="${IS}"><option value="p">Persen (%)</option><option value="n">Nominal (Rp)</option></select></div><div><label>Nilai</label><input id="vv" type="number" style="${IS}"></div><div><label>Min. malam</label><input id="vm" type="number" value="1" style="${IS}"></div><div><label>Berlaku s/d</label><input id="vd" type="date" style="${IS}"></div><div><label>Kuota (0 = tak terbatas)</label><input id="vq" type="number" value="0" style="${IS}"></div>`)+'<div class="acts"><button class="btn p" onclick="addVc()">+ Buat voucher</button></div><div style="margin-top:12px">'+(CFG.vc.map((v,i)=>`<div class="kv"><span><b>${esc(v.code)}</b> · ${v.t=='p'?v.v+'%':'Rp '+rp(v.v)} · min ${v.min} mlm${v.exp?' · s/d '+v.exp:''} · terpakai ${v.used}${v.q?'/'+v.q:''}</span><span><span class="st ${v.on?'on':''}">${v.on?'Aktif':'Mati'}</span> <button class="btn" onclick="vcOn(${i})">${v.on?'Matikan':'Aktifkan'}</button> <button class="btn" onclick="vcDel(${i})">Hapus</button></span></div>`).join('')||'<div class="empty">Belum ada voucher</div>')+'</div><p class="m">Voucher dimasukkan resepsionis saat menyetujui pendaftaran tamu.</p>';
+ if(oTab=='a')b=g2(cf('name','Nama hotel','text')+cf('cin','Jam check-in','time')+cf('cout','Jam check-out','time')+cf('relock','Pintu kunci otomatis (detik)'));
+ if(oTab=='k')b=`<label>PIN owner baru (4-8 angka; bawaan 1234, segera ganti)</label><div class="bar"><input id="np" type="password" inputmode="numeric" style="${IS};width:160px"><button class="btn p" onclick="setPin()">Ganti PIN</button></div><div class="acts" style="flex-wrap:wrap"><button class="btn" onclick="exp()">⬇ Backup pengaturan</button><label class="btn" style="flex:1;text-align:center">⬆ Pulihkan<input type="file" accept=".json" hidden onchange="imp(this.files[0])"></label><button class="btn d" onclick="rstCfg()">Reset pengaturan</button></div>`;
+ $('oB').innerHTML=b}
+/* ===== Voucher & rincian biaya di dialog pendaftaran ===== */
+function vcCheck(c,sub,n){if(!c)return{ok:false};const v=CFG.vc.find(x=>x.code===c);if(!v||!v.on)return{ok:false,msg:'Voucher tidak ditemukan / nonaktif'};if(v.exp&&new Date(v.exp+'T23:59')<new Date())return{ok:false,msg:'Voucher kedaluwarsa'};if(v.q&&v.used>=v.q)return{ok:false,msg:'Kuota voucher habis'};if(n<(v.min||1))return{ok:false,msg:'Minimal '+v.min+' malam'};return{ok:true,disc:Math.min(sub,v.t=='p'?sub*v.v/100:v.v)}}
+function calc(g,r,n){let sub=0;for(let i=0;i<n;i++){const d=new Date(g.cin+'T00:00');d.setDate(d.getDate()+i);sub+=(r.price||0)*([5,6].includes(d.getDay())?1+CFG.wk/100:1)}const v=vcCheck(g.vc,sub,n),disc=v.ok?v.disc:0,base=sub-disc,svc=base*CFG.svc/100,tax=(base+svc)*CFG.tax/100;return{sub,v,disc,svc,tax,tot:base+svc+tax}}
+const _dr=drawReg;drawReg=function(g){_dr(g);const r=rooms[g.room]||{},n=nights(g.cin,g.cout),c=calc(g,r,n),k=(a,b,x='')=>`<div class="kv"><span>${a}</span><span ${x}>${b}</span></div>`,bx=document.createElement('div');
+ bx.innerHTML=`<label style="display:block;margin:10px 0 4px;font-size:12px;color:var(--mu)">Voucher</label><div class="bar" style="margin:0"><input id="vcIn" value="${esc(g.vc||'')}" placeholder="Kode voucher" style="${IS};width:160px"><button class="btn" onclick="applyVc()">Pakai</button></div>${g.vc&&!c.v.ok?`<p class="er" style="margin:4px 0">${esc(c.v.msg||'')}</p>`:''}`+k('Subtotal (termasuk tarif akhir pekan)','Rp '+rp(c.sub))+(c.disc?k('Diskon '+esc(g.vc),'− Rp '+rp(c.disc),'class="okc"'):'')+(CFG.svc?k('Service '+CFG.svc+'%','Rp '+rp(c.svc)):'')+(CFG.tax?k('Pajak '+CFG.tax+'%','Rp '+rp(c.tax)):'')+k('<b>Total</b>','<b>Rp '+rp(c.tot)+'</b>');
+ const a=$('rBody').querySelector('.acts');if(a)a.parentNode.insertBefore(bx,a)};
+window.applyVc=()=>{const g=regs.find(x=>x.rid===curReg);if(!g)return;g.vc=$('vcIn').value.trim().toUpperCase();drawReg(g)};
+const _ap=approveReg;approveReg=function(){const g=regs.find(x=>x.rid===curReg),v=g&&g.vc&&CFG.vc.find(x=>x.code===g.vc),ok=v&&vcCheck(g.vc,1e12,nights(g.cin,g.cout)).ok;_ap();if(g&&v&&ok&&rooms[g.room]&&rooms[g.room].rid===g.rid){v.used++;rooms[g.room].vcode=v.code;saveCfg();log(`Voucher ${v.code} dipakai kamar ${g.room}`,'i');save()}};
+/* ===== PENGATURAN LANJUTAN ===== */
+let OR='';const D={dep:0,xg:0,xgFrom:2,lco:0,pay:'Tunai, Transfer, QRIS',bank:'',pol:'',esc:0,hkMin:30,ac:'#e2ae2f',mgr:'',sv:[],ss:[]};Object.assign(CFG,{...D,...CFG});if(CFG.ac==='#b69a6b')CFG.ac='#e2ae2f';if(CFG.blockDirty===undefined)CFG.blockDirty=1;
+document.documentElement.style.setProperty('--ac',CFG.ac);
+const STR=['name','cin','cout','ac','pay','bank','pol'];
+window.setC=(k,v)=>{CFG[k]=STR.includes(k)?v:Math.max(0,Number(v)||0);if(k=='name')$('hn').textContent=v;if(k=='ac')document.documentElement.style.setProperty('--ac',v);saveCfg();log(`Owner: ${k} → ${v}`,'i');if(k=='blockDirty')render();if(k=='wk'||k=='tax'||k=='svc'||k=='dep'||k=='xg'||k=='xgFrom'||k=='lco')drawO()};
+let audit=ld('hs_audit'),tx=ld('hs_tx');
+const sa=()=>{try{localStorage.setItem('hs_audit',JSON.stringify(audit.slice(-300)));localStorage.setItem('hs_tx',JSON.stringify(tx.slice(-2000)))}catch(e){}};
+const _lg=log;log=function(t,c){_lg(t,c);if(String(t).startsWith('Owner')){audit.push({t:Date.now(),u:OR||'-',m:String(t)});sa()}};
+const ct=(k,l)=>`<div style="grid-column:1/-1"><label style="font-size:12px;color:var(--mu)">${l}</label><textarea rows="2" style="${IS}" onchange="setC('${k}',this.value)">${esc(CFG[k]||'')}</textarea></div>`;
+const hkSelR=()=>$('hkSel').innerHTML=Object.keys(rooms).map(n=>`<option>${n}</option>`).join('');
+const pubCfg=()=>({name:CFG.name,tax:CFG.tax,svc:CFG.svc,wk:CFG.wk,cin:CFG.cin,cout:CFG.cout,dep:CFG.dep,xg:CFG.xg,xgFrom:CFG.xgFrom,pay:CFG.pay,bank:CFG.bank,pol:CFG.pol,sv:CFG.sv,ss:CFG.ss});
+ch.addEventListener('message',e=>{if(e.data&&e.data.type=='hello')tell({type:'cfg',cfg:pubCfg()})});
+let ecn=0;setInterval(()=>{if(alarms.length&&CFG.esc>0){if(++ecn>=CFG.esc){beep('late',`Ada ${alarms.length} panggilan belum ditanggapi`);ecn=0}}else ecn=0},1000);
+/* kamar */
+window.addRoom=()=>{const n=$('rn').value.trim(),t=$('rt').value.trim(),pr=+$('rpz').value;if(!/^\d{1,4}$/.test(n)||!t||!(pr>0))return toast('Isi nomor (angka), tipe & harga');if(rooms[n])return toast('Nomor kamar sudah ada');
+ const ex=Object.values(rooms).find(r=>r.type==t)||{};rooms[n]={max:2,size:20,facs:'AC, WiFi, TV',desc:'',...ex,photo:ex.photo||'',ip:$('ri').value.trim()||'192.168.1.'+n,type:t,price:pr,show:true,token:rnd(),door:true,light:false,guest:false,name:'',oo:false,hk:'',hkBy:''};log(`Owner: kamar ${n} (${t}) ditambah`,'w');hkSelR();render();drawO()};
+window.delRoom=n=>{if(rooms[n].guest)return toast('Kamar sedang terisi');if(!confirm('Hapus kamar '+n+'?'))return;delete rooms[n];log(`Owner: kamar ${n} dihapus`,'w');hkSelR();render();drawO()};
+window.setRm=(n,k,v)=>{rooms[n][k]=k=='price'?+v:v;log(`Owner: kamar ${n} ${k} → ${v}`,'i');render()};
+window.setOOState=(n,v,note,by,type)=>{const r=rooms[n];if(!r)return;v=!!v;type=['OOO','OOS','BLK'].includes(type)?type:'OOO';r.oo=v;r.show=!v;if(v){r.ooT=type;r.ooNote=String(note||'').slice(0,200);r.ooBy=by||'';r.ooAt=Date.now();if(note)r.hkNote=r.ooNote}else{r.ooT='';r.ooNote='';r.ooBy='';r.ooAt=0;if(['OO','OOS'].includes(r.hkCode))r.hkCode=''}
+ log(`${by||'Sistem'}: kamar ${n} ${v?type+' → TIDAK DIJUAL'+(r.ooNote?' ('+r.ooNote+')':''):'kembali bisa dijual'}`,v?'w':'i');sv();try{renderStaff()}catch(e){}render();try{drawO()}catch(e){}};
+window.setOO=(n,v)=>setOOState(n,v,'','Owner');
+/* musiman, layanan */
+window.addSs=()=>{const a=$('sn').value.trim(),f=$('sa').value,t=$('sb').value,p=+$('sp').value;if(!a||!f||!t||!p)return toast('Lengkapi nama, tanggal & %');CFG.ss.push({n:a,f,t,p});saveCfg();log(`Owner: musim ${a} ${p}% (${f}→${t})`,'w');drawO()};
+window.delSs=i=>{log('Owner: musim '+CFG.ss[i].n+' dihapus','w');CFG.ss.splice(i,1);saveCfg();drawO()};
+window.addSv=()=>{const a=$('vn').value.trim(),p=+$('vpz').value;if(!a||!(p>=0))return toast('Isi nama & harga');CFG.sv.push({n:a,p});saveCfg();log(`Owner: layanan ${a} Rp ${rp(p)}`,'i');drawO()};
+window.setSv=(i,k,v)=>{CFG.sv[i][k]=k=='p'?+v:v;saveCfg();log(`Owner: layanan ${CFG.sv[i].n} ${k} → ${v}`,'i')};
+window.delSv=i=>{log('Owner: layanan '+CFG.sv[i].n+' dihapus','w');CFG.sv.splice(i,1);saveCfg();drawO()};
+window.setMgr=()=>{const n=$('mp').value.trim();if(n&&!/^\d{4,8}$/.test(n))return toast('PIN 4-8 angka');if(n===CFG.pin)return toast('Harus beda dari PIN owner');CFG.mgr=n;saveCfg();log('Owner: PIN manajer '+(n?'diatur':'dihapus'),'w');toast(n?'PIN manajer disimpan':'Akses manajer dimatikan')};
+window.csv=()=>{const q=v=>'"'+String(v).replace(/"/g,'""')+'"',rows=[['Tanggal','Kamar','Tipe','Tamu','Malam','Diskon','Voucher','Total']].concat(tx.map(x=>[new Date(x.t).toLocaleString('id-ID'),x.room,x.type,x.name,x.n,x.disc,x.vc,x.tot])),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.map(r=>r.map(q).join(',')).join('\n')],{type:'text/csv'}));a.download='transaksi-hotel.csv';a.click()};
+window.rstTx=()=>{if(confirm('Hapus SEMUA data transaksi laporan?')){tx=[];sa();log('Owner: data transaksi dihapus','w');drawO()}};
+const TABS=[['h','💰 Harga & Musim'],['r','🛏 Kamar'],['v','🎟 Voucher'],['s','🛎 Layanan'],['p','💳 Bayar & Kebijakan'],['a','🏨 Hotel & Sistem'],['l','📊 Laporan'],['g','🧾 Audit'],['k','🔐 Keamanan']],OWN=['g','k'];
+function extra(t){const L=Object.entries(rooms),sm=(c,w)=>`style="${IS};width:${w}px;padding:6px"`;
+ if(t=='r')return `<p class="m">Tambah/hapus kamar, ubah IP ESP32 & harga, atau tandai maintenance (otomatis disembunyikan dari katalog tamu).</p><div style="display:grid;grid-template-columns:80px 1fr 1fr 110px auto;gap:8px"><input id="rn" placeholder="No." style="${IS}"><input id="rt" list="tl" placeholder="Tipe (baru/ada)" style="${IS}"><input id="ri" placeholder="IP ESP32 (opsional)" style="${IS}"><input id="rpz" type="number" placeholder="Harga" style="${IS}"><button class="btn p" onclick="addRoom()">+ Tambah</button></div><datalist id="tl">${types().map(x=>`<option>${esc(x)}</option>`).join('')}</datalist><div style="max-height:300px;overflow:auto;margin-top:10px">${L.map(([n,r])=>`<div class="kv"><span><b>${n}</b> ${esc(r.type)}${r.guest?' · terisi':''}</span><span><input value="${esc(r.ip)}" ${sm(0,130)} onchange="setRm(${n},'ip',this.value)"> <input type="number" value="${r.price}" ${sm(0,100)} onchange="setRm(${n},'price',this.value)"> <label><input type="checkbox" ${r.oo?'checked':''} onchange="setOO(${n},this.checked)" style="width:auto"> Maintenance</label> <button class="btn" onclick="delRoom(${n})">Hapus</button></span></div>`).join('')}</div>`;
+ if(t=='s')return `<p class="m">Daftar harga layanan (amenities, laundry, pulsa, extra bed, dll). Terkirim ke halaman lain lewat channel.</p><div style="display:grid;grid-template-columns:1fr 140px auto;gap:8px"><input id="vn" placeholder="Nama layanan" style="${IS}"><input id="vpz" type="number" placeholder="Harga" style="${IS}"><button class="btn p" onclick="addSv()">+ Tambah</button></div>`+(CFG.sv.map((x,i)=>`<div class="kv"><span><input value="${esc(x.n)}" ${sm(0,220)} onchange="setSv(${i},'n',this.value)"></span><span><input type="number" value="${x.p}" ${sm(0,110)} onchange="setSv(${i},'p',this.value)"> <button class="btn" onclick="delSv(${i})">Hapus</button></span></div>`).join('')||'<div class="empty">Belum ada layanan</div>');
+ if(t=='p')return g2(cf('dep','Deposit (Rp)')+cf('xg','Biaya tamu tambahan /orang/malam (Rp)')+cf('xgFrom','Gratis hingga … tamu')+cf('lco','Late check-out (% harga/jam)')+ct('pay','Metode pembayaran diterima')+ct('bank','Info rekening / QRIS')+ct('pol','Kebijakan pembatalan & aturan hotel'))+'<p class="m">Biaya tamu tambahan masuk ke rincian saat menyetujui pendaftaran; deposit ditampilkan terpisah.</p>';
+ if(t=='l'){const o=L.filter(([n,r])=>r.guest).length,tot=tx.reduce((a,x)=>a+x.tot,0),ds=tx.reduce((a,x)=>a+x.disc,0),bt={},hk={};tx.forEach(x=>bt[x.type]=(bt[x.type]||0)+x.tot);hklog.forEach(l=>{(hk[l.n]=hk[l.n]||[]).push((l.b-l.a)/6e4)});
+  return `<div class="kv"><span>Okupansi sekarang</span><span>${o}/${L.length} (${L.length?Math.round(o*100/L.length):0}%)</span></div><div class="kv"><span>Transaksi check-in</span><span>${tx.length}</span></div><div class="kv"><span>Pendapatan (estimasi)</span><span><b>Rp ${rp(tot)}</b></span></div><div class="kv"><span>Total diskon voucher</span><span>Rp ${rp(ds)}</span></div><h2 style="margin-top:16px">Per tipe kamar</h2>${Object.entries(bt).map(([k,v])=>`<div class="kv"><span>${esc(k)}</span><span>Rp ${rp(v)}</span></div>`).join('')||'<div class="empty">Belum ada data</div>'}<h2 style="margin-top:16px">Kinerja Housekeeping (target ${CFG.hkMin} mnt)</h2>${Object.entries(hk).map(([k,v])=>{const a=Math.round(v.reduce((x,y)=>x+y,0)/v.length);return `<div class="kv"><span>${esc(k)} · ${v.length} kamar</span><span class="${a>CFG.hkMin?'er':'okc'}">rata-rata ${a} mnt</span></div>`}).join('')||'<div class="empty">Belum ada data</div>'}<div class="acts" style="margin-top:14px"><button class="btn" onclick="csv()">⬇ Ekspor CSV transaksi</button>${OR=='owner'?'<button class="btn d" onclick="rstTx()">Hapus data laporan</button>':''}</div>`}
+ if(t=='g')return '<p class="m">Riwayat perubahan pengaturan (300 terakhir).</p><div id="log" style="height:320px">'+(audit.slice().reverse().map(a=>`<div class="i">${new Date(a.t).toLocaleString('id-ID')} [${a.u}] ${esc(a.m)}</div>`).join('')||'-')+'</div>';return ''}
+const _do=drawO;drawO=function(){if(OWN.includes(oTab)&&OR!='owner')oTab='h';
+ if('havk'.includes(oTab)&&oTab!='')_do();else $('oB').innerHTML=extra(oTab);const B=$('oB');
+ if(oTab=='h')B.insertAdjacentHTML('beforeend',`<h2 style="margin-top:18px">Harga musiman / libur</h2><div style="display:grid;grid-template-columns:1fr 1fr 1fr 80px auto;gap:8px"><input id="sn" placeholder="Nama (Lebaran)" style="${IS}"><input id="sa" type="date" style="${IS}"><input id="sb" type="date" style="${IS}"><input id="sp" type="number" placeholder="+%" style="${IS}"><button class="btn p" onclick="addSs()">+ Tambah</button></div>`+(CFG.ss.map((x,i)=>`<div class="kv"><span>${esc(x.n)} · ${x.f} → ${x.t}</span><span>${x.p>0?'+':''}${x.p}% <button class="btn" onclick="delSs(${i})">Hapus</button></span></div>`).join('')||'<p class="m">Belum ada musim. Gunakan angka negatif untuk diskon low season.</p>'));
+ if(oTab=='a')B.insertAdjacentHTML('beforeend',g2(cf('esc','Ulang bunyi bell tiap (detik, 0=mati)')+cf('hkMin','Target durasi bersih (menit)')+cf('blockDirty','Blokir kamar kotor dari katalog tamu (1=ya, 0=tidak)')+cf('ac','Warna aksen tampilan','color')));
+ if(oTab=='k')B.insertAdjacentHTML('beforeend',`<label style="display:block;margin-top:16px">PIN Manajer (akses harga, voucher, kamar, layanan & laporan; tanpa Keamanan/Audit). Kosongkan untuk mematikan.</label><div class="bar"><input id="mp" type="password" inputmode="numeric" value="${esc(CFG.mgr)}" style="${IS};width:160px"><button class="btn p" onclick="setMgr()">Simpan PIN manajer</button></div>`);
+ $('oT').innerHTML=TABS.filter(t=>OR=='owner'||!OWN.includes(t[0])).map(([k,l])=>`<button class="btn ${oTab==k?'p':''}" onclick="oTab='${k}';drawO()">${l}</button>`).join('');tell({type:'cfg',cfg:pubCfg()})};
+/* hitung biaya: musim + akhir pekan + tamu tambahan */
+function calc(g,r,n){let sub=0;for(let i=0;i<n;i++){const d=new Date(g.cin+'T00:00');d.setDate(d.getDate()+i);const iso=d.toISOString().slice(0,10);let m=[5,6].includes(d.getDay())?1+CFG.wk/100:1;CFG.ss.forEach(z=>{if(iso>=z.f&&iso<=z.t)m*=1+z.p/100});sub+=(r.price||0)*m}
+ const xt=CFG.xg>0&&+g.pax>CFG.xgFrom?CFG.xg*(g.pax-CFG.xgFrom)*n:0;sub+=xt;const v=vcCheck(g.vc,sub,n),disc=v.ok?v.disc:0,base=sub-disc,svc=base*CFG.svc/100,tax=(base+svc)*CFG.tax/100;return{sub,v,disc,svc,tax,xt,tot:base+svc+tax}}
+const _ap2=approveReg;approveReg=function(){const g=regs.find(x=>x.rid===curReg),r=g&&rooms[g.room],c=g&&r?calc(g,r,nights(g.cin,g.cout)):null;_ap2();if(g&&r&&r.rid===g.rid){tx.push({t:Date.now(),room:g.room,type:r.type,name:g.name,n:nights(g.cin,g.cout),disc:Math.round(c.disc),vc:c.v.ok?g.vc:'',tot:Math.round(c.tot)});sa();if(CFG.dep)log(`Kamar ${g.room}: tagih deposit Rp ${rp(CFG.dep)}`,'w')}};
+/* ===== Status kebersihan tampil di kartu kamar ===== */
+const HKL={dirty:'🧹 Kotor',doing:'🧼 Dibersihkan',insp:'🔎 Menunggu cek',clean:'✨ Bersih'};
+window.hkNext=()=>String(window.CFG&&CFG.hkInsp)==='0'?'clean':'insp';
+window.hkReview=(n,ok,who)=>{const r=rooms[n];if(!r||r.hk!='insp')return;if(ok){r.hk='clean';r.hkChk=who||'Supervisor';r.hkChkAt=Date.now();log(`Kamar ${n} lolos cek ${who||'supervisor'} → siap dijual`,'i')}else{r.hk='dirty';r.hkBy='';log(`Kamar ${n} dikembalikan ke Housekeeping oleh ${who||'supervisor'} (belum lolos cek)`,'w')}sv();renderStaff();render()};
+window.hkSet=(n,v)=>{const r=rooms[n];if(r.guest)return toast('Kamar terisi tamu');r.hk=v;if(v!='doing'){r.hkBy=v=='clean'?(r.hkBy||'Resepsionis'):'';}log(`Kamar ${n} → ${HKL[v]} (manual resepsionis)`,'w');sv();renderStaff();render()};
+const _rn=render;render=function(){_rn();{let ch=0;const T=ymd();for(const k in rooms){const e=resv.some(x=>String(x.room)===String(k)&&x.cin===T)?1:0;if((rooms[k].ea|0)!==e){rooms[k].ea=e;ch=1}}if(ch)sv()}const rr=document.getElementById('rsRecap');if(rr)rr.innerHTML=RS.recap(Object.values(rooms),rf.st);document.querySelectorAll('#rooms .room').forEach(c=>{const n=c.querySelector('.rh b').textContent,r=rooms[n];if(!r)return;
+ const I=RS.info(r),st=c.querySelector('.st');st.className='st';st.innerHTML=RS.chips(r)+' <span>'+esc(I.label)+'</span>';st.title='Klik: detail status kamar';st.style.cursor='pointer';st.onclick=()=>RS.pop(n);if(r.oo)c.classList.add('hk-dirty');else if(r.hk&&!r.guest)c.classList.add('hk-'+r.hk);
+ {const ci=[...c.querySelectorAll('.acts button')].find(x=>x.textContent.trim()=='Check-in');if(ci&&r.oo){ci.disabled=true;ci.title='Kamar OO tidak bisa dijual'}}
+ const hn=c.querySelector('.rh');if(hn){const d=document.createElement('div');d.style.cssText='padding:2px 12px 6px';d.innerHTML=RS.line(r);hn.insertAdjacentElement('afterend',d)}
+ const a=c.querySelector('.acts');if(a&&!r.guest){const b=document.createElement('button');b.className='btn';b.style.gridColumn='1/-1';
+  if(r.hk=='insp'){b.textContent='✔ Lolos cek → Siap';b.onclick=()=>hkReview(n,true,'Resepsionis');a.appendChild(b);const b2=document.createElement('button');b2.className='btn';b2.style.gridColumn='1/-1';b2.textContent='↩ Kembalikan ke HK';b2.onclick=()=>hkReview(n,false,'Resepsionis');a.appendChild(b2);return}
+  if(r.hk=='dirty'||r.hk=='doing'){b.textContent='✔ Tandai bersih (manual)';b.onclick=()=>hkSet(n,'clean')}else{b.textContent='🧹 Tandai kotor';b.onclick=()=>hkSet(n,'dirty')}a.appendChild(b)}})};
+render();
+/* ===== Perintah dari tab Owner (owner-lama3.html) ===== */
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='own_cmd')return;const R=(ok,msg)=>tell({type:'own_res',id:m.id,ok,msg});
+ if(m.pin!==CFG.pin){log('Tab owner: PIN salah','e');return R(false,'PIN salah')}
+ const a=m.a||{},o=OR;OR='owner-tab';
+ try{
+  if(m.op=='cfg'){if(!['name','tax','svc','wk','cin','cout','dep','xg','xgFrom','lco','esc','hkMin','blockDirty','hkInsp','pay','bank','pol','relock','ac','rvOn','rvMin','rvAuto','vcOn'].includes(a.k)){OR=o;return R(false,'Pengaturan tidak dikenal')}setC(a.k,a.v);R(true,'Pengaturan disimpan')}
+  else if(m.op=='hkOk'||m.op=='hkBack'){const r=rooms[a.room];if(!r){OR=o;return R(false,'Kamar tidak ditemukan')}if(r.hk!='insp'){OR=o;return R(false,'Kamar tidak sedang menunggu cek')}hkReview(a.room,m.op=='hkOk','Owner');R(true,m.op=='hkOk'?'Kamar '+a.room+' siap dijual':'Kamar '+a.room+' dikembalikan ke HK')}
+  else if(m.op=='typePrice'){const v=+a.price;if(!(v>=0)){OR=o;return R(false,'Harga tidak valid')}let c=0;for(const n in rooms)if(rooms[n].type==a.type){rooms[n].price=v;c++}log(`Owner: harga ${a.type} → Rp ${rp(v)} (${c} kamar)`,'w');R(true,`Harga ${a.type} diperbarui (${c} kamar)`)}
+  else if(m.op=='bulk'){const p=+a.pct;if(!p){OR=o;return R(false,'Persen tidak valid')}for(const n in rooms)rooms[n].price=Math.max(0,Math.round(rooms[n].price*(1+p/100)/1000)*1000);log(`Owner: semua harga ${p>0?'naik':'turun'} ${Math.abs(p)}%`,'w');R(true,'Semua harga diperbarui')}
+  else if(m.op=='vcAdd'){const c=String(a.code||'').trim().toUpperCase().replace(/\s/g,'');if(!c||!(a.v>0)){OR=o;return R(false,'Kode & nilai wajib diisi')}if(CFG.vc.some(x=>x.code===c)){OR=o;return R(false,'Kode sudah ada')}CFG.vc.push({code:c,t:a.t=='n'?'n':'p',v:+a.v,min:+a.min||1,exp:a.exp||'',q:+a.q||0,used:0,on:true});log('Owner: voucher '+c+' dibuat','i');R(true,'Voucher '+c+' dibuat')}
+  else if(m.op=='vcOn'||m.op=='vcDel'){const i=CFG.vc.findIndex(x=>x.code===a.code);if(i<0){OR=o;return R(false,'Voucher tidak ada')}if(m.op=='vcOn'){CFG.vc[i].on=!CFG.vc[i].on;log('Owner: voucher '+a.code+(CFG.vc[i].on?' diaktifkan':' dimatikan'),'i')}else{CFG.vc.splice(i,1);log('Owner: voucher '+a.code+' dihapus','w')}R(true,'Voucher diperbarui')}
+  else if(m.op=='ssAdd'){const n=String(a.n||'').trim().slice(0,40),f=String(a.f||''),t=String(a.t||''),p=+a.p,D=/^\d{4}-\d\d-\d\d$/;if(!n||!D.test(f)||!D.test(t)||t<f||!p||p<-90||p>300){OR=o;return R(false,'Lengkapi nama, tanggal (awal <= akhir) & persen (-90 s/d 300)')}CFG.ss.push({n,f,t,p});log(`Owner: musim ${n} ${p}% (${f} → ${t})`,'w');R(true,'Harga musiman ditambahkan')}
+  else if(m.op=='ssDel'){const i=+a.i;if(!CFG.ss[i]){OR=o;return R(false,'Musim tidak ada')}log('Owner: musim '+CFG.ss[i].n+' dihapus','w');CFG.ss.splice(i,1);R(true,'Musim dihapus')}
+  else{OR=o;return R(false,'Perintah tidak dikenal')}
+  saveCfg();render();if($('odlg').open)drawO();else tell({type:'cfg',cfg:pubCfg()})
+ }catch(x){R(false,String(x))}OR=o});
+/* ===== Perintah lanjutan dari tab Owner: foto, tipe kamar, promo, karyawan, PIN ===== */
+let GAL=(()=>{try{return JSON.parse(localStorage.getItem('hs_galr'))||{}}catch(e){return{}}})(),GALP=(()=>{try{return JSON.parse(localStorage.getItem('hs_galp'))||[]}catch(e){return[]}})();
+const saveGal=()=>{try{localStorage.setItem('hs_galr',JSON.stringify(GAL));localStorage.setItem('hs_galp',JSON.stringify(GALP));return true}catch(e){return false}};
+const applyGal=n=>{if(rooms[n])rooms[n].photo=GALP[(GAL[n]||[])[0]]||''};
+const compactGal=()=>{const u=[...new Set(Object.values(GAL).flat())].sort((x,y)=>x-y),mp={};u.forEach((o,i)=>mp[o]=i);GALP=u.map(i=>GALP[i]);for(const k in GAL){GAL[k]=GAL[k].map(i=>mp[i]);if(!GAL[k].length)delete GAL[k]}};
+for(const n in rooms){if(rooms[n].photo&&!GAL[n]){let i=GALP.indexOf(rooms[n].photo);if(i<0)i=GALP.push(rooms[n].photo)-1;GAL[n]=[i]}}saveGal();
+const pinErr=(p,id)=>{if(!/^\d{6,8}$/.test(p))return 'PIN harus 6-8 angka';if(staff.some(s=>s.id!==id&&s.pin===p))return 'PIN sudah dipakai karyawan lain';if(p===CFG.pin||p===CFG.mgr)return 'PIN tidak boleh sama dengan PIN owner/manajer';return ''};
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='own_cmd2')return;const R=(ok,msg)=>tell({type:'own_res',id:m.id,ok,msg}),F=msg=>{OR=o;return R(false,msg)};
+ if(m.pin!==CFG.pin){log('Tab owner: PIN salah','e');return R(false,'PIN salah')}
+ const a=m.a||{},o=OR;OR='owner-tab';
+ try{const op=m.op,t=a.type,g=()=>GAL[t]=GAL[t]||[];
+  if(op=='galAdd'){const n=String(a.n);if(!rooms[n])return F('Kamar tidak ada');const bak=JSON.stringify([GAL,GALP]);let i=GALP.indexOf(a.img);if(i<0)i=GALP.push(a.img)-1;const T=a.all?Object.keys(rooms).filter(k=>rooms[k].type==rooms[n].type):[n];let add=0;T.forEach(k=>{const L=GAL[k]=GAL[k]||[];if(L.length<6&&!L.includes(i)){L.push(i);add++}});if(!saveGal()){[GAL,GALP]=JSON.parse(bak);return F('Penyimpanan browser penuh — hapus foto lama atau kecilkan foto')}T.forEach(applyGal);log(`Owner: foto kamar ${n} ditambah (${add} kamar)`,'w');R(true,`Foto ditambahkan ke ${add} kamar`)}
+  else if(op=='galMain'){const n=String(a.n),L=GAL[n]||[],x=L.splice(a.i,1)[0];if(x!=null)L.unshift(x);saveGal();applyGal(n);log(`Owner: foto utama kamar ${n} diganti`,'w');R(true,'Foto utama diganti')}
+  else if(op=='galDel'){const n=String(a.n);(GAL[n]||[]).splice(a.i,1);compactGal();saveGal();applyGal(n);log(`Owner: foto kamar ${n} dihapus`,'w');R(true,'Foto dihapus')}
+  else if(op=='roomEdit'){const r=rooms[a.n];if(!r)return F('Kamar tidak ada');const f=a.f||{},ot=r.type,T=a.all?Object.keys(rooms).filter(k=>rooms[k].type==ot):[String(a.n)];T.forEach(k=>Object.assign(rooms[k],{type:String(f.type||ot).trim()||ot,price:+f.price||0,size:+f.size||0,max:+f.max||2,facs:String(f.facs||''),desc:String(f.desc||'')}));r.ip=String(f.ip||r.ip);log(`Owner: kamar ${a.n} diedit${a.all?' (+'+(T.length-1)+' kamar sama tipe)':''}`,'w');R(true,'Kamar disimpan'+(a.all?` (${T.length} kamar)`:''))}
+  else if(op=='roomSet'){const r=rooms[a.n];if(!r||!['ip','price','oo','so','skp'].includes(a.k))return F('Data tidak valid');if(a.k=='oo'){setOOState(a.n,!!a.v,a.note,'Owner',a.t)}else if(a.k=='so'||a.k=='skp'){r[a.k]=a.v?1:0;sv();render()}else r[a.k]=a.k=='price'?+a.v:String(a.v);log(`Owner: kamar ${a.n} ${a.k} → ${a.v}`,'i');R(true,'Kamar diperbarui')}
+  else if(op=='roomAdd'){const n=String(a.n||'').trim();if(!/^\d{1,4}$/.test(n)||rooms[n]||!a.type||!(+a.price>0))return F('Nomor kamar/tipe/harga tidak valid atau sudah ada');const ex=Object.values(rooms).find(r=>r.type==a.type)||{};rooms[n]={max:2,size:20,facs:'AC, WiFi, TV',desc:'',...ex,ip:a.ip||'192.168.1.'+n,type:a.type,price:+a.price,show:true,token:rnd(),door:true,light:false,guest:false,name:'',oo:false,hk:'',hkBy:'',photo:''};hkSelR();log(`Owner: kamar ${n} (${a.type}) ditambah`,'w');R(true,'Kamar '+n+' ditambah')}
+  else if(op=='roomDel'){const r=rooms[a.n];if(!r)return F('Kamar tidak ada');if(r.guest)return F('Kamar sedang terisi');delete rooms[a.n];delete GAL[a.n];compactGal();saveGal();hkSelR();log(`Owner: kamar ${a.n} dihapus`,'w');R(true,'Kamar dihapus')}
+  else if(op=='promo'){if(!promos[a.i]||!['title','text','img'].includes(a.k))return F('Promo tidak ada');promos[a.i][a.k]=String(a.v);R(true,'Promo disimpan')}
+  else if(op=='promoAdd'){promos.push({title:'Promo baru',text:'',img:''});R(true,'Promo ditambah')}
+  else if(op=='promoDel'){promos.splice(a.i,1);R(true,'Promo dihapus')}
+  else if(op=='svAdd'){if(!a.n||!(+a.p>=0))return F('Isi nama & harga');CFG.sv.push({n:String(a.n),p:+a.p});log(`Owner: layanan ${a.n} Rp ${rp(a.p)}`,'i');R(true,'Layanan ditambah')}
+  else if(op=='svSet'){const x=CFG.sv[a.i];if(!x)return F('Layanan tidak ada');x[a.k]=a.k=='p'?+a.v:String(a.v);log(`Owner: layanan ${x.n} ${a.k} → ${a.v}`,'i');R(true,'Layanan diperbarui')}
+  else if(op=='svDel'){CFG.sv.splice(a.i,1);log('Owner: layanan dihapus','w');R(true,'Layanan dihapus')}
+  else if(op=='stAdd'){if(!a.name||!ROLES.includes(a.role))return F('Nama/peran tidak valid');const pn=String(a.pin||'').trim();if(pn){const e=pinErr(pn,'');if(e)return F(e)}staff.push({id:'K'+String(Date.now()).slice(-5),name:String(a.name).slice(0,40),role:a.role,token:rnd()+rnd(),on:true,last:'',pin:pn});log(`Owner: karyawan ${a.name} (${a.role}) ditambah`,'i');R(true,'Karyawan ditambah'+(pn?' — login dengan PIN-nya':' — atur PIN agar bisa login, atau cetak QR-nya'))}
+  else if(op=='stPin'){const x=staff.find(z=>z.id==a.id);if(!x)return F('Karyawan tidak ada');const pn=String(a.pin||'').trim();if(pn){const e=pinErr(pn,x.id);if(e)return F(e)}x.pin=pn;log(`Owner: PIN login ${x.name} ${pn?'diatur':'dihapus'}`,'w');R(true,pn?'PIN '+x.name+' disimpan':'PIN '+x.name+' dihapus')}
+  else if(op=='stOn'||op=='stDel'||op=='stNew'){const i=staff.findIndex(x=>x.id==a.id);if(i<0)return F('Karyawan tidak ada');if(op=='stOn')staff[i].on=!staff[i].on;else if(op=='stNew')staff[i].token=rnd()+rnd();else staff.splice(i,1);log(`Owner: karyawan ${a.id} ${op}`,'w');R(true,'Karyawan diperbarui')}
+  else if(op=='pin'||op=='mgr'){const n=String(a.n||'').trim();if(op=='pin'?!/^\d{4,8}$/.test(n)||n===CFG.mgr:n&&(!/^\d{4,8}$/.test(n)||n===CFG.pin))return F('PIN 4-8 angka dan tidak boleh sama');CFG[op=='pin'?'pin':'mgr']=n;log(`Owner: PIN ${op=='pin'?'owner':'manajer'} diganti`,'w');R(true,'PIN disimpan')}
+  else if(op=='rvHide'||op=='rvDel'){const i=rts.findIndex(y=>window.rk(y)===String(a.id));if(i<0)return F('Ulasan tidak ditemukan');if(op=='rvHide'){rts[i].hide=!rts[i].hide;log(`Owner: ulasan kamar ${rts[i].room} ${rts[i].hide?'disembunyikan dari':'ditampilkan di'} aplikasi tamu`,'w');R(true,rts[i].hide?'Ulasan disembunyikan dari tamu':'Ulasan ditampilkan ke tamu')}else{log(`Owner: ulasan kamar ${rts[i].room} dihapus`,'w');rts.splice(i,1);R(true,'Ulasan dihapus')}sr();avail()}
+  else if(op=='rsvCancel'){if(!window.cancelResv(String(a.rid),'Reservasi dibatalkan oleh hotel.'))return F('Reservasi tidak ditemukan');R(true,'Reservasi dibatalkan')}
+  else return F('Perintah tidak dikenal');
+  saveCfg();sv();render();renderPromos();renderStaff();if($('odlg').open)drawO();else tell({type:'cfg',cfg:pubCfg()})
+ }catch(x){R(false,String(x))}OR=o});
+render();
+
+
+/* ===== SMART ROOM TAMU: AC, suasana, DND/MUR, layanan, chat, wake-up, SOS, rating ===== */
+const NEWC=['ac','scene','dnd','mur','order','chat','wake','req','rate','sos','sync'];NEWC.forEach(c=>WHITELIST.includes(c)||WHITELIST.push(c));
+Object.assign(CFG,{wifi:'',wpass:'',bf:'06.00 - 10.00',emg:'',...CFG});STR.push('wifi','wpass','bf','emg');
+let reqs=ld('hs_reqs'),rts=ld('hs_rts');const sr=()=>{try{localStorage.setItem('hs_reqs',JSON.stringify(reqs.slice(-300)));localStorage.setItem('hs_rts',JSON.stringify(rts.slice(-1000)))}catch(e){}};
+const SCENES={tidur:{l:0,ac:26},santai:{l:1,ac:24},kerja:{l:1,ac:23},romantis:{l:1,ac:25}};
+const roomBill=n=>{const r=rooms[n];let t=0;try{t=Math.round(calc({cin:r.cin,cout:r.cout,pax:r.pax||1,vc:r.vcode},r,nights(r.cin,r.cout)).tot)}catch(e){}return{room:t,svc:reqs.filter(x=>x.room==n&&x.price).reduce((a,x)=>a+x.price*x.qty,0),dep:CFG.dep||0}};
+const ext=n=>{const r=rooms[n];if(!r||!r.guest)return;tell({type:'ext',to:n,e:{ac:r.ac||24,fan:r.fan||2,scene:r.scene||'',dnd:!!r.dnd,mur:!!r.mur,wake:r.wake||'',rate:r.rate||0,orders:reqs.filter(x=>x.room==n).slice(-15),chat:(r.chat||[]).slice(-30),bill:roomBill(n)}})};
+const infoMsg=()=>tell({type:'info',info:{wifi:CFG.wifi,wpass:CFG.wpass,bf:CFG.bf,emg:CFG.emg,pol:CFG.pol,cout:CFG.cout,sv:CFG.sv,hn:CFG.name}});
+ch.addEventListener('message',e=>{if(e.data&&e.data.type=='hello')infoMsg()});
+const _g=gate;gate=function(m){_g(m);if(!NEWC.includes(m.cmd))return;const n=m.room,r=rooms[n];if(!r||!r.guest||m.token!==r.token||(m.sessionRoom&&m.sessionRoom!=n))return;
+ const a=m.a||{},c=m.cmd,add=o=>{const q={id:'Q'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),room:n,qty:1,price:0,st:'baru',t:Date.now(),...o};reqs.push(q);if(q.kind!='sos')beep(/PANIK|DARURAT|SOS/i.test(q.item||'')?'sos':'req',`Kamar ${q.room}: ${String(q.item||'permintaan layanan').replace(/\s*⏱.*/,'')}`);return q};
+ if(c=='ac'){if(a.t!=null)r.ac=Math.min(30,Math.max(16,Math.round(+a.t)||24));if([1,2,3].includes(+a.f))r.fan=+a.f;log(`Kamar ${n}: AC ${r.ac||24}°C, kipas ${r.fan||2}`,'i')}
+ else if(c=='scene'){const s=SCENES[a.s];if(!s)return;r.scene=a.s;r.light=!!s.l;r.ac=s.ac;push(n);log(`Kamar ${n}: suasana ${a.s}`,'i')}
+ else if(c=='dnd'){r.dnd=!!a.v;if(r.dnd)r.mur=false;log(`Kamar ${n}: Jangan Ganggu ${r.dnd?'ON':'OFF'}`,'w')}
+ else if(c=='mur'){r.mur=!!a.v;if(r.mur){r.dnd=false;if(!reqs.some(x=>x.room==n&&x.kind=='mur'&&x.st!='selesai'))add({item:'Mohon bersihkan kamar',role:'Housekeeping',kind:'mur'})}log(`Kamar ${n}: Mohon Dibersihkan ${r.mur?'ON':'OFF'}`,'w')}
+ else if(c=='order'){const s=a.sv!=null?CFG.sv[+a.sv]:null,qty=Math.min(9,Math.max(1,Math.round(+a.qty)||1)),item=s?s.n:String(a.item||'').slice(0,60);if(!item)return;add({item,qty,price:s?s.p:0,role:s?'Lainnya':(ROLES.includes(a.role)?a.role:'Lainnya'),kind:'order'});log(`Kamar ${n}: pesan ${item} ×${qty}`,'w')}
+ else if(c=='req'){const k=a.kind=='ext'?'ext':'lco';add({item:k=='ext'?'Perpanjang 1 malam':'Late check-out',role:'Resepsionis',kind:k});log(`Kamar ${n}: permintaan ${k=='ext'?'perpanjang menginap':'late check-out'}`,'w')}
+ else if(c=='sos'){add({item:'🚨 DARURAT / SOS',role:'Keamanan',kind:'sos'});alarms.push(n);beep('sos',`Darurat! SOS dari kamar ${n}`);log(`🚨 SOS dari kamar ${n}!`,'e')}
+ else if(c=='chat'){const t=String(a.m||'').trim().slice(0,200);if(!t)return;(r.chat=r.chat||[]).push({f:'g',t:Date.now(),m:t});r.chat=r.chat.slice(-40);beep('chat',`Pesan dari kamar ${n}: ${t}`);log(`💬 Kamar ${n}: ${t}`,'w')}
+ else if(c=='wake'){r.wake=/^\d\d:\d\d$/.test(a.t||'')?a.t:'';r.wakeD='';log(`Kamar ${n}: wake-up call ${r.wake||'dibatalkan'}`,'i')}
+ else if(c=='rate'){const v=Math.round(+a.v);if(v>=1&&v<=5){r.rate=v;if(a.c!=null)r.rcm=String(a.c).trim().slice(0,300);log(`⭐ Kamar ${n} memberi rating ${v}${r.rcm?' + ulasan':''}`,'i');window.upsertRev(n)}}
+ ext(n);sr();save();render()};
+const setReq=(q,s,by)=>{q.st=s;if(by)q.by=by;const r=rooms[q.room];if(s=='selesai'&&r){if(q.kind=='mur')r.mur=false;if(q.kind=='sos')alarms=alarms.filter(x=>x!=q.room)}sr();save();ext(q.room);render()};
+window.rqSt=(id,s)=>{const q=reqs.find(x=>x.id==id);if(q){setReq(q,s,'Resepsionis');log(`Permintaan "${q.item}" kamar ${q.room} → ${s}`,'i')}};
+window.rqExt=id=>{const q=reqs.find(x=>x.id==id),r=q&&rooms[q.room];if(!r||!r.guest||!r.cout)return;const d=new Date(r.cout+'T00:00');d.setDate(d.getDate()+1);r.cout=new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+ if(r.rid)tell({type:'stay_ok',rid:r.rid,room:q.room,token:r.token,name:r.name,cin:r.cin,cout:r.cout});log(`Kamar ${q.room}: menginap diperpanjang s/d ${r.cout}`,'w');setReq(q,'selesai','Resepsionis')};
+window.chatSend=n=>{const i=$('cr'+n),t=i.value.trim();if(!t)return;const r=rooms[n];(r.chat=r.chat||[]).push({f:'r',t:Date.now(),m:t.slice(0,200)});i.value='';ext(n);save();render()};
+$('alarms').closest('.card').insertAdjacentHTML('beforebegin','<div class="card"><h2>Permintaan tamu <span class="cnt" id="reqN">0</span></h2><div id="reqs"></div><h2 style="margin-top:16px">Chat tamu</h2><div id="chats"></div></div>');
+const RB={baru:'Baru',proses:'Diproses'};
+function rReq(){const open=reqs.filter(x=>x.st!='selesai');$('reqN').textContent=open.length;
+ $('reqs').innerHTML=open.length?open.slice().reverse().map(x=>`<div class="reg"><b>${x.kind=='sos'?'🚨 ':''}Kamar ${x.room} · ${esc(x.item)}${x.qty>1?' ×'+x.qty:''}</b><small>${new Date(x.t).toLocaleTimeString('id-ID')} · ${RB[x.st]}${x.by?' ('+esc(x.by)+')':''} · tugas ${x.role}${x.price?' · Rp '+rp(x.price*x.qty):''}</small><div class="acts">${x.st=='baru'?`<button class="btn p" onclick="rqSt('${x.id}','proses')">Proses</button>`:''}${x.kind=='ext'?`<button class="btn p" onclick="rqExt('${x.id}')">Setujui +1 malam</button>`:''}<button class="btn" onclick="rqSt('${x.id}','selesai')">Selesai</button></div></div>`).join(''):'<div class="empty">Tidak ada permintaan</div>';
+ const ae=document.activeElement;if(ae&&ae.closest&&ae.closest('#chats'))return;
+ $('chats').innerHTML=Object.entries(rooms).filter(([n,r])=>r.guest&&(r.chat||[]).length).map(([n,r])=>`<div class="reg"><b>💬 Kamar ${n} · ${esc(r.name||'')}</b>${r.chat.slice(-4).map(c=>`<small style="color:${c.f=='r'?'var(--ac)':'var(--tx)'}">${c.f=='r'?'Anda':'Tamu'}: ${esc(c.m)}</small>`).join('')}<div class="bar" style="margin:8px 0 0"><input id="cr${n}" placeholder="Balas…" style="flex:1;padding:6px;border:1px solid var(--bd);background:#1d1813;color:var(--tx)" onkeydown="if(event.key=='Enter')chatSend(${n})"><button class="btn p" onclick="chatSend(${n})">Kirim</button></div></div>`).join('')||'<div class="empty">Belum ada chat</div>'}
+const _r3=render;render=function(){_r3();document.querySelectorAll('#rooms .room').forEach(c=>{const n=c.querySelector('.rh b').textContent,r=rooms[n];if(!r||!r.guest)return;const t=[r.dnd?'🔕 DND':'',r.mur?'🧹 MUR':'',r.wake?'⏰ '+r.wake:'',r.rate?'⭐'+r.rate:'',r.scene?'🎬 '+r.scene:'',r.ac?'❄️ '+r.ac+'°':''].filter(Boolean).join(' · ');if(t)c.querySelector('.rh').insertAdjacentHTML('afterend',`<div class="kv"><span>Smart Room</span><span>${t}</span></div>`)});rReq()};
+setInterval(()=>{const d=new Date(),hm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'),day=d.toDateString();for(const n in rooms){const r=rooms[n];if(r.guest&&r.wake==hm&&r.wakeD!=day){r.wakeD=day;tell({type:'wakeup',to:n});log(`⏰ Wake-up call kamar ${n} (${hm})`,'w');beep();ext(n)}}},15000);
+const _c3=window.chk;window.chk=n=>{const r=rooms[n],was=r.guest;if(was&&r.rate&&!(r.rid&&rts.some(x=>x.id===r.rid)))rts.push({id:r.rid||'',room:n,name:r.name,v:r.rate,c:r.rcm||'',t:Date.now(),type:r.type||'',cin:r.cin||'',cout:r.cout||''});_c3(n);if(was){['ac','fan','scene','dnd','mur','wake','wakeD','rate','rcm','chat'].forEach(k=>delete rooms[n][k]);reqs=reqs.filter(q=>q.room!=n);alarms=alarms.filter(x=>x!=n);sr();save();render()}};
+const _d3=drawO;drawO=function(){_d3();const B=$('oB');
+ if(oTab=='l'){const a=rts.length?(rts.reduce((x,y)=>x+y.v,0)/rts.length).toFixed(1):'-';B.insertAdjacentHTML('beforeend',`<h2 style="margin-top:16px">Kepuasan tamu</h2><div class="kv"><span>Rating rata-rata (${rts.length} ulasan)</span><span>⭐ ${a}</span></div><div class="kv"><span>Permintaan layanan aktif</span><span>${reqs.filter(x=>x.st!='selesai').length}</span></div>`)}
+ if(oTab=='a')B.insertAdjacentHTML('beforeend',g2(cf('wifi','Nama WiFi tamu','text')+cf('wpass','Password WiFi','text')+cf('bf','Jam sarapan','text')+cf('emg','Info penting / nomor darurat','text')));infoMsg()};
+ch.addEventListener('message',e=>{const m=e.data;if(!m||(m.type!='emp_tasks'&&m.type!='emp_task'))return;const x=staff.find(a=>a.id===m.emp),R=o=>tell({type:'emp_res',to:m.emp,k:m.type,...o});
+ if(!x||!x.on||x.token!==m.token)return;const mine=q=>q.role==x.role||x.role=='Resepsionis';let msg='';
+ if(m.type=='emp_task'){const q=reqs.find(a=>a.id===m.id);if(!q||!mine(q))return R({ok:false,msg:'Tugas tidak ditemukan'});setReq(q,m.act=='done'?'selesai':'proses',x.name);log(`${x.name}: tugas "${q.item}" kamar ${q.room} → ${q.st}`,'i');msg=m.act=='done'?'Tugas selesai':'Tugas diambil'}
+ R({ok:true,msg,tasks:reqs.filter(q=>q.st!='selesai'&&mine(q)).slice(-30),dnd:Object.keys(rooms).filter(n=>rooms[n].dnd)})});
+rReq();render();
+
+/* ===== PUSAT FITUR OWNER: fitur tersembunyi + menu tab buatan owner ===== */
+const FT=['dev','tip','comp','clean','ann','rep'];CFG.ft=CFG.ft||{};CFG.cm=CFG.cm||[];CFG.ann=CFG.ann||'';
+const fon=k=>!!CFG.ft[k],addReq=o=>{const q={id:'Q'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),qty:1,price:0,st:'baru',t:Date.now(),...o};reqs.push(q);if(q.kind!='sos')beep(/PANIK|DARURAT|SOS/i.test(q.item||'')?'sos':'req',`Kamar ${q.room}: ${String(q.item||'permintaan layanan').replace(/\s*⏱.*/,'')}`);return q};
+const info2=()=>tell({type:'info2',ft:CFG.ft,ann:CFG.ann,tips:CFG.tips,cm:pubCm('tamu')});
+const ext2=n=>{const r=rooms[n];if(r&&r.guest)tell({type:'ext2',to:n,e:{tv:!!r.tv,vol:r.vol==null?10:r.vol,ch:r.ch||1,cur:r.cur==null?0:r.cur,clean:r.clean||''}})};
+ch.addEventListener('message',e=>{if(e.data&&e.data.type=='hello')info2()});
+['dev','tip','comp','clean','xorder','sync'].forEach(c=>WHITELIST.includes(c)||WHITELIST.push(c));
+const _g2=gate;gate=function(m){_g2(m);if(!['dev','tip','comp','clean','xorder','sync'].includes(m.cmd))return;const n=m.room,r=rooms[n];if(!r||!r.guest||m.token!==r.token||(m.sessionRoom&&m.sessionRoom!=n))return;const a=m.a||{},c=m.cmd,N=(v,lo,hi)=>Math.min(hi,Math.max(lo,Math.round(+v)||0));
+ if(c=='dev'&&fon('dev')){if(a.k=='tv')r.tv=!!a.v;else if(a.k=='vol')r.vol=N(a.v,0,30);else if(a.k=='ch')r.ch=N(a.v,1,99);else if(a.k=='cur')r.cur=N(a.v,0,100);else return;log(`Kamar ${n}: ${a.k} → ${a.v}`,'i')}
+ else if(c=='tip'&&fon('tip')){const v=(CFG.tips||'10000,20000,50000').split(',').map(Number).includes(+a.v)?+a.v:0;if(!v)return;addReq({room:n,item:'Tip untuk staf',price:v,role:'Resepsionis',kind:'tip'});log(`💝 Kamar ${n} memberi tip Rp ${rp(v)}`,'w')}
+ else if(c=='comp'&&fon('comp')){const t=String(a.m||'').trim().slice(0,300);if(!t)return;addReq({room:n,item:'Keluhan: '+t,role:'Resepsionis',kind:'comp'});log(`📝 Keluhan kamar ${n}: ${t}`,'e')}
+ else if(c=='clean'&&fon('clean')){r.clean=/^\d\d:\d\d$/.test(a.t||'')?a.t:'';log(`Kamar ${n}: jam bersih pilihan ${r.clean||'kapan saja'}`,'i')}
+ else if(c=='xorder'){const M=CFG.cm.find(x=>x.id==a.id&&x.t=='tamu'),it=M&&(M.items||[])[+a.i];if(!it)return;addReq({room:n,item:M.name+': '+it.n,price:+it.p||0,role:'Lainnya',kind:'order'});log(`Kamar ${n}: pesan ${M.name} – ${it.n}`,'w')}
+ ext2(n);ext(n);sr();save();render()};
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='own_cmd3')return;const R=(ok,msg)=>tell({type:'own_res',id:m.id,ok,msg});if(m.pin!==CFG.pin){log('Tab owner: PIN salah','e');return R(false,'PIN salah')}
+ const a=m.a||{},o=OR;OR='owner-tab';const M=CFG.cm.find(x=>x.id==a.id);let msg='Tersimpan';
+ try{const op=m.op;
+  if(op=='ft'){if(!FT.includes(a.k))return R(false,'Fitur tidak dikenal');CFG.ft[a.k]=!!a.v;log(`Owner: fitur ${a.k} ${a.v?'DIAKTIFKAN':'dimatikan'}`,'w')}
+  else if(op=='ann'){CFG.ann=String(a.t||'').slice(0,400);log('Owner: pengumuman diperbarui','w')}
+  else if(op=='cmAdd'){const nm=String(a.name||'').trim().slice(0,30);if(!nm)return R(false,'Isi nama menu');CFG.cm.push({id:'M'+Date.now().toString(36),name:nm,icon:String(a.icon||'✨').slice(0,4),t:a.t=='karyawan'?'karyawan':'tamu',k:a.k=='info'?'info':'order',items:(a.items||[]).slice(0,30).map(x=>({n:String(x.n).slice(0,50),p:Math.max(0,+x.p||0)})),text:String(a.text||'').slice(0,600)});log(`Owner: menu tab "${nm}" dibuat (${a.t})`,'w')}
+  else if(op=='cmDel'){if(!M)return R(false,'Menu tidak ada');CFG.cm=CFG.cm.filter(x=>x!==M);log(`Owner: menu tab "${M.name}" dihapus`,'w')}
+  else if(op=='cmItemAdd'){if(!M)return R(false,'Menu tidak ada');const n=String(a.n||'').trim().slice(0,50);if(!n)return R(false,'Isi nama item');M.items.push({n,p:Math.max(0,+a.p||0)});log(`Owner: item "${n}" ditambah ke ${M.name}`,'i')}
+  else if(op=='cmItemDel'){if(!M)return R(false,'Menu tidak ada');M.items.splice(+a.i,1);log(`Owner: item dihapus dari ${M.name}`,'i')}
+  else if(op=='cmText'){if(!M)return R(false,'Menu tidak ada');M.text=String(a.text||'').slice(0,600);log(`Owner: teks menu ${M.name} diubah`,'i')}
+  else if(op=='cmSave'){const t=a.tab||{},old=CFG.cm.find(x=>x.id==t.id);if(!TX(t.name,30))return R(false,'Isi nama tab');if(!old&&CFG.cm.length>=30)return R(false,'Maksimal 30 tab');const nt=sanTab(t,old);if(old)CFG.cm[CFG.cm.indexOf(old)]=nt;else CFG.cm.push(nt);log(`Owner: tab "${nt.name}" disimpan (${nt.blocks.length} blok)`,'w');msg='Tab disimpan'}
+  else if(op=='chatClr'){delete rc[a.bid];src();tell({type:'rchat',bid:String(a.bid),msgs:[]});log('Owner: riwayat ruang chat dikosongkan','w');msg='Chat dikosongkan'}
+  else if(op=='cmMove'){const i=CFG.cm.findIndex(x=>x.id==a.id),j=i+(+a.d>0?1:-1);if(i<0||j<0||j>=CFG.cm.length)return R(false,'Tidak bisa dipindah');[CFG.cm[i],CFG.cm[j]]=[CFG.cm[j],CFG.cm[i]];msg='Urutan diubah'}
+  else if(op=='cmDup'){const c=CFG.cm.find(x=>x.id==a.id);if(!c||CFG.cm.length>=30)return R(false,'Tidak bisa menduplikat');const d=JSON.parse(JSON.stringify(c));d.id='M'+Date.now().toString(36);d.name=(d.name+' 2').slice(0,30);d.blocks.forEach(b=>b.id='B'+Math.random().toString(36).slice(2,8));CFG.cm.push(d);msg='Tab diduplikat'}
+  else if(op=='cmOn'){const c=CFG.cm.find(x=>x.id==a.id);if(!c)return R(false,'Tab tidak ada');c.on=!!a.v;log(`Owner: tab "${c.name}" ${c.on?'diaktifkan':'dinonaktifkan'}`,'w')}
+  else if(op=='set3'){const N=['lcoAuto','vcRate'],S=['svcFrom','svcTo','lcoTo','welScene','vouch','vip'];if(N.includes(a.k))CFG[a.k]=Math.max(0,Number(a.v)||0);else if(S.includes(a.k))CFG[a.k]=String(a.v||'').slice(0,800);else return R(false,'Pengaturan tidak dikenal');log(`Owner: ${a.k} diubah`,'w');inf3()}
+  else if(op=='impCfg'){let j;try{j=JSON.parse(a.json)}catch(e){return R(false,'JSON tidak valid')}if(j.ft)CFG.ft=Object.fromEntries(Object.keys(j.ft).filter(k=>FT.includes(k)&&j.ft[k]).map(k=>[k,true]));if(Array.isArray(j.cm))CFG.cm=j.cm.slice(0,30).map(c=>({id:'M'+Math.random().toString(36).slice(2,8),name:String(c.name||'').slice(0,30),icon:String(c.icon||'✨').slice(0,4),t:c.t=='karyawan'?'karyawan':'tamu',k:c.k=='info'?'info':'order',items:(c.items||[]).slice(0,30).map(x=>({n:String(x.n).slice(0,50),p:Math.max(0,+x.p||0)})),text:String(c.text||'').slice(0,600)})).filter(c=>c.name);KN.forEach(k=>{if(j[k]!=null)CFG[k]=Math.max(0,Number(j[k])||0)});KS.forEach(k=>{if(j[k]!=null)CFG[k]=String(j[k]).slice(0,1500)});log('Owner: konfigurasi fitur diimpor','w');inf3();if(Array.isArray(j.cm))CFG.cm=j.cm.slice(0,30).map(c=>sanTab(c.blocks?c:cmLeg(c),null)).filter(c=>c.name);msg='Konfigurasi diimpor'}
+  else if(op=='ftSet'){const k=(a.keys||[]).filter(x=>FT.includes(x));CFG.ft={};k.forEach(x=>CFG.ft[x]=true);log(`Owner: paket fitur diterapkan (${k.length} aktif)`,'w');msg=k.length+' fitur aktif'}
+  else if(op=='set2'){const S=['tvOff','tips','tag','contact','faqt','wa','note','heroA','heroB','heroK','heroC','promoA','promoB','feats','name'],N=['maxVol','lockCtl','promoOff'];if(S.includes(a.k)){CFG[a.k]=String(a.v||'').slice(0,a.k=='faqt'?1500:a.k=='feats'?400:200);if(a.k=='name')infoMsg()}else if(N.includes(a.k))CFG[a.k]=Math.max(0,Number(a.v)||0);else return R(false,'Pengaturan tidak dikenal');log(`Owner: ${a.k} diubah`,'w');inf3()}
+  else if(op=='set'){const K=['acMin','acMax','olim','cool','remMin','sla','lowRate','dynAt','dynPct','loyRate','silver','gold','auto'];if(!K.includes(a.k))return R(false,'Pengaturan tidak dikenal');CFG[a.k]=Math.max(0,Number(a.v)||0);log(`Owner: ${a.k} → ${CFG[a.k]}`,'w')}
+  else if(op=='pushRoom'){const t=String(a.t||'').slice(0,200);if(!rooms[a.n]||!t)return R(false,'Data tidak valid');tell({type:'popup',to:String(a.n),text:t});log(`Owner: pesan ke kamar ${a.n}: ${t}`,'w');msg='Pesan terkirim ke kamar '+a.n}
+  else if(op=='task'){const t=String(a.text||'').slice(0,150);if(!t||!ROLES.includes(a.role))return R(false,'Isi tugas & peran');addReq({room:String(a.room||'-').slice(0,6),item:'📌 Tugas owner: '+t,role:a.role,kind:'order'});sr();rReq();log(`Owner: tugas untuk ${a.role}: ${t}`,'w');msg='Tugas dikirim ke '+a.role}
+  else if(op=='push'){const t=String(a.t||'').trim().slice(0,200);if(!t)return R(false,'Isi pesan');tell({type:'popup',text:t});log('Owner: siaran kilat → '+t,'w');msg='Siaran terkirim ke semua tamu & karyawan'}
+  else if(op=='wel'){CFG.wel=String(a.t||'').slice(0,200);log('Owner: sambutan tamu diubah','i')}
+  else return R(false,'Perintah tidak dikenal');
+  saveCfg();info2();render()}catch(x){return R(false,String(x))}finally{OR=o}R(true,msg)});
+ch.addEventListener('message',e=>{const m=e.data;if(!m||(m.type!='emp_tasks'&&m.type!='emp_rep'))return;const x=staff.find(s=>s.id===m.emp),R=o=>tell({type:'emp_res',to:m.emp,...o});if(!x||!x.on||x.token!==m.token)return;
+ if(m.type=='emp_rep'){const t=String(m.text||'').trim().slice(0,300);if(!(fon('rep')||fon('stock'))||!t)return R({k:'emp_rep',ok:false,msg:'Fitur belum aktif / isi laporan'});addReq({room:String(m.room||'-').slice(0,6),item:`Laporan ${x.name}: ${t}`,role:'Teknisi',kind:'rep',by:x.name});log(`🔧 Laporan ${x.name} (kamar ${m.room||'-'}): ${t}`,'w');sr();rReq();return R({k:'emp_rep',ok:true,msg:'Laporan terkirim'})}
+ R({k:'emp_ft',ok:true,ft:CFG.ft,ann:CFG.ann,cm:pubCm('karyawan'),pv:votes.c,rc:rcAll(),my:myV('karyawan',x.name),hand:(typeof hand!='undefined'?hand:[]).slice(-6)})});
+info2();
+
+/* ===== FITUR TAMBAHAN: timer tidur, hemat energi, check-out mandiri, tamu undangan, barang hilang, riwayat pintu, survei, poin loyalitas, sambutan, siaran kilat ===== */
+FT.push('sleep','lost','xout','away','dlog','vis','survey','loy','welcome','stock');CFG.wel=CFG.wel||'Selamat datang, {nama}! Semoga istirahat Anda nyaman.';
+let loy=(()=>{try{return JSON.parse(localStorage.getItem('hs_loy'))||{}}catch(e){return{}}})();const sl=()=>{try{localStorage.setItem('hs_loy',JSON.stringify(loy))}catch(e){}},dg3=x=>String(x||'').replace(/\D/g,''),tier=p=>p>=(CFG.gold||500)?'Gold':p>=(CFG.silver||200)?'Silver':'Bronze';
+const ext3=n=>{const r=rooms[n];if(!r||!r.guest)return;const p=loy[dg3(r.phone)]||0;tell({type:'ext3',to:n,e:{sleep:r.sleepAt?Math.max(1,Math.round((r.sleepAt-Date.now())/6e4)):0,away:!!r.away,dlog:(r.dlog||[]).slice(-10),poin:p,tier:tier(p),svy:r.svy||null,wel:String(CFG.wel||'').replace('{nama}',r.name||'Tamu'),xout:!!r.xout}})};
+const N3=['sleep','lost','xout','away','vis','survey'];N3.forEach(c=>WHITELIST.includes(c)||WHITELIST.push(c));
+const _g3=gate;gate=function(m){_g3(m);if(![...N3,'sync','door'].includes(m.cmd))return;const n=m.room,r=rooms[n];if(!r||!r.guest||m.token!==r.token||(m.sessionRoom&&m.sessionRoom!=n))return;const a=m.a||{},c=m.cmd,S=v=>Math.min(5,Math.max(1,Math.round(+v)||0)),T=(x,l)=>String(x||'').trim().slice(0,l);
+ if(c=='door'){if(fon('dlog')){(r.dlog=r.dlog||[]).push(Date.now());r.dlog=r.dlog.slice(-20)}}
+ else if(c=='sleep'&&fon('sleep')){const mn=[15,30,60].includes(+a.v)?+a.v:0;r.sleepAt=mn?Date.now()+mn*6e4:0;log(`Kamar ${n}: timer tidur ${mn||'batal'}`,'i')}
+ else if(c=='lost'&&fon('lost')){const t=T(a.m,200);if(!t)return;addReq({room:n,item:'Barang hilang/tertinggal: '+t,role:'Housekeeping',kind:'lost'});log(`🔍 Kamar ${n}: lapor barang — ${t}`,'w')}
+ else if(c=='xout'&&fon('xout')){if(r.xout)return;r.xout=true;addReq({room:n,item:'Check-out mandiri — tamu siap check-out',role:'Resepsionis',kind:'xout'});log(`🚪 Kamar ${n} mengajukan check-out mandiri`,'w')}
+ else if(c=='away'&&fon('away')){r.away=!!a.v;if(r.away){r.light=false;r.ac=27;push(n)}log(`Kamar ${n}: ${r.away?'tamu keluar — mode hemat energi':'tamu kembali'}`,'i')}
+ else if(c=='vis'&&fon('vis')){const t=T(a.n,50);if(!t)return;addReq({room:n,item:`Tamu undangan: ${t}${a.t?' (jam '+T(a.t,5)+')':''}`,role:'Keamanan',kind:'vis'});log(`👥 Kamar ${n}: tamu undangan ${t}`,'w')}
+ else if(c=='survey'&&fon('survey')){r.svy={k:S(a.k),p:S(a.p),f:S(a.f)};r.rate=Math.round((r.svy.k+r.svy.p+r.svy.f)/3);log(`📋 Kamar ${n}: survei K${r.svy.k} P${r.svy.p} F${r.svy.f}`,'i')}
+ ext3(n);sr();save();render()};
+setInterval(()=>{for(const n in rooms){const r=rooms[n];if(r.guest&&r.sleepAt&&Date.now()>=r.sleepAt){r.sleepAt=0;r.light=false;r.ac=26;push(n);ext3(n);ext2(n);log(`😴 Kamar ${n}: timer tidur — lampu mati, AC 26°`,'i');save();render()}}},20000);
+const _rs=window.rqSt;window.rqSt=(id,s)=>{const q=reqs.find(x=>x.id==id);if(q&&q.kind=='xout'&&s=='selesai'){if(confirm('Proses check-out kamar '+q.room+'?'))chk(q.room);return}_rs(id,s)};
+const _c4=window.chk;window.chk=n=>{const r=rooms[n];if(r.guest&&fon('loy')){const k=dg3(r.phone);if(k){const b=roomBill(n);loy[k]=(loy[k]||0)+Math.floor((b.room+b.svc)/(CFG.loyRate||1e4));sl()}}_c4(n)};
+ch.addEventListener('message',e=>{if(e.data&&e.data.type=='hello')return;});
+
+/* ===== BATCH 4: pengaturan lanjutan, SLA, pengingat check-out, harga dinamis, auto-approve, preferensi tamu, kejutan, lampu mood, DND terjadwal, panik staf ===== */
+FT.push('sur','mood','dndS','pref','ksos');
+Object.assign(CFG,{acMin:16,acMax:30,olim:8,cool:2,remMin:60,sla:15,lowRate:2,dynAt:0,dynPct:0,loyRate:1e4,silver:200,gold:500,auto:0,...CFG});
+let prefs=(()=>{try{return JSON.parse(localStorage.getItem('hs_pref'))||{}}catch(e){return{}}})();const sp=()=>{try{localStorage.setItem('hs_pref',JSON.stringify(prefs))}catch(e){}};
+const ext4=n=>{const r=rooms[n];if(r&&r.guest)tell({type:'ext4',to:n,e:{lcol:r.lcol||'netral',lb:r.lb==null?60:r.lb,dndF:r.dndF||'',dndT:r.dndT||''}})};
+['mood','dnds','sur'].forEach(c=>WHITELIST.includes(c)||WHITELIST.push(c));
+const _g4=gate;gate=function(m){const r=rooms[m.room],ok=r&&r.guest&&m.token===r.token;
+ if(ok&&['order','xorder','chat','tip','comp','lost','vis','req','sur'].includes(m.cmd)){const now=Date.now();if(CFG.cool>0&&r.lcd&&now-r.lcd<CFG.cool*1000)return deny(m,'terlalu cepat, tunggu sebentar');r.lcd=now;
+  if(CFG.olim>0&&['order','xorder','req','lost','vis','sur'].includes(m.cmd)&&reqs.filter(x=>x.room==m.room&&x.st!='selesai').length>=CFG.olim)return deny(m,'terlalu banyak permintaan aktif (maks '+CFG.olim+')')}
+ _g4(m);if(!ok)return;const a=m.a||{},n=m.room,T=(x,l)=>String(x||'').trim().slice(0,l);let ch2=0;
+ if(m.cmd=='ac'&&r.ac!=null){r.ac=Math.min(CFG.acMax,Math.max(CFG.acMin,r.ac));ext(n)}
+ else if(m.cmd=='mood'&&fon('mood')){r.lcol=['hangat','netral','dingin'].includes(a.c)?a.c:(r.lcol||'netral');if(a.b!=null)r.lb=Math.min(100,Math.max(0,Math.round(+a.b)||0));r.light=r.lb>0;push(n);log(`Kamar ${n}: lampu ${r.lcol} ${r.lb}%`,'i');ch2=1}
+ else if(m.cmd=='dnds'&&fon('dndS')){r.dndF=/^\d\d:\d\d$/.test(a.f||'')?a.f:'';r.dndT=/^\d\d:\d\d$/.test(a.t||'')?a.t:'';if(!r.dndF||!r.dndT){r.dndF=r.dndT='';}log(`Kamar ${n}: DND terjadwal ${r.dndF?r.dndF+'–'+r.dndT:'dihapus'}`,'i');ch2=1}
+ else if(m.cmd=='sur'&&fon('sur')){const o=['Ulang tahun','Anniversary','Bulan madu','Lamaran'].includes(a.o)?a.o:'Kejutan';addReq({room:n,item:`🎁 Kejutan ${o}: ${T(a.n,150)||'-'}`,role:'Housekeeping',kind:'order'});log(`🎁 Kamar ${n}: kejutan ${o}`,'w')}
+ else if(m.cmd=='sync'){if(fon('pref')&&!r.prefD&&r.ac==null){const p=prefs[dg3(r.phone)];r.prefD=1;if(p){r.ac=p.ac;if(p.scene){r.scene=p.scene;r.light=!!SCENES[p.scene].l}push(n);log(`Kamar ${n}: preferensi tamu dari kunjungan lalu diterapkan`,'i');ext(n)}}ch2=1}
+ else if(['survey','rate'].includes(m.cmd)&&CFG.lowRate>0&&r.rate&&r.rate<=CFG.lowRate&&!r.lowD){r.lowD=1;addReq({room:n,item:`⚠️ Rating rendah (${r.rate}/5) — hubungi tamu`,role:'Resepsionis',kind:'comp'});log(`⚠️ Rating rendah kamar ${n}`,'e')}
+ if(ch2||['sur','survey','rate'].includes(m.cmd)){ext4(n);sr();save();render()}};
+setInterval(()=>{const now=Date.now(),d=new Date(),hm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');let dirty=0;
+ for(const n in rooms){const r=rooms[n];if(!r.guest)continue;
+  if(r.cout){const ms=new Date(r.cout+'T'+(CFG.cout||'12:00'))-now;if(CFG.remMin>0&&ms>0&&ms<=CFG.remMin*6e4&&!r.remD){r.remD=1;tell({type:'popup',to:n,text:`Check-out pukul ${CFG.cout} (±${Math.round(ms/6e4)} menit lagi). Butuh late check-out? Buka tab Layanan.`})}
+   if(ms<0&&!r.ovD){r.ovD=1;addReq({room:n,item:'⏰ Tamu melewati jam check-out',role:'Resepsionis',kind:'over'});log(`⏰ Kamar ${n} melewati jam check-out`,'e');dirty=1}}
+  if(r.dndF&&r.dndT){const a=r.dndF,b=r.dndT,inn=a<=b?(hm>=a&&hm<b):(hm>=a||hm<b);if(inn!==!!r.dnd){r.dnd=inn;if(inn)r.mur=false;ext(n);dirty=1}}}
+ if(CFG.sla>0)reqs.forEach(q=>{if(q.st=='baru'&&!q.late&&q.kind!='tip'&&now-q.t>CFG.sla*6e4){q.late=1;q.item+=' ⏱ TERLAMBAT';beep('late',`Tugas kamar ${q.room} terlambat`);log(`⏱ Tugas kamar ${q.room} melewati SLA ${CFG.sla} mnt`,'e');dirty=1}});
+ if(dirty){sr();save();render()}},30000);
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='register'||!CFG.auto)return;setTimeout(()=>{if(regs.some(g=>g.rid===m.rid)){curReg=m.rid;approveReg();closeReg();log(`Auto-approve: ${m.name} → kamar ${m.room}`,'w')}},80)});
+const _cl=calc;calc=function(g,r,n){const c=_cl(g,r,n);if(CFG.dynAt>0&&CFG.dynPct>0){const L=Object.values(rooms),occ=L.filter(x=>x.guest).length*100/Math.max(1,L.length);if(occ>=CFG.dynAt){const k=1+CFG.dynPct/100;['sub','disc','svc','tax','tot','xt'].forEach(f=>c[f]=(c[f]||0)*k)}}return c};
+const _c5=window.chk;window.chk=n=>{const r=rooms[n];if(r.guest&&fon('pref')&&r.ac!=null){const k=dg3(r.phone);if(k){prefs[k]={ac:r.ac,scene:r.scene||''};sp()}}_c5(n);if(rooms[n]&&!rooms[n].guest){['tv','vol','ch','cur','clean','sleepAt','away','svy','xout','dlog','lcd','remD','ovD','lowD','prefD','lb','lcol','dndF','dndT'].forEach(k=>delete rooms[n][k]);save();render()}};
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='emp_sos')return;const x=staff.find(s=>s.id===m.emp);if(!x||!x.on||x.token!==m.token||!fon('ksos'))return;addReq({room:'STAF',item:`🚨 PANIK dari ${x.name} (${x.role})`,role:'Keamanan',kind:'sos'});beep();beep();log(`🚨 PANIK staf ${x.name}!`,'e');sr();rReq();tell({type:'emp_res',to:m.emp,k:'emp_rep',ok:true,msg:'Sinyal darurat terkirim'})});
+
+/* ===== BATCH 5: kunci kontrol, batas TV, FAQ otomatis, info bayar, ubah jumlah tamu, serah terima, izin karyawan, branding ===== */
+FT.push('payinfo','wifiqr','pax','bag','faq','hand','leave');
+Object.assign(CFG,{tvOff:'',maxVol:30,lockCtl:0,tips:'10000,20000,50000',tag:'',contact:'',faqt:'',wa:'',note:'',heroA:'',heroB:'',heroK:'',heroC:'',promoA:'',promoB:'',promoOff:0,feats:'',...CFG});
+['bill','pax'].forEach(c=>WHITELIST.includes(c)||WHITELIST.push(c));
+const inf3=()=>tell({type:'info3',pay:CFG.pay,bank:CFG.bank,tag:CFG.tag,contact:CFG.contact,wa:CFG.wa,note:CFG.note,heroA:CFG.heroA,heroB:CFG.heroB,heroK:CFG.heroK,heroC:CFG.heroC,promoA:CFG.promoA,promoB:CFG.promoB,promoOff:CFG.promoOff,feats:CFG.feats,hn:CFG.name,ac:CFG.ac,vouch:CFG.vouch,vcRate:CFG.vcRate});
+ch.addEventListener('message',e=>{if(e.data&&e.data.type=='hello')inf3()});
+const _g5=gate;gate=function(m){const r=rooms[m.room],ok=r&&r.guest&&m.token===r.token;
+ if(ok&&CFG.lockCtl&&!['sos','bell','chat','ic_request','ic_end','sync','door','rtc'].includes(m.cmd))return deny(m,'kontrol kamar dinonaktifkan sementara oleh hotel');
+ _g5(m);if(!ok)return;const a=m.a||{},n=m.room;let up=0;
+ if(m.cmd=='bill'&&fon('payinfo')){addReq({room:n,item:'💳 Minta rincian tagihan / ingin membayar',role:'Resepsionis',kind:'bill'});log(`💳 Kamar ${n} minta tagihan`,'w');up=1}
+ else if(m.cmd=='pax'&&fon('pax')){const k=Math.min(r.max||8,Math.max(1,Math.round(+a.n)||1));addReq({room:n,item:`👥 Jumlah tamu menjadi ${k} orang (terdaftar ${r.pax||'-'})`,role:'Resepsionis',kind:'pax'});log(`👥 Kamar ${n}: jumlah tamu ${k}`,'w');up=1}
+ else if(m.cmd=='dev'&&r.vol>CFG.maxVol){r.vol=CFG.maxVol;ext2(n)}
+ else if(m.cmd=='chat'&&fon('faq')&&CFG.faqt){const t=String(a.m||'').toLowerCase();for(const ln of CFG.faqt.split('\n')){const i=ln.indexOf('=');if(i<1)continue;if(ln.slice(0,i).toLowerCase().split(',').map(x=>x.trim()).filter(Boolean).some(k=>t.includes(k))){(r.chat=r.chat||[]).push({f:'r',t:Date.now(),m:'🤖 '+ln.slice(i+1).trim().slice(0,200)});up=1;break}}}
+ if(up){ext(n);sr();save();render()}};
+setInterval(()=>{if(!CFG.tvOff)return;const d=new Date(),hm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');if(hm!=CFG.tvOff)return;for(const n in rooms){const r=rooms[n];if(r.guest&&r.tv){r.tv=false;ext2(n);log(`📺 Kamar ${n}: TV dimatikan otomatis (${hm})`,'i')}}},30000);
+let hand=ld('hs_hand');const shd=()=>{try{localStorage.setItem('hs_hand',JSON.stringify(hand.slice(-50)))}catch(e){}};
+ch.addEventListener('message',e=>{const m=e.data;if(!m||!['emp_hand','emp_leave'].includes(m.type))return;const x=staff.find(s=>s.id===m.emp);if(!x||!x.on||x.token!==m.token)return;const t=String(m.text||'').trim().slice(0,300),R=o=>tell({type:'emp_res',to:m.emp,k:'emp_rep',...o});if(!t)return R({ok:false,msg:'Isi teks dulu'});
+ if(m.type=='emp_hand'){if(!fon('hand'))return;hand.push({n:x.name,r:x.role,t:Date.now(),m:t});shd();log(`📝 Serah terima ${x.name}: ${t}`,'i');R({ok:true,msg:'Catatan serah terima disimpan'})}
+ else{if(!fon('leave'))return;addReq({room:'-',item:`🏖 Pengajuan izin ${x.name}: ${t}`,role:'Resepsionis',kind:'leave',by:x.name});sr();rReq();R({ok:true,msg:'Pengajuan izin terkirim'})}});
+
+/* ===== BATCH 6: jam layanan, late check-out otomatis, scene sambutan, VIP, absensi, voucher, impor/ekspor konfigurasi ===== */
+FT.push('fix','amen','brk','routine','clock','vip','voucher');
+Object.assign(CFG,{svcFrom:'',svcTo:'',lcoAuto:0,lcoTo:'14:00',welScene:'',vcRate:4,vouch:'',vip:'',...CFG});
+const inW=(f,t)=>{if(!f||!t)return true;const d=new Date(),hm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');return f<=t?(hm>=f&&hm<t):(hm>=f||hm<t)};
+const _g6=gate;gate=function(m){const r=rooms[m.room],ok=r&&r.guest&&m.token===r.token;
+ if(ok&&['order','xorder','req','lost','vis','sur'].includes(m.cmd)&&!inW(CFG.svcFrom,CFG.svcTo))return deny(m,`layanan tersedia pukul ${CFG.svcFrom}–${CFG.svcTo}. Untuk hal mendesak gunakan Chat atau SOS`);
+ _g6(m);if(!ok)return;const n=m.room;let up=0;
+ if(m.cmd=='req'&&CFG.lcoAuto&&(m.a||{}).kind!='ext'){const q=[...reqs].reverse().find(x=>x.room==n&&x.kind=='lco'&&x.st=='baru');if(q){q.st='selesai';q.by='Otomatis';tell({type:'popup',to:n,text:`Late check-out disetujui hingga pukul ${CFG.lcoTo}.`});log(`Kamar ${n}: late check-out otomatis s/d ${CFG.lcoTo}`,'w');up=1}}
+ if(m.cmd=='sync'&&!r.welD){r.welD=1;if(CFG.welScene&&SCENES[CFG.welScene]&&r.ac==null){const s=SCENES[CFG.welScene];r.scene=CFG.welScene;r.light=!!s.l;r.ac=s.ac;push(n);up=1}
+  if(fon('vip')){const k=dg3(r.phone),ln=String(CFG.vip||'').split('\n').find(l=>k&&dg3(l.split('=')[0])==k);if(ln){addReq({room:n,item:'🌟 Tamu VIP: '+(ln.split('=')[1]||'').trim()+' — sapa & beri perhatian khusus',role:'Resepsionis',kind:'vip'});log(`🌟 Tamu VIP masuk kamar ${n}`,'w');up=1}}}
+ if(up){ext(n);ext2(n);sr();save();render()}};
+const _c6=window.chk;window.chk=n=>{_c6(n);if(rooms[n]&&!rooms[n].guest){delete rooms[n].welD;save()}};
+let att=ld('hs_att');const sat=()=>{try{localStorage.setItem('hs_att',JSON.stringify(att.slice(-300)))}catch(e){}};
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='emp_clock')return;const x=staff.find(s=>s.id===m.emp);if(!x||!x.on||x.token!==m.token||!fon('clock'))return;const a=m.act=='out'?'out':'in';att.push({n:x.name,r:x.role,a,t:Date.now()});sat();log(`🕘 ${x.name} ${a=='in'?'masuk shift':'selesai shift'}`,'i');tell({type:'emp_res',to:m.emp,k:'emp_rep',ok:true,msg:a=='in'?'Absen masuk tercatat':'Absen pulang tercatat'})});
+const KN=['acMin','acMax','olim','cool','remMin','sla','lowRate','dynAt','dynPct','loyRate','silver','gold','auto','maxVol','lockCtl','lcoAuto','vcRate'],KS=['tvOff','tips','tag','contact','faqt','wa','note','heroA','heroB','heroK','heroC','promoA','promoB','promoOff','feats','svcFrom','svcTo','lcoTo','welScene','vouch','vip','wel','wifi','wpass','bf','emg'];
+
+/* ===== MENU TAB BUILDER v2: blok universal (teks, menu+stok+opsi, tombol, formulir, tautan, FAQ, polling, gambar) ===== */
+window.deny=window.deny||function(m,why){log(`Ditolak kamar ${m.room}: ${why}`,'w');tell({type:'denied',to:m.room,why})};
+function pubCm(aud){return (CFG.cm||[]).filter(c=>c.on!==false&&(c.t==aud||c.t=='semua'))}
+const HM=x=>/^\d\d:\d\d$/.test(x||'')?x:'',TX=(x,l)=>String(x==null?'':x).trim().slice(0,l);
+const LK=u=>{u=TX(u,300);if(/^wa:/i.test(u))return 'https://wa.me/'+u.slice(3).replace(/\D/g,'');return /^(https?:\/\/|tel:|mailto:)/i.test(u)?u:''};
+const cmLeg=c=>({...c,types:'',blocks:[c.k=='info'?{type:'text',lines:c.text||''}:{type:'menu',lines:(c.items||[]).map(i=>i.n+' | '+i.p).join('\n')}]});
+const sanB=b=>{const ty=['text','menu','buttons','form','links','faq','poll','img','file','chat'].includes(b.type)?b.type:'text',o={id:TX(b.id,12)||'B'+Math.random().toString(36).slice(2,8),type:ty,title:TX(b.title,60),role:ROLES.includes(b.role)?b.role:'Lainnya',from:HM(b.from),to:HM(b.to),style:['warn','hi'].includes(b.style)?b.style:'normal'};
+ const L=String(b.lines||'').split('\n').map(x=>x.trim()).filter(Boolean).slice(0,60),P=l=>l.split('|').map(x=>x.trim()),RL2=x=>ROLES.includes(x)?x:'';
+ if(ty=='text')o.text=TX(b.lines,1500);
+ else if(ty=='menu')o.items=L.map(P).map(p=>({n:TX(p[0],50),p:Math.max(0,Number(String(p[1]||'').replace(/[.,](?=\d{3}(\D|$))/g,'').replace(/[^\d.]/g,''))||0),d:TX(p[2],100),o:(p[3]||'').split(',').map(x=>x.trim()).filter(Boolean).slice(0,10),role:RL2(p[4]),st:p[5]!==undefined&&p[5]!==''&&!isNaN(+p[5])?Math.max(0,+p[5]):null})).filter(i=>i.n);
+ else if(ty=='buttons')o.items=L.map(P).map(p=>({l:TX(p[0],40),role:RL2(p[1]),m:TX(p[2],100)})).filter(i=>i.l);
+ else if(ty=='form')o.f=L.map(P).map(p=>({l:TX(p[0],40),t:['text','number','time','date','select','textarea'].includes(p[1])?p[1]:'text',o:(p[2]||'').split(',').map(x=>x.trim()).filter(Boolean).slice(0,15)})).filter(i=>i.l).slice(0,12);
+ else if(ty=='links')o.items=L.map(P).map(p=>({l:TX(p[0],40),u:LK(p[1])})).filter(i=>i.l&&i.u);
+ else if(ty=='faq')o.items=L.map(P).map(p=>({q:TX(p[0],100),a:TX(p.slice(1).join(' | '),400)})).filter(i=>i.q);
+ else if(ty=='poll')o.items=L.map(x=>({n:TX(x,60)})).slice(0,10);
+ else if(ty=='img'){const p=P(L[0]||'');o.u=/^https:\/\//i.test(p[0])||/^F[a-z0-9]{5,14}$/.test(p[0])?TX(p[0],400):'';o.c=TX(p[1],100)}
+ else if(ty=='file')o.items=L.map(P).map(p=>({l:TX(p[0],80),id:/^F[a-z0-9]{5,14}$/.test(p[1]||'')?p[1]:'',s:Math.max(0,+p[2]||0),t:TX(p[3],60)})).filter(i=>i.l&&i.id);
+ return o};
+const sanTab=(c,old)=>({id:old?old.id:'M'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),name:TX(c.name,30),icon:TX(c.icon||'✨',4),t:['tamu','karyawan','semua'].includes(c.t)?c.t:'tamu',on:c.on!==false,from:HM(c.from),to:HM(c.to),types:(Array.isArray(c.types)?c.types.join(','):String(c.types||'')).split(',').map(x=>x.trim()).filter(Boolean).slice(0,10),color:/^#[0-9a-f]{6}$/i.test(c.color||'')?c.color:'',blocks:(c.blocks||[]).slice(0,25).map(sanB)});
+CFG.cm=(CFG.cm||[]).map(c=>c.blocks?c:sanTab(cmLeg(c),c));saveCfg();info2();
+const votes=(()=>{try{return JSON.parse(localStorage.getItem('hs_votes'))||{c:{},m:{}}}catch(e){return{c:{},m:{}}}})(),svv=()=>{try{localStorage.setItem('hs_votes',JSON.stringify(votes))}catch(e){}};
+const myV=(aud,id)=>{const o={},p=aud+':'+id+':';Object.keys(votes.m).forEach(k=>{if(k.startsWith(p))o[k.slice(p.length)]=votes.m[k]});return o};
+const cmv=n=>{const r=rooms[n];if(r&&r.guest)tell({type:'cmv',to:n,rt:r.type||'',pv:votes.c,rc:rcAll(),my:myV('tamu',n+':'+(r.rid||r.token))})};
+const cmVis=(c,r)=>c.on!==false&&inW(c.from,c.to)&&(!(c.types||[]).length||(r&&c.types.map(x=>x.toLowerCase()).includes(String(r.type||'').toLowerCase())));
+function cmRun(aud,who,room,a){const r=aud=='tamu'?rooms[room]:null,c=(CFG.cm||[]).find(x=>x.id==a.tid);
+ if(!c||!(c.t==aud||c.t=='semua')||!cmVis(c,r))return{ok:false,msg:'Menu sedang tidak tersedia'};const b=(c.blocks||[])[+a.bi];if(!b||!inW(b.from,b.to))return{ok:false,msg:'Layanan sedang tidak tersedia'};
+ const mk=(item,o={})=>addReq({...o,room:String(aud=='tamu'?room:'-'),item:TX(item,200),role:o.role||b.role,kind:'order',by:aud=='karyawan'?who:undefined});
+ if(b.type=='menu'){const it=b.items[+a.i];if(!it)return{ok:false,msg:'Item tidak ada'};const q=Math.min(9,Math.max(1,Math.round(+a.q)||1)),o=TX(a.o,40);if(o&&!it.o.includes(o))return{ok:false,msg:'Pilihan tidak valid'};
+  if(it.st!=null){if(it.st<q)return{ok:false,msg:it.st?`Stok tersisa ${it.st}`:'Stok habis'};it.st-=q;saveCfg();info2()}
+  mk(`${c.name}: ${it.n}${o?' ('+o+')':''}${a.nt?' – '+TX(a.nt,60):''}`,{qty:q,price:aud=='tamu'?it.p:0,role:it.role||b.role});return{ok:true,msg:'Pesanan terkirim'}}
+ if(b.type=='buttons'){const it=b.items[+a.i];if(!it)return{ok:false,msg:'Tombol tidak ada'};mk(`${c.name}: ${it.l}${it.m?' – '+it.m:''}`,{role:it.role||b.role});return{ok:true,msg:'Permintaan terkirim'}}
+ if(b.type=='form'){const v=(Array.isArray(a.v)?a.v:[]).slice(0,b.f.length).map(x=>TX(x,120));if(!v.some(Boolean))return{ok:false,msg:'Isi formulir dulu'};mk(`${b.title||c.name}: `+b.f.map((f,i)=>v[i]?f.l+'='+v[i]:'').filter(Boolean).join('; '));return{ok:true,msg:'Formulir terkirim'}}
+ if(b.type=='poll'){const i=+a.i;if(!b.items[i])return{ok:false,msg:'Pilihan tidak ada'};const k=aud+':'+(aud=='tamu'?room+':'+(r.rid||r.token):who)+':'+b.id;if(votes.m[k]!=null)return{ok:false,msg:'Anda sudah memberi suara'};const arr=votes.c[b.id]=votes.c[b.id]||[];arr[i]=(arr[i]||0)+1;votes.m[k]=i;svv();return{ok:true,msg:'Terima kasih atas suara Anda'}}
+if(b.type=='chat'){const t=TX(a.m,200);if(!t)return{ok:false,msg:'Tulis pesan dulu'};const fl=a.f&&/^F[a-z0-9]{5,14}$/.test(a.f.id||'')?{id:a.f.id,n:TX(a.f.n,80),s:Math.max(0,+a.f.s||0)}:undefined,arr=rc[b.id]=rc[b.id]||[];arr.push({f:aud=='tamu'?'Kamar '+room:who,a:aud,t:Date.now(),m:t,fl});rc[b.id]=arr.slice(-100);src();tell({type:'rchat',bid:b.id,msgs:rc[b.id].slice(-40)});return{ok:true,msg:''}}
+ return{ok:false,msg:'Blok ini tidak bisa diproses'}}
+WHITELIST.includes('cmact')||WHITELIST.push('cmact');
+const _g7=gate;gate=function(m){const r=rooms[m.room],ok=r&&r.guest&&m.token===r.token;
+ if(ok&&m.cmd=='cmact'){if(CFG.lockCtl)return deny(m,'kontrol dinonaktifkan sementara oleh hotel');const now=Date.now();if(CFG.cool>0&&r.lcd&&now-r.lcd<CFG.cool*1000)return deny(m,'terlalu cepat, tunggu sebentar');r.lcd=now;
+  if(!inW(CFG.svcFrom,CFG.svcTo))return deny(m,`layanan tersedia pukul ${CFG.svcFrom}–${CFG.svcTo}`);
+  const R=cmRun('tamu',null,m.room,m.a||{});if(!R.ok)return deny(m,R.msg);_g7(m);tell({type:'cmres',to:m.room,msg:R.msg});cmv(m.room);ext(m.room);sr();save();render();return}
+ _g7(m);if(ok&&m.cmd=='sync')cmv(m.room)};
+const _g8=gate;gate=function(m){if(m.cmd!='rtc')return _g8(m);const r=rooms[m.room];
+ if(!r||!r.guest||m.token!==r.token||!call||call.room!=m.room||call.s!='live'||!pc)return;
+ if(m.k=='answer'&&pc.signalingState=='have-local-offer')pc.setRemoteDescription({type:'answer',sdp:String(m.sdp||'').slice(0,30000)}).then(()=>log(`Kamar ${m.room}: jalur suara terhubung`,'w')).catch(e=>log('Jawaban WebRTC gagal: '+e.message,'e'))};
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='emp_cmact')return;const x=staff.find(s=>s.id===m.emp);if(!x||!x.on||x.token!==m.token)return;const R=cmRun('karyawan',x.name,'-',m);tell({type:'emp_res',to:m.emp,k:'emp_rep',ok:R.ok,msg:R.msg});if(R.ok&&R.msg){log(`📋 ${x.name}: ${R.msg}`,'i');sr();save();render()}});
+
+/* ===== Ruang chat (penyimpanan & siaran) ===== */
+let rc=(()=>{try{return JSON.parse(localStorage.getItem('hs_rchat'))||{}}catch(e){return{}}})();const src=()=>{try{localStorage.setItem('hs_rchat',JSON.stringify(rc))}catch(e){}};
+const rcAll=()=>Object.fromEntries(Object.entries(rc).map(([k,v])=>[k,v.slice(-40)]));
+/* ===== ULASAN TAMU (rating + komentar tampil di aplikasi tamu) & DAFTAR RESERVASI ===== */
+window.rk=x=>x.id||('t'+x.t);
+window.rvToggle=id=>{const i=rts.findIndex(y=>window.rk(y)===String(id));if(i<0)return;rts[i].hide=!rts[i].hide;log(`Ulasan kamar ${rts[i].room} ${rts[i].hide?'disembunyikan dari':'ditampilkan di'} aplikasi tamu`,'w');sr();avail();drawRvS()};
+window.rvRemove=id=>{const i=rts.findIndex(y=>window.rk(y)===String(id));if(i<0||!confirm('Hapus rating/ulasan ini permanen?'))return;log(`Ulasan kamar ${rts[i].room} dihapus`,'w');rts.splice(i,1);sr();avail();drawRvS()};
+let _rvH='';window.drawRvS=()=>{const el=$('rvS');if(!el)return;const L=rts.filter(x=>x&&x.v>=1&&x.v<=5).slice().sort((a,b)=>b.t-a.t),n=L.length,avg=n?L.reduce((s,x)=>s+x.v,0)/n:0;
+ const h=`<div class="kv"><span><b style="font:700 26px Georgia,serif;color:var(--ac)">${n?avg.toFixed(1):'-'}</b> ${n?'★'.repeat(Math.round(avg)):''}</span><span>${n} rating menginap</span></div>`+(L.slice(0,60).map(x=>`<div class="reg"><b>${'★'.repeat(x.v)}${'☆'.repeat(5-x.v)} · Kamar ${esc(x.room)}${x.type?' · '+esc(x.type):''}</b><small>${esc(x.name||'Tamu')} · ${new Date(x.t).toLocaleDateString('id-ID')} · ${x.hide?'Disembunyikan':'Tayang'}</small>${x.c?`<small style="color:var(--tx)">${esc(x.c)}</small>`:''}<div class="acts"><button class="btn" onclick="rvToggle('${esc(window.rk(x))}')">${x.hide?'Tayangkan':'Sembunyikan'}</button><button class="btn d" onclick="rvRemove('${esc(window.rk(x))}')">Hapus</button></div></div>`).join('')||'<div class="empty">Belum ada rating menginap</div>');
+ if(h!==_rvH){_rvH=h;el.innerHTML=h}};
+setInterval(()=>{const c=$('cRev');if(c&&c.style.display!='none')drawRvS()},2000);setTimeout(drawRvS,600);
+const shortName=n=>{const w=String(n||'').trim().split(/\s+/).filter(Boolean);if(!w.length)return'Tamu';return w[0].slice(0,14)+(w[1]?' '+w[1][0].toUpperCase()+'.':'')};
+/* ringkasan publik: hanya ulasan yang tayang (tidak disembunyikan owner dan ≥ batas bintang minimal) */
+window.revPub=()=>{if(CFG.rvOn===0)return null;const mn=+CFG.rvMin||1,L=rts.filter(x=>!x.hide&&x.v>=mn&&x.v<=5),d=[0,0,0,0,0];L.forEach(x=>d[x.v-1]++);const n=L.length;
+ return{n,avg:n?Math.round(L.reduce((a,x)=>a+x.v,0)/n*10)/10:0,dist:d,list:L.slice().sort((a,b)=>b.t-a.t).slice(0,60).map(x=>({v:x.v,c:x.c||'',t:x.t,n:shortName(x.name),ty:x.type||''}))}};
+window.upsertRev=n=>{const r=rooms[n];if(!r||!r.rate)return;const id=r.rid||('K'+n+'-'+(r.cin||''));let x=rts.find(y=>y.id===id);if(!x){x={id};rts.push(x)}
+ Object.assign(x,{room:n,name:r.name,v:r.rate,c:r.rcm||'',t:Date.now(),type:r.type||'',cin:r.cin||'',cout:r.cout||''});sr();avail()};
+/* reservasi mendatang */
+window.cancelResv=(rid,why)=>{const i=resv.findIndex(x=>x.rid===rid);if(i<0)return false;const x=resv.splice(i,1)[0];saveResv();tell({type:'reg_rejected',rid:x.rid,why:why||'Reservasi dibatalkan oleh hotel.'});log(`Reservasi ${x.name} kamar ${x.room} (${x.cin}) dibatalkan`,'w');render();return true};
+window.activateResv=(rid,manual)=>{const i=resv.findIndex(x=>x.rid===rid);if(i<0)return;const x=resv[i],r=rooms[x.room];if(!r)return;
+ if(r.guest){if(manual)toast(`Kamar ${x.room} masih terisi, check-out dulu`);return}
+ if(r.oo){if(manual)toast(`Kamar ${x.room} OO / bermasalah, tidak bisa dijual`);return}
+ resv.splice(i,1);saveResv();regs.push({...x,now:true});curReg=x.rid;approveReg();
+ if(!(rooms[x.room]&&rooms[x.room].rid===x.rid)){regs=regs.filter(g=>g.rid!==x.rid);resv.splice(i,0,x);saveResv();render();return}
+ if(manual){if(!$('rdlg').open)$('rdlg').showModal()}else closeReg();
+ log(`Reservasi ${x.name} → kamar ${x.room}: check-in ${manual?'manual':'otomatis'}, PIN & QR dikirim`,'i')};
+const dshort=d=>{try{return new Date(d+'T00:00').toLocaleDateString('id-ID',{day:'numeric',month:'short'})}catch(e){return d}};
+window.drawResv=()=>{const T=ymd(),L=resv.slice().sort((a,b)=>a.cin<b.cin?-1:a.cin>b.cin?1:0);$('rvN').textContent=L.length;
+ $('resvL').innerHTML=L.length?L.map(x=>{const r=rooms[x.room]||{},due=x.cin<=T,late=due&&r.guest;return `<div class="reg"><b>📅 ${esc(x.name)}</b><small>Kamar ${esc(x.room)} · ${esc(x.cin)} → ${esc(x.cout)} · ${nights(x.cin,x.cout)} malam</small><small>📞 ${esc(x.phone)} · ${esc(x.pax)} tamu${due?` · <span class="er">Hari check-in${late?' (kamar masih terisi)':''}</span>`:''}</small><div class="acts"><button class="btn p" onclick="activateResv('${esc(x.rid)}',1)">Check-in sekarang</button><button class="btn d" onclick="if(confirm('Batalkan reservasi ini?'))cancelResv('${esc(x.rid)}')">Batalkan</button></div></div>`}).join(''):'<div class="empty">Belum ada reservasi mendatang</div>'};
+const _rnRv=render;render=function(){_rnRv();drawResv();const T=ymd();document.querySelectorAll('#rooms .room').forEach(c=>{const b=c.querySelector('.rh b');if(!b)return;const L=resv.filter(x=>String(x.room)===b.textContent&&x.cout>T).sort((a,b)=>a.cin<b.cin?-1:1);if(!L.length)return;const a=c.querySelector('.acts');if(!a)return;const d=document.createElement('div');d.className='kv';d.innerHTML='<span>📅 Dipesan</span><span>'+L.map(x=>dshort(x.cin)+' → '+dshort(x.cout)).join(', ')+'</span>';a.parentNode.insertBefore(d,a)})};
+/* check-in otomatis pada hari H (jam check-in) & bersihkan reservasi yang lewat tanpa tamu datang */
+setInterval(()=>{const T=ymd(),d=new Date(),hm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');let ch2=false;
+ resv.filter(x=>x.cout<=T).forEach(x=>{log(`Reservasi ${x.name} kamar ${x.room} (${x.cin}) kedaluwarsa — tamu tidak datang`,'w');cancelResv(x.rid,'Reservasi kedaluwarsa karena tidak ada check-in.');ch2=true});
+ if(CFG.rvAuto!==0)resv.filter(x=>x.cin===T&&hm>=(CFG.cin||'14:00')).forEach(x=>{const r=rooms[x.room];if(r&&!r.guest)activateResv(x.rid,0)})},30000);
+render();
+</script><script>(()=>{const h=document.querySelector('header.hd'),s=document.getElementById('scrim'),o=v=>{h.classList.toggle('open',v);s.classList.toggle('on',v)};document.getElementById('mb').onclick=()=>o(!h.classList.contains('open'));s.onclick=()=>o(false);const nv=h.querySelector('nav');nv.addEventListener('click',e=>{const a=e.target.closest('a,button');if(!a)return;o(false);if(a.getAttribute('href'))nv.querySelectorAll('a').forEach(x=>x.classList.toggle('on',x===a))})})();</script>
+<script>(()=>{
+const A=document.querySelectorAll('main > aside > .card');if(A[1])A[1].id='cRs';if(A[2])A[2].id='cReq';
+const nav=document.querySelector('header.hd nav');const cc=nav.querySelector('a[href="#cCall"]');if(cc)cc.insertAdjacentHTML('afterend','<a href="#cReq">🛎️ Permintaan & Chat</a>');
+const G={cRooms:['cRooms'],cAcc:['cAcc'],cRev:['cRev'],cReg:['cReg','cRs'],cReq:['cReq'],cCall:['cCall'],cVis:['cVis'],cStaff:['cStaff'],cHk:['cHk'],cPromo:['cPromo'],cTopo:['cTopo'],cLog:['cLog']};
+const main=document.querySelector('main'),all=[...main.querySelectorAll(':scope > div > .card, :scope > aside > .card')];
+function show(k){if(!G[k])k='cRooms';const on=new Set(G[k]);all.forEach(c=>c.style.display=on.has(c.id)?'':'none');
+ const side=main.querySelector(':scope > aside'),left=main.querySelector(':scope > div');const sideOn=[...side.children].some(c=>c.style.display!='none'),leftOn=[...left.children].some(c=>c.style.display!='none');
+ side.style.display=sideOn?'':'none';left.style.display=leftOn?'':'none';main.style.gridTemplateColumns=(sideOn&&leftOn)?'':'1fr';
+ nav.querySelectorAll('a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')=='#'+k));try{sessionStorage.setItem('ob_rv',k)}catch(e){}scrollTo(0,0)}
+nav.addEventListener('click',e=>{const a=e.target.closest('a[href^="#c"]');if(!a)return;e.preventDefault();show(a.getAttribute('href').slice(1))},true);
+let k0='cRooms';try{k0=sessionStorage.getItem('ob_rv')||k0}catch(e){}if(location.hash&&G[location.hash.slice(1)])k0=location.hash.slice(1);show(k0);
+const bd=(h,n)=>{const a=nav.querySelector('a[href="#'+h+'"]');if(!a)return;let b=a.querySelector('.nb');if(!b){b=document.createElement('b');b.className='nb';b.style.cssText='margin-left:8px;background:#ef4444;color:#fff;border-radius:10px;padding:1px 7px;font-size:11px';a.appendChild(b)}b.textContent=n;b.style.display=n?'':'none'};
+const num=id=>{const e=document.getElementById(id);return e?parseInt(e.textContent)||0:0};
+setInterval(()=>{bd('cAcc',num('accN'));bd('cReg',num('regN')+num('rsN'));bd('cVis',num('vN'));bd('cCall',document.querySelectorAll('#alarms .alert, #call .alert, #call .live').length)},1200);
+})()</script>
+<script>/* ===== INTERKOM: hub panggilan suara. Resepsionis jadi perantara untuk tamu (tamu hanya boleh bicara lewat sini) dan menyimpan pengaturan dari owner ===== */
+(()=>{
+ IC.setSelf({id:'R',name:'Resepsionis'});
+ const CALLS={},LAST={},RING={},rl=n=>'Kamar '+n+((rooms[n]&&rooms[n].name)?' · '+rooms[n].name:'');
+ const tgtOk=id=>{if(id=='R'||id=='O')return true;const g=IC.grp(id);if(g=='K'){try{return (JSON.parse(localStorage.getItem('hs_staff'))||[]).some(s=>'K:'+s.id==id&&s.on!==false)}catch(e){return false}}if(g=='T'){const r=rooms[id.slice(2)];return !!(r&&r.guest)}return false};
+ const toGuest=(room,x)=>tell({fid:'R',...x,type:'ic2',tid:'T:'+room,to:String(room)});
+ const prune=()=>{const ks=Object.keys(CALLS),now=Date.now();ks.forEach(k=>{if(now-CALLS[k].t>3*3600e3)delete CALLS[k]});if(ks.length>300)ks.slice(0,ks.length-300).forEach(k=>delete CALLS[k])};
+ function dirTo(room,force){const me='T:'+room,r=rooms[room];if(!r||!r.guest)return;const ic=IC.cfgIc();
+  const m={type:'ic2',k:'dir',tid:me,to:String(room),fid:'R',on:!!(ic.on&&IC.has(ic,me)),out:IC.dirFor(me).map(c=>IC.grp(c.id)=='T'?{...c,sub:''}:c),inn:IC.inbound(me),ice:window.HS_ICE||[]},h=JSON.stringify([m.on,m.out,m.inn]);
+  if(!force&&LAST[room]&&LAST[room].h==h&&Date.now()-LAST[room].t<60000)return;LAST[room]={h,t:Date.now()};tell(m)}
+ const dirAll=force=>Object.keys(rooms).forEach(n=>dirTo(n,force));
+ setInterval(()=>dirAll(false),15000);
+ const deliver=o=>{if(o.tid=='R')return IC.deliver(o);if(IC.grp(o.tid)=='T')o.to=o.tid.slice(2);tell(o)};
+ function fromGuest(room,p){
+  const me='T:'+room,k=String(p.k||''),cid=String(p.cid||'').replace(/[^\w-]/g,'').slice(0,40),tid=String(p.tid||'').slice(0,40);
+  if(k=='dirq')return dirTo(room,true);
+  if(!['ring','accept','reject','end','offer','answer'].includes(k)||!cid)return;
+  if(k=='ring'){const ic=IC.cfgIc();
+   if(!ic.on||!IC.has(ic,me)||!IC.can(ic,me,tid)||!tgtOk(tid)){log(`📞 ${rl(room)} → ${tid}: panggilan ditolak (tidak diizinkan / tidak tersedia)`,'e');return toGuest(room,{k:'end',cid,fid:tid,why:'tidak diizinkan atau tidak tersedia'})}
+   if(IC.grp(tid)=='T'){const tn=tid.slice(2),tr=rooms[tn];   /* tamu -> tamu: hormati Jangan Ganggu & batasi dering */
+    if(tr&&tr.dnd){log(`📞 ${rl(room)} → kamar ${tn}: ditolak (Jangan Ganggu)`,'i');return toGuest(room,{k:'end',cid,fid:tid,why:'Kamar tujuan sedang tidak ingin diganggu'})}
+    const nw=Date.now(),L=(RING[me]=(RING[me]||[]).filter(t=>nw-t<60000));
+    if(L.length>=4){log(`📞 ${rl(room)} terlalu sering memanggil kamar ${tn}`,'w');return toGuest(room,{k:'end',cid,fid:tid,why:'Terlalu sering memanggil, coba lagi sebentar'})}
+    L.push(nw)}
+   CALLS[cid]={a:me,b:tid,t:Date.now()};log(`📞 ${rl(room)} memanggil ${IC.nameOf(tid).name}`,'w')}
+  else{const c=CALLS[cid];if(!c||(c.a!==me&&c.b!==me))return;if(tid!==(c.a===me?c.b:c.a))return}
+  const o={type:'ic2',k,cid,tid,fid:me,fn:IC.grp(tid)=='T'?'Kamar '+room:rl(room)};
+  if(typeof p.sdp=='string')o.sdp=p.sdp.slice(0,30000);
+  if(k=='offer')o.ice=window.HS_ICE||[];
+  if(p.why)o.why=String(p.why).slice(0,80);
+  deliver(o);if(k=='end'||k=='reject')delete CALLS[cid];prune()}
+ const _gI=gate;gate=function(m){
+  if(m.cmd!='ic2')return _gI(m);
+  const r=rooms[m.room];if(!r||!r.guest||m.token!==r.token)return;
+  if(m.sessionRoom&&String(m.sessionRoom)!=String(m.room))return;
+  fromGuest(String(m.room),m.m&&typeof m.m=='object'?m.m:{})};
+ IC.hook=m=>{if(IC.grp(m.tid)!='T')return;if(m.k=='ring')CALLS[m.cid]={a:'R',b:m.tid,t:Date.now()};else if(m.k=='end'||m.k=='reject')delete CALLS[m.cid]};
+ ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='ic2'||!m.cid)return;
+  if(m.k=='ring'&&IC.grp(m.tid)=='T'){const ic=IC.cfgIc();
+   if(!IC.can(ic,m.fid,m.tid)||!tgtOk(m.tid)){tell({type:'ic2',k:'end',cid:m.cid,tid:m.fid,fid:m.tid,why:'tidak diizinkan atau tidak tersedia'});toGuest(m.tid.slice(2),{k:'end',cid:m.cid,fid:m.fid,why:'dibatalkan'});return}
+   CALLS[m.cid]={a:m.fid,b:m.tid,t:Date.now()};log(`📞 ${m.fn||m.fid} memanggil ${rl(m.tid.slice(2))}`,'w')}
+  else if((m.k=='end'||m.k=='reject')&&CALLS[m.cid])delete CALLS[m.cid]});
+ ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='own_ic')return;const R=(ok,msg)=>tell({type:'own_res',id:m.id,ok,msg});
+  if(m.pin!==CFG.pin){log('Tab owner: PIN salah','e');return R(false,'PIN salah')}
+  CFG.ic=IC.norm(m.ic);saveCfg();try{avail(false)}catch(e){}log('Owner: pengaturan panggilan suara diperbarui','w');dirAll(true);R(true,'Pengaturan panggilan tersimpan')});
+})();
+</script>
+<script>
+/* ===== CALON TAMU: chat & panggilan suara dari beranda tamu (sebelum reservasi) ===== */
+(()=>{
+const VOK=v=>/^[A-Za-z0-9]{8,24}$/.test(String(v||''));
+let VC=(()=>{try{return JSON.parse(localStorage.getItem('hs_vchat'))||{}}catch(e){return{}}})(),vOpen=null;
+const sv=()=>{const now=Date.now();Object.keys(VC).forEach(k=>{if(now-VC[k].t>14*864e5)delete VC[k]});Object.keys(VC).sort((a,b)=>VC[b].t-VC[a].t).slice(80).forEach(k=>delete VC[k]);try{localStorage.setItem('hs_vchat',JSON.stringify(VC))}catch(e){}};
+const T=x=>String(x==null?'':x).replace(/[\u0000-\u001f]/g,' ').trim();
+const nm=v=>v.n||('Calon tamu '+(v.id||'').slice(0,4).toUpperCase());
+const hm=t=>{try{return new Date(t).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})}catch(e){return''}};
+const get=(vid)=>VC[vid]||(VC[vid]={id:vid,n:'',t:Date.now(),u:0,m:[]});
+function faq(text){if(typeof fon!='function'||!fon('faq')||!CFG.faqt)return'';const t=text.toLowerCase();for(const ln of String(CFG.faqt).split('\n')){const i=ln.indexOf('=');if(i<1)continue;if(ln.slice(0,i).toLowerCase().split(',').map(x=>x.trim()).filter(Boolean).some(k=>t.includes(k)))return ln.slice(i+1).trim().slice(0,200)}return''}
+function drawV(){
+ const L=Object.values(VC).sort((a,b)=>b.t-a.t),un=L.reduce((s,v)=>s+(v.u||0),0),n=$('vN');if(n){n.textContent=un;n.style.display=un?'':'none'}
+ const box=$('visL');if(!box)return;
+ if(!L.length){box.innerHTML='<div class="empty">Belum ada chat</div>';return}
+ box.innerHTML=L.map(v=>{const open=vOpen===v.id,last=v.m[v.m.length-1];
+  return `<div class="reg" style="${open?'border-color:var(--ac)':''}"><div style="display:flex;justify-content:space-between;gap:8px;cursor:pointer" onclick="vTog('${v.id}')"><b>💬 ${esc(nm(v))}${v.u?` <span class="cnt" style="background:#ef4444;color:#fff">${v.u}</span>`:''}</b><small>${hm(v.t)}</small></div>
+  ${open?`<div id="vt-${v.id}" style="max-height:260px;overflow:auto;margin:8px 0;display:flex;flex-direction:column;gap:6px">${v.m.map(x=>`<div style="align-self:${x.f=='g'?'flex-start':'flex-end'};max-width:86%;padding:7px 11px;border-radius:12px;background:${x.f=='g'?'#2a2a30':'var(--ac)'};color:${x.f=='g'?'#fff':'#1b1405'};font-size:13px;white-space:pre-wrap;word-break:break-word">${esc(x.m)}<small style="display:block;opacity:.6;font-size:10px">${hm(x.t)}${x.f=='r'&&x.b?' · otomatis':''}</small></div>`).join('')}</div>
+  <div style="display:flex;gap:6px"><input id="vi-${v.id}" maxlength="300" placeholder="Balas calon tamu…" style="flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--bd);background:#1d1813;color:var(--tx)" onkeydown="if(event.key=='Enter')vSend('${v.id}')"><button class="btn p" onclick="vSend('${v.id}')">Kirim</button></div>
+  <div class="acts" style="margin-top:6px"><button class="btn d" onclick="vDel('${v.id}')">Hapus chat</button></div>`
+  :`<small style="color:var(--mu);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${last?(last.f=='r'?'Anda: ':'')+esc(last.m):'—'}</small>`}</div>`}).join('');
+ if(vOpen){const t=$('vt-'+vOpen);if(t)t.scrollTop=1e9}}
+window.vTog=id=>{vOpen=vOpen===id?null:id;if(vOpen&&VC[vOpen]){VC[vOpen].u=0;sv()}drawV()};
+window.vSend=id=>{const i=$('vi-'+id),t=T(i&&i.value).slice(0,300),v=VC[id];if(!t||!v)return;const x={f:'r',t:Date.now(),m:t};v.m.push(x);v.m=v.m.slice(-60);v.t=x.t;sv();tell({type:'visit_r',vid:id,k:'msg',m:t,t:x.t});log(`💬 Balas calon tamu ${nm(v)}: ${t}`,'i');drawV();const n=$('vi-'+id);if(n)n.focus()};
+window.vDel=id=>{if(!confirm('Hapus chat ini?'))return;delete VC[id];if(vOpen===id)vOpen=null;sv();drawV()};
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='visit'||!VOK(m.vid))return;
+ const vid=String(m.vid),v=get(vid),R=o=>tell({type:'visit_r',vid,...o});
+ if(m.n!=null){const n=T(m.n).slice(0,40);if(n)v.n=n}
+ if(m.k=='hi'){R({k:'hist',msgs:v.m.slice(-40).map(x=>({f:x.f,t:x.t,m:x.m}))});sv();drawV();return}
+ if(m.k=='chat'){const text=T(m.m).slice(0,300);if(!text)return;
+  if(m.i&&v.m.some(x=>x.i===String(m.i).slice(0,20))){R({k:'ack',i:m.i});return}
+  const x={f:'g',t:Date.now(),m:text,i:String(m.i||'').slice(0,20)};v.m.push(x);v.m=v.m.slice(-60);v.t=x.t;if(vOpen===vid&&!document.hidden)v.u=0;else v.u=(v.u||0)+1;
+  R({k:'ack',i:m.i});beep('chat',`Calon tamu ${nm(v)}: ${text}`);log(`💬 Calon tamu ${nm(v)}: ${text}`,'w');
+  const a=faq(text);if(a){const y={f:'r',t:Date.now(),m:'🤖 '+a,b:1};v.m.push(y);R({k:'msg',m:y.m,t:y.t})}
+  sv();drawV();return}
+ if(m.k=='call'){if(call){R({k:'busy'});return}call={room:'V:'+vid,vid,name:nm(v),s:'ring'};beep('call',`Panggilan suara dari ${nm(v)}`);log(`📞 Panggilan dari calon tamu ${nm(v)}`,'w');render();return}
+ if(m.k=='end'){if(call&&call.vid===vid)endCall('diakhiri calon tamu');return}
+ if(m.k=='answer'){if(call&&call.vid===vid&&call.s=='live'&&pc&&pc.signalingState=='have-local-offer')pc.setRemoteDescription({type:'answer',sdp:String(m.sdp||'').slice(0,30000)}).then(()=>log(`Calon tamu ${nm(v)}: jalur suara terhubung`,'w')).catch(er=>log('Jawaban WebRTC gagal: '+er.message,'e'))}
+});
+drawV();setInterval(drawV,60000);
+})();
+</script>
+<script>/* ===== STATUS KAMAR TERPADU (16 kode) — popup per kamar, filter, dan aksi ===== */
+RS.host={get:n=>rooms[n],bd:()=>window.CFG&&CFG.blockDirty!==0,refresh:()=>{try{render()}catch(e){}},
+ filter:c=>{rf.st=c;const s=document.getElementById('rs');if(s)s.value=c;render()},
+ setOO:(n,v,note,t)=>setOOState(n,v,note,'Resepsionis',t),
+ setFlag:(n,k,v)=>{const r=rooms[n];if(!r)return;r[k]=v?1:0;log(`Resepsionis: kamar ${n} ${k.toUpperCase()} ${v?'ditandai':'dihapus'}`,v?'w':'i');sv();render()},
+ actions:(n,r)=>{const a=[];if(r.guest)return a;
+  if(r.hk=='insp'){a.push({t:'✔ Lolos cek → Siap dijual',c:'p',f:()=>hkReview(n,true,'Resepsionis')});a.push({t:'↩ Kembalikan ke HK',f:()=>hkReview(n,false,'Resepsionis')})}
+  else if(r.hk=='dirty'||r.hk=='doing')a.push({t:'✔ Tandai bersih (manual)',f:()=>hkSet(n,'clean')});
+  else a.push({t:'🧹 Tandai kotor',f:()=>hkSet(n,'dirty')});
+  if(!r.oo)a.push({t:'Check-in',f:()=>chk(n)});return a}};
+</script>
+</body></html>

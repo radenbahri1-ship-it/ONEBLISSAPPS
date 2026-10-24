@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id"><head><script src="/hs/net.js"></script><script src="/hs/draft.js"></script><script src="/hs/ic.js"></script><script src="/hs/rs.js"></script><script src="/hs/akun.js"></script><script src="/hs/staf.js"></script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="/manifest-staf.webmanifest"><meta name="theme-color" content="#0a0a0a"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Karyawan"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="icon" href="/icons/icon-192.png"><title>Tab Karyawan</title>
+<style>
+:root{--bg:#0a0a0a;--card:#14110e;--bd:#2c2722;--tx:#fff;--mu:#a9a193;--ac:#b69a6b;--ok:#34d399;--er:#fb7185;--wn:#fbbf24}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 'Segoe UI',system-ui,sans-serif}.hide{display:none!important}
+.hd{text-align:center;padding:18px 16px;background:#050505;border-bottom:1px solid var(--bd)}.hd b{font:600 22px Georgia,serif;letter-spacing:.06em;text-transform:uppercase}.hd small{display:block;color:var(--mu);letter-spacing:.2em;font-size:11px;text-transform:uppercase}
+main{max-width:520px;margin:auto;padding:16px}.card{background:var(--card);border:1px solid var(--bd);padding:16px;margin-bottom:14px}
+h2{font:300 14px 'Segoe UI';letter-spacing:.16em;margin:0 0 12px;text-transform:uppercase}h2:after{content:'';display:block;width:34px;border-top:2px solid var(--ac);margin-top:8px}
+.btn{border:1px solid var(--bd);background:#ffffff0a;color:var(--tx);padding:10px 14px;font:inherit;cursor:pointer}.btn.p{background:var(--ac);border-color:var(--ac);font-weight:600}.btn:disabled{opacity:.4}.btn.w{width:100%}
+input,textarea{width:100%;padding:10px;border:1px solid var(--bd);background:#1d1813;color:var(--tx);font:inherit}
+.m{color:var(--mu);font-size:13px;margin:4px 0 10px}.row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.st{font-size:11px;padding:2px 9px;border-radius:99px;background:#ffffff12}.st.ok{background:#34d39922;color:var(--ok)}.st.er{background:#fb718522;color:var(--er)}.st.wn{background:#fbbf2422;color:var(--wn)}
+.tabs{display:flex;gap:0;margin-bottom:14px}.tabs button{flex:1;padding:10px;background:none;border:0;border-bottom:2px solid var(--bd);color:var(--mu);font:inherit;cursor:pointer;text-transform:uppercase;letter-spacing:.1em;font-size:12px}.tabs button.on{color:#fff;border-color:var(--ac)}
+dialog{background:var(--card);color:var(--tx);border:1px solid var(--ac);width:min(440px,94vw)}dialog::backdrop{background:#000a}video{width:100%;background:#000;max-height:300px}
+label.c{display:flex;gap:8px;align-items:center;margin:8px 0}label.c input{width:18px;accent-color:var(--ac)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#2a2219;border:1px solid var(--ac);padding:10px 18px;opacity:0;transition:.25s;pointer-events:none;max-width:90%;text-align:center;z-index:99}.toast.s{opacity:1}
+/* ===== SIDEBAR (sama di tamu & resepsionis) ===== */
+header.hd{position:fixed!important;left:0;top:0;bottom:0;width:236px;display:flex!important;flex-direction:column;align-items:stretch;text-align:left!important;padding:24px 16px 18px!important;background:#050506!important;color:#fff;border:0!important;border-right:1px solid #3a3a40!important;overflow-y:auto;z-index:30;transition:transform .25s;backdrop-filter:none!important}
+header.hd .stars{color:var(--gd,#e2ae2f);letter-spacing:6px;font-size:11px}
+header.hd .logo,header.hd .lg{font:700 22px/1.2 Georgia,'Times New Roman',serif;color:#fff!important;letter-spacing:.04em;text-transform:uppercase;margin-top:6px;width:auto;height:auto;background:none;border-radius:0;display:block}
+header.hd .tg{color:var(--gd,#e2ae2f)!important;font:11px Georgia,serif;letter-spacing:.18em;text-transform:uppercase;margin-top:6px}
+header.hd nav{display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:2px;margin:22px 0 0;flex:1;justify-content:flex-start}
+header.hd nav a{display:block;padding:11px 12px;color:#cfc9bd;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:0;border-left:3px solid transparent;cursor:pointer;text-decoration:none}
+header.hd nav a:hover,header.hd nav a.on{color:#fff;background:#ffffff0d;border-color:transparent;border-left-color:var(--gd,#e2ae2f)}
+header.hd .srv{margin-top:auto;padding:14px 12px 0;color:#9a958a}
+.tb{display:none}
+body{padding-left:236px}
+@media(max-width:899px){body{padding-left:0;padding-top:52px}
+.tb{display:flex;position:fixed;top:0;left:0;right:0;height:52px;align-items:center;gap:12px;padding:0 14px;background:#050506;border-bottom:2px solid var(--gd,#e2ae2f);z-index:25;color:#fff;font:700 12px 'Segoe UI',system-ui,sans-serif;letter-spacing:.14em}
+.tb button{background:none;border:1px solid var(--gd,#e2ae2f);color:var(--gd,#e2ae2f);font-size:20px;line-height:1;padding:4px 11px;border-radius:8px;cursor:pointer}
+header.hd{transform:translateX(-100%);width:262px;z-index:40}header.hd.open{transform:none;box-shadow:0 0 40px #000c}
+#scrim{position:fixed;inset:0;background:#000a;opacity:0;pointer-events:none;transition:.25s;z-index:35}#scrim.on{opacity:1;pointer-events:auto}}
+@media(min-width:900px){#scrim{display:none}}
+
+header.hd nav button{display:block;width:100%;text-align:left;background:none;padding:11px 12px;color:#cfc9bd;font:inherit;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:0;border-left:3px solid transparent;border-radius:0;cursor:pointer}
+header.hd nav button:hover,header.hd nav button.on{color:#fff;background:#ffffff0d;border-left-color:var(--gd,#e2ae2f)}
+header.hd nav{padding:0;border:0;background:none;overflow:visible}
+header.hd .hr{display:flex;flex-direction:column;align-items:stretch;gap:8px;margin-top:14px}header.hd .hr .chip{text-align:center}
+@media print{header.hd,.tb,#scrim{display:none!important}}
+
+/* ===== TEMA FLYER ===== */
+:root{--ac:#e2ae2f;--gd:#e2ae2f;--bg:#0b0b0d;--card:#161618;--bd:#3a3a40;--gg:linear-gradient(180deg,#ffe58a,#e0a62a)}
+body{background:#0b0b0d}
+.card{border-radius:16px;box-shadow:none}
+.btn,input,select,textarea,.rm,.ins{border-radius:8px}dialog{border-radius:16px}
+.btn:hover{border-color:var(--ac)}
+.btn.p{background:var(--gg)!important;color:#1b1405!important;border:0!important;font-weight:700}
+h2{font:800 12px 'Segoe UI',system-ui,sans-serif;letter-spacing:.14em;color:var(--ac)}
+.pill{display:table;margin:22px auto 0;padding:9px 30px;border-radius:99px;background:var(--gg);color:#1b1405;font:800 14px 'Segoe UI',system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 4px 14px #e2ae2f44}
+.bar,.bar i{border-radius:99px}
+
+/* ===== NOTIFIKASI ===== */
+.toast{top:18px!important;bottom:auto!important;border-radius:12px!important;background:#161618!important;border:1px solid #3a3a40!important;border-left:5px solid #e2ae2f!important;padding:13px 20px!important;font-size:15px!important;font-weight:600;box-shadow:0 12px 34px #000b;transform:translate(-50%,-14px)!important;z-index:150!important;color:#fff}
+.toast.s{transform:translate(-50%,0)!important}
+.tabs{display:none}
+</style></head><body>
+<div class="tb"><button id="mb" aria-label="Menu">☰</button><span>MENU</span></div><div id="scrim"></div>
+<header class="hd"><div class="stars">★ ★ ★ ★ ★</div><b class="lg" id="hn">Nama Hotel Anda</b><div class="tg">Tab Karyawan</div>
+<nav><a id="sA" class="hide">📋 Absen</a><a id="sK" class="hide">🧹 Kamar</a></nav><div class="hr"><button class="btn hide" id="sX" onclick="logout()">Keluar</button></div></header>
+<div class="pill">Tab Karyawan</div>
+<main>
+<div id="vLogin" class="card"><h2>Masuk dengan QR ID</h2><p class="m">Scan QR ID karyawan Anda (kartu yang dicetak resepsionis), atau ketik/tempel kode di bawah (scanner USB juga bisa).</p>
+<button class="btn p w" onclick="openScan(handle)">📷 Scan QR ID saya</button><p class="m" id="lMsg" style="margin-top:10px"></p><input id="lIn" placeholder="Kode / tautan QR ID, lalu Enter"></div>
+
+<div id="vMain" class="hide">
+<div class="card"><div class="row" style="border:0;padding:0"><div><b id="mN" style="font:700 20px Georgia,serif"></b><div class="m" id="mR" style="margin:0"></div></div><button class="btn" onclick="logout()">Keluar</button></div></div>
+<div class="tabs"><button id="tA" class="on" onclick="tab('A')">Absen</button><button id="tK" class="hide" onclick="tab('K')">Kamar</button></div>
+<div id="pA" class="card"><h2>Absensi</h2><p class="m" id="aS">Scan QR ID karyawan Anda untuk absen masuk / pulang.</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button class="btn p" onclick="attScan('in')">📷 Absen masuk (scan QR)</button><button class="btn" onclick="attScan('out')">📷 Absen pulang (scan QR)</button></div></div>
+<div id="pK" class="hide"><div class="card"><h2>🛏️ Dasbor Kamar</h2><p class="m">Tekan kamar untuk membuka detailnya. Masukkan <b>PIN HK</b> = Anda mulai mengerjakan kamar itu. Setelah selesai, tekan <b>Konfirmasi selesai</b>: kamar lalu <b id="hkRule">menunggu cek supervisor</b>.</p><div class="hkf" id="hkF"></div><input id="hkQ" placeholder="Cari kamar / tipe" style="margin-bottom:10px"><div id="rg" class="hkg"><p class="m">Memuat kamar…</p></div></div><div id="rl" class="hide"></div></div>
+</div></main>
+
+<dialog id="sc"><h2>Scan QR</h2><video id="vid" playsinline muted></video><canvas id="cv" class="hide"></canvas><p class="m" id="scM">Arahkan kamera ke QR…</p><input id="scIn" placeholder="Atau ketik kode, lalu Enter"><div style="margin-top:10px"><button class="btn w" onclick="stopScan()">Tutup</button></div></dialog>
+<dialog id="dn"><h2>Konfirmasi selesai — <span id="dnR"></span></h2><label class="c"><input type="checkbox" class="ck">Tempat tidur & linen rapi</label><label class="c"><input type="checkbox" class="ck">Kamar mandi bersih</label><label class="c"><input type="checkbox" class="ck">Lantai & sampah bersih</label><label class="c"><input type="checkbox" class="ck">Amenities terisi</label><textarea id="dnN" rows="2" placeholder="Catatan (opsional)" style="margin-top:8px"></textarea><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><button class="btn" onclick="dn.close()">Batal</button><button class="btn p" id="dnOk" disabled>✔ Konfirmasi selesai</button></div></dialog>
+<div class="toast" id="toast"></div>
+<dialog id="hkd"><div class="hkh"><h2 id="hkT" style="margin:0">Kamar</h2><span id="hkChip" class="chip"></span></div><p class="m" id="hkS" style="margin-top:10px"></p>
+<div class="hkl">Kode status kamar</div><div id="hkC" class="codes"></div>
+<div class="hkl">Catatan kamar</div><textarea id="hkN" rows="3" maxlength="200" placeholder="Mis. AC bocor, noda di sprei, barang tertinggal"></textarea>
+<div id="hkPinBox"><div class="hkl">PIN HK (mulai membersihkan)</div><input id="hkP" type="password" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="PIN HK"></div>
+<div id="hkCk" class="hide"><div class="hkl">Cek sebelum selesai</div><label class="c"><input type="checkbox">Tempat tidur & linen rapi</label><label class="c"><input type="checkbox">Kamar mandi bersih</label><label class="c"><input type="checkbox">Lantai & sampah bersih</label><label class="c"><input type="checkbox">Amenities terisi</label></div>
+<p class="m" id="hkM" style="min-height:18px"></p>
+<div style="display:grid;gap:8px"><button class="btn p w" id="hkGo">🔓 Masuk dengan PIN — mulai membersihkan</button><button class="btn p w hide" id="hkDone" disabled>✔ Konfirmasi selesai</button><button class="btn w" id="hkSave">💾 Simpan kode & catatan</button><button class="btn w" onclick="hkd.close()">Tutup</button></div></dialog>
+<style>.hkf{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}.hkf button{border:1px solid var(--bd);background:#ffffff0a;color:var(--mu);padding:6px 10px;border-radius:99px;font:12px system-ui;cursor:pointer}.hkf button b{color:#fff;margin-left:3px}.hkf button.on{border-color:var(--ac);color:#fff;background:#b69a6b22}
+.hkg{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}.hr{border:1px solid var(--bd);border-radius:12px;padding:10px;background:#1d1813;color:inherit;font:inherit;text-align:left;cursor:pointer;display:block;width:100%}.hr .hh{display:flex;justify-content:space-between;align-items:center;gap:6px}.hr b{font:700 20px Georgia,serif}.hr .s{font-size:12px;color:var(--mu);margin-top:3px}.hr .nt{color:#cfc9bd;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.hr.mine{outline:2px solid #e2ae2f}
+.chip{font-size:11px;padding:2px 9px;border-radius:99px;background:#ffffff12;white-space:nowrap}.chip.occ{background:#60a5fa22;color:#60a5fa}.chip.free{background:#34d39922;color:var(--ok)}.chip.dirty{background:#fb718522;color:var(--er)}.chip.doing{background:#fbbf2422;color:var(--wn)}.chip.insp{background:#a78bfa33;color:#c4b5fd}.chip.mt{background:#ffffff18;color:var(--mu)}
+.cd{display:inline-block;font:700 11px system-ui;padding:1px 7px;border-radius:6px;background:#ffffff18;margin-top:4px}.cd.OO{background:#ef444455;color:#fecaca}
+.hkh{display:flex;justify-content:space-between;align-items:center;gap:8px}.hkl{font:600 11px system-ui;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin:12px 0 6px}
+.codes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.codes button{padding:8px 2px;border:1px solid var(--bd);background:#ffffff0a;color:var(--tx);font:700 14px system-ui;cursor:pointer;border-radius:8px}.codes button small{display:block;font:400 9px/1.2 system-ui;color:var(--mu);margin-top:2px}.codes button.on{border-color:var(--ac);background:#b69a6b33}</style>
+
+
+<script>
+const CHANNEL='hotel-sim',$=id=>document.getElementById(id),ch=new BroadcastChannel(CHANNEL),tell=m=>ch.postMessage(m);
+const toast=t=>{$('toast').textContent=t;$('toast').classList.add('s');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('s'),3000)};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let me=null,rooms={},keys={},pend=null,sync;
+try{keys=JSON.parse(localStorage.getItem('emp_keys'))||{}}catch(e){}
+function send(o){tell({emp:me.emp,token:me.token,...o})}
+function login(emp,token){if(!emp||!token)return $('lMsg').textContent='Kode tidak valid';me={emp,token};$('lMsg').textContent='Memeriksa ke server resepsionis…';send({type:'emp_login'});
+ clearTimeout(login.t);login.t=setTimeout(()=>{if(!me.name){$('lMsg').textContent='Server tidak merespons. Buka dasbor resepsionis di browser yang sama.';me=null}},3000)}
+function handle(t){t=String(t).trim();let m;
+ if(t.includes('emp=')){try{const u=new URL(t,location.href);return login(u.searchParams.get('emp'),u.searchParams.get('token'))}catch(e){}}
+ if(m=t.match(/^HKR\|(\w+)\|(\w+)$/))return room(m[1],m[2]);
+ toast('Kode tidak dikenali')}
+function room(n,key){if(!me||me.role!='Housekeeping')return toast('Login sebagai Housekeeping dulu');keys[n]=key;localStorage.setItem('emp_keys',JSON.stringify(keys));
+ const r=rooms[n];if(r&&r.hk=='doing'&&r.by===me.name)return openDone(n);send({type:'emp_hk',act:'start',room:n,key})}
+function openDone(n){$('dnR').textContent='Kamar '+n;$('dnN').value='';document.querySelectorAll('.ck').forEach(c=>c.checked=false);$('dnOk').disabled=true;pend=n;$('dn').showModal()}
+document.querySelectorAll('.ck').forEach(c=>c.onchange=()=>$('dnOk').disabled=![...document.querySelectorAll('.ck')].every(x=>x.checked));
+$('dnOk').onclick=()=>{send({type:'emp_hk',act:'done',room:pend,key:keys[pend]||'',note:$('dnN').value});$('dn').close()};
+window.att=a=>send({type:'emp_att',act:a});
+ch.onmessage=e=>{const m=e.data;if(!m||m.type!='emp_res'||!me||m.to!==me.emp)return;
+ if(m.k=='emp_login'){if(!m.ok){me=null;localStorage.removeItem('emp_me');return $('lMsg').textContent=m.msg}
+  me.name=m.name;me.role=m.role;localStorage.setItem('emp_me',JSON.stringify({emp:me.emp,token:me.token}));history.replaceState(null,'',location.pathname);
+  $('vLogin').classList.add('hide');$('vMain').classList.remove('hide');$('mN').textContent=m.name;$('mR').textContent=m.role+' · ID '+me.emp;$('tK').classList.toggle('hide',m.role!='Housekeeping');tab('A');
+  clearInterval(sync);sync=setInterval(()=>send({type:'emp_sync'}),3000);send({type:'emp_sync'});return}
+ if(m.k=='emp_sync'){rooms=m.rooms||{};return drawRooms()}
+ if(m.k=='emp_att'){$('aS').textContent=m.msg;return toast(m.msg)}
+ if(m.k=='emp_hk'){toast((m.ok?'✔ ':'✖ ')+m.msg);if(m.ok&&m.act=='start')send({type:'emp_sync'});if(m.ok&&m.act=='done')send({type:'emp_sync'});if(!m.ok&&me.role)return}
+ if(!m.ok&&m.msg)toast(m.msg)};
+function drawRooms(){const e=Object.entries(rooms);$('rl').innerHTML=e.length?e.map(([n,r])=>{const mine=r.hk=='doing'&&r.by===me.name;
+ return `<div class="row"><div><b>Kamar ${n}</b><div class="m" style="margin:0">${r.by?esc(r.by):''}</div></div><div><span class="st ${r.hk=='clean'?'ok':r.hk=='doing'?'wn':'er'}">${{dirty:'Kotor',doing:'Dibersihkan',insp:'Menunggu cek',clean:'Bersih'}[r.hk]}</span> ${mine?`<button class="btn p" onclick="openDone('${n}')">Selesai</button>`:r.hk=='dirty'?`<button class="btn" onclick="openScan(handle)">Scan</button>`:''}</div></div>`}).join(''):'<p class="m">Belum ada kamar yang perlu dibersihkan.</p>'}
+function tab(t){['A','K'].forEach(x=>{$('p'+x).classList.toggle('hide',x!=t);$('t'+x).classList.toggle('on',x==t)})}
+function logout(){if(localStorage.getItem('hs_pin_mode')==='1'){location.href='/logout';return}clearInterval(sync);me=null;localStorage.removeItem('emp_me');$('vMain').classList.add('hide');$('vLogin').classList.remove('hide');$('lMsg').textContent=''}
+/* ===== Scanner kamera: BarcodeDetector → jsQR (online) → ketik manual ===== */
+let stream,det,tmr,cb;
+async function openScan(f){cb=f;$('sc').showModal();$('scM').textContent='Arahkan kamera ke QR…';
+ try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});$('vid').srcObject=stream;await $('vid').play();det='BarcodeDetector' in window?new BarcodeDetector({formats:['qr_code']}):null;
+  if(!det&&!window.jsQR)await new Promise(r=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js';s.onload=s.onerror=r;document.head.appendChild(s)});
+  if(!det&&!window.jsQR)$('scM').textContent='Pembaca QR tidak tersedia — ketik kode di bawah';loop()}
+ catch(e){$('scM').textContent='Kamera tidak bisa dibuka (perlu HTTPS/izin) — ketik kode di bawah'}}
+async function loop(){const v=$('vid');if(!stream)return;try{if(v.videoWidth){let t='';if(det){const r=await det.detect(v);t=r[0]?r[0].rawValue:''}else if(window.jsQR){const c=$('cv'),x=c.getContext('2d');c.width=v.videoWidth;c.height=v.videoHeight;x.drawImage(v,0,0);const q=jsQR(x.getImageData(0,0,c.width,c.height).data,c.width,c.height);t=q?q.data:''}if(t){stopScan();return cb(t)}}}catch(e){}tmr=setTimeout(loop,250)}
+function stopScan(){clearTimeout(tmr);if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$('sc').close()}
+$('scIn').onkeydown=e=>{if(e.key=='Enter'&&e.target.value.trim()){const v=e.target.value;e.target.value='';stopScan();cb(v)}};
+$('lIn').onkeydown=e=>{if(e.key=='Enter'&&e.target.value.trim()){handle(e.target.value);e.target.value=''}};
+/* ===== Start: dari tautan QR atau sesi tersimpan ===== */
+(()=>{const q=new URLSearchParams(location.search);let s=null;try{s=JSON.parse(localStorage.getItem('emp_me'))}catch(e){}
+ if(q.get('emp'))login(q.get('emp'),q.get('token'));else if(s)login(s.emp,s.token);else fetch('/hs/me',{cache:'no-store'}).then(r=>r.json()).then(m=>{if(m&&m.ok&&m.emp&&m.etoken)login(m.emp,m.etoken)}).catch(()=>{})})();
+
+/* ===== Tab Tugas: permintaan tamu sesuai peran ===== */
+(()=>{$('tA').insertAdjacentHTML('afterend','<button id="tT" onclick="tab(\'T\')">Tugas <span class="st wn" id="tN">0</span></button>');
+$('vMain').insertAdjacentHTML('beforeend','<div id="pT" class="hide"><div class="card"><h2>Tugas dari tamu</h2><p class="m">Permintaan kamar sesuai peran Anda. Ambil, lalu tandai selesai.</p><div id="tL"></div></div></div>');
+tab=function(t){['A','K','T'].forEach(x=>{$('p'+x).classList.toggle('hide',x!=t);$('t'+x).classList.toggle('on',x==t)})};
+let TK=[],DN=[],init=0;const RL={baru:'Baru',proses:'Diambil'};
+const dr=()=>{$('tN').textContent=TK.length;$('tL').innerHTML=TK.length?TK.slice().reverse().map(q=>`<div class="row"><div><b>${q.kind=='sos'?'🚨 ':''}Kamar ${q.room}</b> · ${esc(q.item)}${q.qty>1?' ×'+q.qty:''}<div class="m" style="margin:0">${new Date(q.t).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})} · ${RL[q.st]}${q.by?' · '+esc(q.by):''}${DN.includes(String(q.room))?' · 🔕 jangan ganggu':''}</div></div><div>${q.st=='baru'?`<button class="btn p" onclick="tk('${q.id}','take')">Ambil</button>`:`<button class="btn p" onclick="tk('${q.id}','done')">Selesai</button>`}</div></div>`).join(''):'<p class="m">Tidak ada tugas.</p>'};
+window.tk=(id,act)=>send({type:'emp_task',id,act});
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='emp_res'||!me||m.to!==me.emp||(m.k!='emp_tasks'&&m.k!='emp_task'))return;if(m.msg)toast((m.ok?'✔ ':'✖ ')+m.msg);
+ if(m.tasks){const n=TK.length;TK=m.tasks;DN=m.dnd||[];if(init&&TK.length>n)toast('🔔 Tugas baru dari tamu');init=1;dr()}});
+setInterval(()=>{if(me&&me.name)send({type:'emp_tasks'})},4000)})();
+
+/* ===== Fitur tersembunyi dari Owner (karyawan) ===== */
+(()=>{let F={ft:{},cm:[],ann:''};$('tT').insertAdjacentHTML('afterend','<button id="tF" class="hide" onclick="tab(\'F\')">Fitur</button>');
+$('vMain').insertAdjacentHTML('beforeend','<div id="pF" class="hide"></div>');
+tab=function(t){['A','K','T','F'].forEach(x=>{$('p'+x).classList.toggle('hide',x!=t);$('t'+x).classList.toggle('on',x==t)})};
+const dF=()=>{const f=F.ft||{},any=(f.ann&&F.ann)||f.rep||f.stock||f.ksos||f.hand||f.leave||f.clock||F.cm.length;$('tF').classList.toggle('hide',!any);if(!any)return;if(document.activeElement&&document.activeElement.closest&&document.activeElement.closest('#pF'))return;
+ let h='';if(f.ann&&F.ann)h+=`<div class="card"><h2>📣 Pengumuman</h2><p class="m" style="color:#fff">${esc(F.ann)}</p></div>`;
+ if(f.rep)h+=`<div class="card"><h2>🔧 Lapor kerusakan / temuan</h2><input id="fRm" placeholder="No. kamar (opsional)" style="margin-bottom:8px"><textarea id="fTx" rows="3" maxlength="300" placeholder="Jelaskan masalah atau barang temuan…"></textarea><button class="btn p w" style="margin-top:8px" onclick="rep()">Kirim laporan</button></div>`;
+ if(f.clock)h+=`<div class="card"><h2>🕘 Absensi</h2><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button class="btn p" onclick="clk('in')">Masuk shift</button><button class="btn" onclick="clk('out')">Pulang</button></div></div>`;
+ if(f.hand)h+=`<div class="card"><h2>📝 Serah terima shift</h2>${(F.hand||[]).slice().reverse().map(x=>`<div class="m" style="color:#fff"><b>${esc(x.n)}</b> (${esc(x.r)}) · ${new Date(x.t).toLocaleString('id-ID',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}<br>${esc(x.m)}</div>`).join('')||'<p class="m">Belum ada catatan.</p>'}<textarea id="hdT" rows="2" maxlength="300" placeholder="Catatan untuk shift berikutnya…"></textarea><button class="btn p w" style="margin-top:8px" onclick="hdS('emp_hand','hdT')">Simpan catatan</button></div>`;
+ if(f.leave)h+=`<div class="card"><h2>🏖 Ajukan izin</h2><textarea id="lvT" rows="2" maxlength="300" placeholder="Tanggal & alasan izin…"></textarea><button class="btn p w" style="margin-top:8px" onclick="hdS('emp_leave','lvT')">Kirim pengajuan</button></div>`;
+ if(f.ksos)h+=`<div class="card"><h2>🚨 Darurat</h2><button class="btn w" style="background:#9f1239" onclick="ksos()">TOMBOL PANIK</button></div>`;
+ if(f.stock)h+=`<div class="card"><h2>📦 Lapor stok habis</h2><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">${['Handuk','Sabun & sampo','Tisu','Air mineral','Sprei & linen','Deterjen'].map(x=>`<button class="btn" onclick="stk('${x}')">${x}</button>`).join('')}</div></div>`;
+ F.cm.filter(c=>CMV(c,'')).forEach(c=>h+=`<div class="card"><h2>${esc(c.icon+' '+c.name)}</h2>${CMR(c,CMS)}</div>`);
+ $('pF').innerHTML=h;CMI($('pF'))};
+window.ksos=()=>{if(confirm('Kirim sinyal PANIK ke Keamanan & resepsionis?'))send({type:'emp_sos'})};
+window.hdS=(t,i)=>{const v=$(i).value.trim();if(!v)return toast('Isi dulu');send({type:t,text:v});$(i).value=''};
+window.clk=a=>send({type:'emp_clock',act:a});
+window.stk=x=>send({type:'emp_rep',room:'',text:'STOK HABIS: '+x});
+window.rep=()=>{const t=$('fTx').value.trim();if(!t)return toast('Isi laporan');send({type:'emp_rep',room:$('fRm').value.trim(),text:t});$('fTx').value=''};
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='emp_res'||!me||m.to!==me.emp)return;if(m.k=='emp_ft'){F={ft:m.ft||{},ann:m.ann||'',cm:m.cm||[]};dF()}else if(m.k=='emp_rep'&&m.msg)toast((m.ok?'✔ ':'✖ ')+m.msg)});
+ch.addEventListener('message',e=>{if(e.data&&e.data.type=='popup'&&me&&!e.data.to)toast('📢 '+e.data.text)});
+})();
+
+
+/* ===== Renderer blok menu tab (dipakai tamu & karyawan) ===== */
+document.head.insertAdjacentHTML('beforeend','<style>.cmb{background:var(--cd,#1d1813);border:1px solid var(--bd,#3a3126);padding:14px;margin-bottom:12px;text-align:left}.cmb h3{margin:0 0 8px;font-size:15px}.cmb.warn{border-color:#f59e0b}.cmb.hi{border-color:var(--gd,#b69a6b);background:#b69a6b22}.cmr{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--bd,#3a3126);font-size:13px}.cmr small{color:var(--mu,#9a8f7e);display:block}.cmb select,.cmb input,.cmb textarea{width:100%;margin-top:6px;box-sizing:border-box}.cmb .cmq{display:flex;gap:4px;align-items:center;white-space:nowrap}.cmb button,.cmb a.btn{cursor:pointer}.cmb details{border-bottom:1px solid var(--bd,#3a3126);padding:8px 0;font-size:13px}.cmb summary{cursor:pointer}.cmb img{max-width:100%}.cmbar{height:6px;background:var(--gd,#b69a6b);margin-top:4px}.cmg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cmb .sm{width:auto;margin:0;padding:7px 12px}.cmb a.btn{display:block;text-align:center;text-decoration:none;margin:0 0 8px}</style>');
+const CMF=n=>'Rp '+Math.round(+n||0).toLocaleString('id-ID'),CMH=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const CMW=(f,t)=>{if(!f||!t)return true;const d=new Date(),h=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');return f<=t?(h>=f&&h<t):(h>=f||h<t)};
+const CMV=(c,rt)=>c.on!==false&&CMW(c.from,c.to)&&(!(c.types||[]).length||(!!rt&&c.types.map(x=>x.toLowerCase()).includes(String(rt).toLowerCase())));
+function CMR(c,S){return (c.blocks||[]).map((b,bi)=>{if(!CMW(b.from,b.to))return'';const id=c.id+'-'+bi,hd=b.title?`<h3>${CMH(b.title)}</h3>`:'',w=h=>`<div class="cmb ${b.style||''}" ${c.color?`style="border-top:3px solid ${CMH(c.color)}"`:''}>${hd}${h}</div>`;
+ if(b.type=='text')return w(`<div style="white-space:pre-wrap;font-size:13px">${CMH(b.text)}</div>`);
+ if(b.type=='menu')return w((b.items||[]).map((it,i)=>{const k=id+'-'+i,out=it.st!=null&&it.st<=0;return `<div class="cmr"><span>${CMH(it.n)}${it.d?`<small>${CMH(it.d)}</small>`:''}${it.p?`<small>${CMF(it.p)}</small>`:''}${it.st!=null?`<small>${out?'Habis':'Stok: '+it.st}</small>`:''}${(it.o||[]).length?`<select id="co-${k}">${it.o.map(o=>`<option>${CMH(o)}</option>`).join('')}</select>`:''}</span><span class="cmq"><button class="btn sm" data-cm="q:${c.id}:${bi}:${i}:-1">−</button><b id="cq-${k}">${S.q[k]||1}</b><button class="btn sm" data-cm="q:${c.id}:${bi}:${i}:1">+</button><button class="btn p sm" data-cm="m:${c.id}:${bi}:${i}" ${out?'disabled':''}>Pesan</button></span></div>`}).join('')+`<input id="cn-${c.id}-${bi}" maxlength="60" placeholder="Catatan (opsional)">`);
+ if(b.type=='buttons')return w(`<div class="cmg">${(b.items||[]).map((it,i)=>`<button class="btn" style="margin:0" data-cm="b:${c.id}:${bi}:${i}">${CMH(it.l)}</button>`).join('')}</div>`);
+ if(b.type=='form')return w((b.f||[]).map((f,j)=>{const i=`cf-${id}-${j}`,l=`<label style="font-size:12px;display:block;margin-top:8px">${CMH(f.l)}`;return l+(f.t=='select'?`<select id="${i}"><option value="">— pilih —</option>${(f.o||[]).map(o=>`<option>${CMH(o)}</option>`).join('')}</select>`:f.t=='textarea'?`<textarea id="${i}" rows="2" maxlength="120"></textarea>`:`<input id="${i}" type="${f.t}" maxlength="120">`)+'</label>'}).join('')+`<button class="btn p" style="margin-top:10px" data-cm="f:${c.id}:${bi}:0">Kirim</button>`);
+ if(b.type=='links')return w((b.items||[]).map(it=>`<a class="btn" href="${CMH(it.u)}" ${/^https?:/.test(it.u)?'target="_blank" rel="noopener"':''}>${CMH(it.l)}</a>`).join(''));
+ if(b.type=='faq')return w((b.items||[]).map(it=>`<details><summary>${CMH(it.q)}</summary><p style="margin:6px 0 0;color:var(--mu,#9a8f7e)">${CMH(it.a)}</p></details>`).join(''));
+ if(b.type=='poll'){const cn=(S.pv||{})[b.id]||[],tot=(b.items||[]).reduce((a,_,i)=>a+(cn[i]||0),0),my=(S.my||{})[b.id];return w((b.items||[]).map((it,i)=>my!=null?`<div style="font-size:13px;margin-top:8px">${CMH(it.n)}${my==i?' ✔':''} — ${tot?Math.round((cn[i]||0)*100/tot):0}%<div class="cmbar" style="width:${tot?(cn[i]||0)*100/tot:0}%"></div></div>`:`<button class="btn" style="margin:0 0 8px" data-cm="v:${c.id}:${bi}:${i}">${CMH(it.n)}</button>`).join(''))}
+ if(b.type=='img')return b.u?w((/^F/.test(b.u)?`<img data-fid="${CMH(b.u)}" alt="">`:`<img src="${CMH(b.u)}" alt="">`)+(b.c?`<small>${CMH(b.c)}</small>`:'')):'';
+ if(b.type=='file')return w((b.items||[]).map(it=>`<div class="cmr"><span>📄 ${CMH(it.l)}<small>${fSz(it.s)}${it.t?' · '+CMH(it.t):''}</small></span><button class="btn p sm" data-cm="d:${it.id}" data-fn="${CMH(it.l)}">⬇ Unduh</button></div>`).join(''));
+ if(b.type=='chat')return w(`<div class="cmc" id="cl-${b.id}" style="max-height:240px;overflow:auto;font-size:13px">${CMM((S.rc||{})[b.id])}</div><div style="display:flex;gap:6px;margin-top:8px;align-items:center"><input id="cc-${id}" maxlength="200" placeholder="Tulis pesan…" style="margin:0;flex:1"><label class="btn sm" style="margin:0;display:inline-block;width:auto">📎<input type="file" id="cu-${id}" hidden></label><button class="btn p sm" data-cm="c:${c.id}:${bi}:0">Kirim</button></div>`);
+ return''}).join('')}
+function CMC(e,S,go){const b=e.target.closest('[data-cm]');if(!b)return;const p=b.dataset.cm.split(':'),k=p[1]+'-'+p[2]+'-'+p[3],g=i=>{const el=document.getElementById(i);return el?el.value:''};
+ if(p[0]=='q'){S.q[k]=Math.max(1,Math.min(9,(S.q[k]||1)+(+p[4])));const el=document.getElementById('cq-'+k);if(el)el.textContent=S.q[k];return}
+ if(p[0]=='d'){cmDl(p[1],b.dataset.fn);return}
+ if(p[0]=='c'){cmSend(p,go);return}
+ if(p[0]=='m')go({tid:p[1],bi:+p[2],i:+p[3],q:S.q[k]||1,o:g('co-'+k),nt:g('cn-'+p[1]+'-'+p[2])});
+ else if(p[0]=='b'||p[0]=='v')go({tid:p[1],bi:+p[2],i:+p[3]});
+ else if(p[0]=='f'){const v=[];for(let j=0;j<12;j++){const el=document.getElementById('cf-'+p[1]+'-'+p[2]+'-'+j);if(!el)break;v.push(el.value)}go({tid:p[1],bi:+p[2],v});(document.querySelectorAll('[id^="cf-'+p[1]+'-'+p[2]+'-"]')).forEach(el=>el.value='')}}
+
+let CMS={q:{},my:{},pv:{},rc:{}};$('pF').addEventListener('click',e=>CMC(e,CMS,a=>send({type:'emp_cmact',...a})));
+ch.addEventListener('message',e=>{const m=e.data;if(m&&m.type=='emp_res'&&me&&m.to===me.emp&&m.k=='emp_ft'){CMS.pv=m.pv||{};CMS.rc=m.rc||{};CMS.my=m.my||{}}});
+
+/* ===== File (IndexedDB), ruang chat, unduh ===== */
+const FDB=()=>new Promise((ok,no)=>{const q=indexedDB.open('hs_files',1);q.onupgradeneeded=()=>q.result.createObjectStore('f');q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)});
+const fPut=async(id,b)=>{const r=await fetch('/hs/file?id='+encodeURIComponent(id),{method:'POST',body:b});if(!r.ok)throw new Error('upload')};
+const fGet=async id=>{try{const r=await fetch('/hs/file?id='+encodeURIComponent(id));return r.ok?await r.blob():null}catch(e){return null}};
+const fSz=n=>n>1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round((n||0)/1024))+' KB';
+async function cmDl(id,fn){const b=await fGet(id);if(!b)return typeof toast=='function'&&toast('File tidak ditemukan di perangkat ini');const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=fn||'file';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
+const CMI=root=>{root.querySelectorAll('img[data-fid]').forEach(async im=>{const b=await fGet(im.dataset.fid);if(b)im.src=URL.createObjectURL(b)});root.querySelectorAll('.cmc').forEach(e=>e.scrollTop=1e9)};
+const CMM=ms=>(ms||[]).map(x=>`<div style="padding:4px 0;border-bottom:1px solid var(--bd,#3a3126)"><b style="color:var(--gd,#b69a6b)">${CMH(x.f)}</b> <small style="color:var(--mu,#9a8f7e)">${new Date(x.t).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})}</small><br>${CMH(x.m)}${x.fl?`<br><button class="btn sm" style="margin-top:4px;width:auto" data-cm="d:${x.fl.id}" data-fn="${CMH(x.fl.n)}">📎 ${CMH(x.fl.n)} (${fSz(x.fl.s)})</button>`:''}</div>`).join('')||'<small style="color:var(--mu,#9a8f7e)">Belum ada pesan. Jadilah yang pertama.</small>';
+function CMU(bid,ms){const e=document.getElementById('cl-'+bid);if(e){e.innerHTML=CMM(ms);e.scrollTop=1e9}}
+async function cmSend(p,go){const k=p[1]+'-'+p[2],i=document.getElementById('cc-'+k),u=document.getElementById('cu-'+k),f=u&&u.files[0],m=i?i.value.trim():'';if(!m&&!f)return;let fl;if(f){if(f.size>8*1048576)return typeof toast=='function'&&toast('File maksimal 8 MB');const id='F'+Math.random().toString(36).slice(2,10);await fPut(id,f);fl={id,n:f.name,s:f.size}}go({tid:p[1],bi:+p[2],m:m||'(file)',f:fl});if(i)i.value='';if(u)u.value=''}
+ch.addEventListener('message',e=>{const m=e.data;if(m&&m.type=='rchat'&&typeof CMS!='undefined'){CMS.rc[m.bid]=m.msgs;CMU(m.bid,m.msgs)}});
+</script><script>(()=>{const h=document.querySelector('header.hd'),s=document.getElementById('scrim'),o=v=>{h.classList.toggle('open',v);s.classList.toggle('on',v)};document.getElementById('mb').onclick=()=>o(!h.classList.contains('open'));s.onclick=()=>o(false);h.querySelector('nav').addEventListener('click',e=>{if(e.target.closest('a,button'))o(false)})})();</script>
+<script>(()=>{const g=id=>document.getElementById(id),sync=()=>{const on=!g('vMain').classList.contains('hide');g('sA').classList.toggle('hide',!on);g('sX').classList.toggle('hide',!on);g('sK').classList.toggle('hide',!on||g('tK').classList.contains('hide'));g('sA').classList.toggle('on',g('tA').classList.contains('on'));g('sK').classList.toggle('on',g('tK').classList.contains('on'))};
+g('sA').onclick=()=>g('tA').click();g('sK').onclick=()=>g('tK').click();
+const ob=new MutationObserver(sync);['vMain','tA','tK'].forEach(i=>ob.observe(g(i),{attributes:true,attributeFilter:['class']}));sync()})();</script>
+<script>/* Interkom: karyawan/HK setelah login */
+setInterval(()=>IC.setSelf(me&&me.name?{id:'K:'+me.emp,name:me.name,role:me.role}:null),800);
+</script>
+<script>
+(()=>{const $=id=>document.getElementById(id);let RM=[],cur=null,tm,flt='all',q='',code='',INSP=true,MY='',busy=false;
+const E=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SL={occ:'Terisi',free:'Kosong/Siap',dirty:'Kotor',doing:'Dibersihkan',insp:'Menunggu cek',mt:'OO · Bermasalah'};
+const CD={VC:'Kosong bersih',VD:'Kosong kotor',OC:'Terisi bersih',OD:'Terisi kotor',SO:'Sleep Out',SKP:'Skipper',OOS:'Out of Service',OO:'Rusak / OOO — tidak dijual'};
+const stOf=r=>r.oo?'mt':r.guest?'occ':r.hk=='doing'?'doing':r.hk=='insp'?'insp':r.hk=='dirty'?'dirty':'free';
+const defCode=r=>{const i=RS.info(r);return CD[i.code]?i.code:i.oo?(i.bt=='OOS'?'OOS':'OO'):(i.base=='VCI'?'VC':CD[i.base]?i.base:'VC')};
+async function api(o){try{const r=await fetch('/hs/hk',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(o)});return await r.json()}catch(e){return{ok:false,msg:'Tidak tersambung ke server'}}}
+function counts(){const c={all:RM.length};RM.forEach(r=>{const i=RS.info(r);c[i.code]=(c[i.code]||0)+1;i.tags.forEach(t=>c[t]=(c[t]||0)+1)});return c}
+function draw(){const g=$('rg');if(!g)return;const c=counts();
+ $('hkRule').textContent=INSP?'menunggu cek supervisor':'langsung siap dijual';
+ $('hkF').innerHTML=[['all','Semua']].concat(RS.LIST.filter(k=>c[k]||flt==k).map(k=>[k,k+' · '+RS.CODES[k].t])).map(([k,v])=>`<button data-f="${k}" class="${flt==k?'on':''}">${v}<b>${c[k]||0}</b></button>`).join('');
+ const L=RM.filter(r=>(flt=='all'||RS.match(r,flt))&&(!q||String(r.n).toLowerCase().includes(q)||String(r.type).toLowerCase().includes(q)));
+ g.innerHTML=L.length?L.map(r=>{const s=stOf(r),mins=r.hk=='doing'&&r.at?Math.max(1,Math.round((Date.now()-r.at)/6e4)):0;
+  return `<button class="hr ${r.mine?'mine':''}" data-n="${E(r.n)}"><div class="hh"><b>${E(r.n)}</b><span class="chip ${s}">${SL[s]}</span></div><div class="s">${E(r.type)}${r.guest&&r.cout?' · out '+E(String(r.cout).slice(5)):''}</div><div>${RS.chips(r)}${r.oo?' <span class="rss no">⛔ Tidak dijual</span>':''}</div>${r.by&&(r.hk=='doing'||r.hk=='insp')?`<div class="s">🧹 ${r.mine?'Anda':E(r.by)}${mins?' · '+mins+' mnt':''}</div>`:''}${r.note?`<div class="s nt">📝 ${E(r.note)}</div>`:''}</button>`}).join(''):'<p class="m">Tidak ada kamar pada filter ini.</p>'}
+async function load(){const j=await api({op:'rooms'});if(j&&j.ok){RM=j.rooms;MY=j.name||'';INSP=j.insp!==false;draw()}else if(j&&j.msg&&$('rg'))$('rg').innerHTML='<p class="m">'+E(j.msg)+'</p>'}
+function drawCodes(){$('hkC').innerHTML=Object.entries(CD).map(([k,v])=>`<button data-c="${k}" class="${code==k?'on':''}">${k=='OO'?'OOO':k}<small>${v}</small></button>`).join('')}
+function openRoom(n){const r=RM.find(x=>String(x.n)==n);if(!r)return;cur=r;
+ code=r.mine?(['VC','OO','OOS'].includes(r.code)?r.code:'VC'):defCode(r);
+ const s=stOf(r),other=r.hk=='doing'&&!r.mine&&r.by;
+ $('hkT').textContent='Kamar '+r.n;$('hkChip').className='chip '+s;$('hkChip').textContent=SL[s];
+ $('hkS').innerHTML=E(r.type)+(r.guest?' · terisi tamu'+(r.cout?' (check-out '+E(r.cout)+')':''):'')+(other?'<br>Sedang dibersihkan '+E(r.by):'')+(r.mine?'<br>Anda sedang mengerjakan kamar ini.':'')+(r.hk=='insp'?'<br>Menunggu cek supervisor'+(r.by?' · dikerjakan '+E(r.by):''):'')+(r.hk=='clean'&&r.chk?'<br>Lolos cek: '+E(r.chk):'')+'<span style="display:block;margin-top:8px">'+RS.detail(r)+'</span>'+(r.oo?'<span style="display:block;margin-top:6px">⛔ Kamar OO tidak dijual. Hanya resepsionis/owner yang dapat membuka blokir setelah diperbaiki.</span>':'');
+ $('hkN').value=r.note||'';$('hkP').value='';$('hkM').textContent='';
+ document.querySelectorAll('#hkCk input').forEach(c=>c.checked=false);
+ const noEnter=r.guest||!!other;
+ $('hkPinBox').classList.toggle('hide',noEnter);$('hkGo').classList.toggle('hide',noEnter);
+ $('hkGo').textContent=r.mine?'🔓 Masuk lagi & nyalakan lampu':'🔓 Masuk dengan PIN — mulai membersihkan';
+ $('hkCk').classList.toggle('hide',!r.mine);$('hkDone').classList.toggle('hide',!r.mine);$('hkDone').disabled=true;
+ drawCodes();$('hkd').showModal()}
+$('rg').onclick=e=>{const b=e.target.closest('.hr');if(b)openRoom(b.dataset.n)};
+$('hkF').onclick=e=>{const b=e.target.closest('button');if(b){flt=b.dataset.f;draw()}};
+$('hkQ').oninput=e=>{q=e.target.value.trim().toLowerCase();draw()};
+$('hkC').onclick=e=>{const b=e.target.closest('button');if(!b)return;code=b.dataset.c;drawCodes()};
+document.querySelectorAll('#hkCk input').forEach(c=>c.onchange=()=>{$('hkDone').disabled=![...document.querySelectorAll('#hkCk input')].every(x=>x.checked)});
+$('hkSave').onclick=async()=>{if(!cur||busy)return;busy=true;$('hkM').textContent='Menyimpan…';const note=$('hkN').value.trim(),j=await api({op:'mark',room:cur.n,code,note});busy=false;$('hkM').textContent=j.ok?'':(j.msg||'Gagal');
+ if(j.ok){cur.code=code;cur.note=note;if(code=='OO'||code=='OOS'){cur.oo=true;cur.ooT=code=='OO'?'OOO':'OOS';cur.ooNote=note}if(code=='SO')cur.so=1;if(code=='SKP')cur.skp=1;draw();$('hkd').close();toast('✔ '+j.msg);setTimeout(load,1500)}};
+$('hkGo').onclick=async()=>{if(!cur||busy)return;const p=$('hkP').value.trim();if(!/^\d{4,8}$/.test(p)){$('hkM').textContent='Isi PIN HK (angka).';return}
+ busy=true;$('hkGo').disabled=true;$('hkM').textContent='Memproses…';const note=$('hkN').value.trim(),j=await api({op:'enter',room:cur.n,pin:p});busy=false;$('hkGo').disabled=false;$('hkP').value='';
+ if(j.ok){if(note!==(cur.note||'')||code!==(cur.code||'')){api({op:'mark',room:cur.n,code,note})}
+  cur.hk='doing';cur.mine=true;cur.by=MY;cur.at=Date.now();draw();$('hkd').close();toast('✔ Kamar '+cur.n+': '+j.msg);setTimeout(load,1500);setTimeout(load,4500)}else $('hkM').textContent=j.msg||'Gagal'};
+$('hkDone').onclick=async()=>{if(!cur||busy)return;busy=true;$('hkDone').disabled=true;$('hkM').textContent='Menyimpan…';const note=$('hkN').value.trim(),j=await api({op:'done',room:cur.n,code,note});busy=false;
+ if(j.ok){cur.hk=j.insp===false?'clean':'insp';cur.mine=false;cur.code=code;cur.note=note;if(code=='OO'||code=='OOS'){cur.oo=true;cur.ooT=code=='OO'?'OOO':'OOS';cur.ooNote=note}if(code=='SO')cur.so=1;if(code=='SKP')cur.skp=1;draw();$('hkd').close();toast('✔ '+j.msg);setTimeout(load,1500);setTimeout(load,4500)}else{$('hkM').textContent=j.msg||'Gagal';$('hkDone').disabled=false}};
+$('hkP').onkeydown=e=>{if(e.key=='Enter')$('hkGo').click()};
+/* Absen: hanya lewat scan QR ID karyawan sendiri */
+window.attScan=a=>{if(!window.openScan)return;openScan(t=>{let ok=false;try{const u=new URL(String(t).trim(),location.href);ok=!!me&&u.searchParams.get('emp')===me.emp&&u.searchParams.get('token')===me.token}catch(e){}if(!ok)return toast('QR bukan milik Anda. Scan QR ID karyawan Anda.');att(a)})};
+const _tab=window.tab;window.tab=t=>{_tab(t);clearInterval(tm);if(t=='K'){load();tm=setInterval(load,5000)}};
+})();
+</script>
+</body></html>

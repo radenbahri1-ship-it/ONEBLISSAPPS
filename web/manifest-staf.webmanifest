@@ -1,0 +1,37 @@
+{
+ "id": "/app/staf",
+ "name": "One Bliss Staf",
+ "short_name": "OB Staf",
+ "lang": "id",
+ "start_url": "/login",
+ "scope": "/",
+ "display": "standalone",
+ "orientation": "any",
+ "background_color": "#0a0a0a",
+ "theme_color": "#0a0a0a",
+ "icons": [
+  {
+   "src": "/icons/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/icons/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "/icons/icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "description": "Aplikasi staf ONE BLISS.",
+ "categories": [
+  "travel",
+  "business"
+ ]
+}

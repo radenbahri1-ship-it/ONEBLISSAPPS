@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+# Data hotel TIDAK pernah masuk repo (akun, kata sandi, chat, config)
+data/
+onebliss_data/
+*.bak
+*.rusak-*
+hub_profile/
+hub.pid
+hub.log
+# Rahasia
+.env
+*.keystore
+*.jks
+assetlinks.json
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+# Hasil build
+dist/
+build/
+*.apk
+*.aab

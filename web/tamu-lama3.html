@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="id"><head><script src="/hs/net.js?g=1"></script><script src="/hs/draft.js"></script><script src="/hs/ic.js?g=1"></script><script src="/hs/akun.js?g=1"></script><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="/manifest-tamu.webmanifest"><meta name="theme-color" content="#0a0a0a"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="One Bliss"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="icon" href="/icons/icon-192.png"><title>Reservasi Hotel & Smart Room</title>
+<style>
+/* ===== TEMA: ubah warna di sini ===== */
+:root{--bk:#0a0a0a;--br:#3a2f26;--gd:#b69a6b;--lt:#ececec;--mu:#a9a193;--bd:#2c2722;--ok:#34d399;--er:#fb7185;--cd:#14110e}
+*{box-sizing:border-box}body{margin:0;background:var(--bk);color:#fff;font:14px/1.6 'Segoe UI',system-ui,sans-serif}.hide{display:none!important}
+.hd{text-align:center;padding:22px 16px 0;background:#050505}.stars{color:var(--gd);letter-spacing:6px;font-size:11px}
+.logo{font:600 30px Georgia,'Times New Roman',serif;letter-spacing:.06em;text-transform:uppercase}.tg{color:var(--mu);font:12px Georgia,serif;letter-spacing:.2em;text-transform:uppercase}
+nav{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:18px;align-items:center}
+nav a{color:#bbb;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;padding-bottom:14px;border-bottom:2px solid transparent}nav a:hover,nav a.on{color:#fff;border-color:var(--gd)}
+.srv{font-size:11px;color:var(--mu);padding-bottom:14px}.srv i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--er);margin-right:5px}.srv.on i{background:var(--ok)}
+.hero{min-height:330px;display:grid;place-items:center;text-align:center;background:center/cover #1c1712;position:relative;padding:40px 16px}
+.hero:before{content:'';position:absolute;inset:0;background:#0008}.hero>div{position:relative}
+.hero .w{font-weight:300;font-size:26px;letter-spacing:.18em;margin:0}.hero hr{width:44px;border:0;border-top:2px solid #fff;margin:12px auto}
+.hero h1{font:800 clamp(32px,7vw,54px)/1.1 'Segoe UI',sans-serif;margin:0;text-transform:uppercase}.hero .s{font:italic 13px Georgia,serif;letter-spacing:.12em;margin:14px 0 0}
+.pad{padding-left:max(16px,calc((100% - 960px)/2));padding-right:max(16px,calc((100% - 960px)/2))}
+.bk{background:var(--br);display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:12px;padding-top:26px;padding-bottom:26px;align-items:end}
+.f label,label{display:block;font-size:12px;margin-bottom:5px}
+input,select,textarea{width:100%;padding:10px;background:#4f4033;border:0;color:#fff;font:inherit;color-scheme:dark}
+.wrap input,.wrap select{background:#1d1813;border:1px solid var(--bd)}
+.gold{background:var(--gd);color:#fff;border:0;padding:11px 16px;font:600 12px 'Segoe UI';letter-spacing:.06em;cursor:pointer;transition:.2s}.gold:hover{filter:brightness(1.12)}
+.ft{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;padding-top:44px;padding-bottom:44px;background:#080808;text-align:center}
+.ft .im{height:100px;display:grid;place-items:center;font-size:44px;background:linear-gradient(135deg,#2a2118,#14110e);border:1px solid var(--bd)}
+.ft h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin:16px 0 6px}.ft hr{width:30px;border:0;border-top:2px solid var(--gd);margin:0 auto 10px}.ft p{color:var(--mu);font-size:13px;margin:0}
+.rm{background:var(--lt);color:#222;padding-top:46px;padding-bottom:60px;text-align:center}
+.rm h2{font:300 21px 'Segoe UI';letter-spacing:.16em;margin:0;text-transform:uppercase}.ln{width:40px;border-top:2px solid var(--gd);margin:12px auto 22px}
+.fl{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}.fl button{border:1px solid #bbb;background:#fff;color:#444;padding:6px 16px;font:inherit;font-size:12px;cursor:pointer}.fl button.on{background:var(--gd);border-color:var(--gd);color:#fff}
+.srt{display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:24px;font-size:12px;color:#666}.srt select{width:auto;background:#fff;color:#222;border:1px solid #bbb;padding:6px 10px}
+.cl{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px;text-align:left}
+.rc{cursor:pointer;transition:.2s}.rc:hover{transform:translateY(-4px)}.rc .im{aspect-ratio:4/3;background:center/cover}
+.rc .t{color:var(--gd);font-weight:700;font-size:12px;letter-spacing:.05em;text-transform:uppercase;margin-top:12px}.rc .d{font:italic 12px Georgia,serif;color:#666}
+.rc .a{font:italic 12px Georgia,serif;color:#888;margin-top:2px}.rc .p{font-weight:700;margin-top:6px;color:#222}.rc .p small{font-weight:400;color:#777}
+footer{background:#050505;text-align:center;color:#666;font-size:12px;padding:22px}
+.wrap{max-width:900px;margin:0 auto;padding:34px 16px 60px}.wrap.nr{max-width:440px}
+.card{background:var(--cd);border:1px solid var(--bd);padding:22px;margin-bottom:16px}h2.h{margin:0 0 6px;font:400 22px Georgia,serif;letter-spacing:.04em}p.m{color:var(--mu);margin:0 0 6px;font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g2{display:grid;grid-template-columns:1fr 1fr;gap:24px}@media(max-width:720px){.g2{grid-template-columns:1fr}}
+.wrap label{margin-top:14px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;font-size:11px}
+.im.big{height:200px;background:center/cover;margin-bottom:12px}.pp{color:var(--gd);font-weight:700;font-size:18px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.chips span{font-size:11px;padding:2px 10px;border:1px solid var(--bd);color:var(--mu)}
+.btn{display:block;width:100%;border:1px solid var(--bd);background:#ffffff0d;color:#fff;padding:13px;font:inherit;font-weight:600;cursor:pointer;margin-top:12px;transition:.15s}.btn:active{transform:scale(.98)}.btn.p{background:var(--gd);border-color:var(--gd)}
+.msg{margin-top:10px;font-size:13px}.er{color:var(--er)}
+.ah{height:210px;background:center/cover #1c1712;position:relative;display:flex;align-items:flex-end;margin-bottom:14px}.ah:after{content:'';position:absolute;inset:0;background:linear-gradient(#0000 20%,#000d)}.ah>div{position:relative;z-index:1;padding:16px}
+.bell{height:84px;font-size:18px;background:linear-gradient(135deg,#d98a1c,#c2410c);border:0;margin-top:0}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.tile{padding:16px;background:var(--cd);border:1px solid var(--bd);text-align:center;cursor:pointer;color:#fff;font:inherit}.tile.on{border-color:var(--gd)}.tile b{display:block;font-size:28px}.tile small{color:var(--mu)}
+.wave{display:flex;gap:3px;align-items:center;height:40px;margin:12px 0}.wave i{flex:1;background:var(--gd);height:5px;transition:height .1s}.ring{animation:r 1s infinite alternate}@keyframes r{to{box-shadow:0 0 22px #b69a6b88}}
+details summary{cursor:pointer;color:var(--mu);margin-top:16px}details .btn{font-size:13px;text-align:left}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#2a2219;border:1px solid var(--gd);padding:10px 18px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;max-width:90%;text-align:center;z-index:9}.toast.s{opacity:1}
+.tok{margin:16px 0 4px;padding:14px;text-align:center;border:1px dashed var(--gd)}.mono{font-family:Consolas,monospace;letter-spacing:.14em}
+.bdg{position:absolute;left:10px;top:10px;background:#064e3bcc;color:#6ee7b7;font-size:11px;padding:3px 10px}.bdg.x{background:#7f1d1dcc;color:#fecaca}.bdg.w{background:#78350fcc;color:#fde68a}
+.rc .im{position:relative}.rc.full .im{filter:grayscale(.75)}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}.info div{border:1px solid var(--bd);padding:10px;text-align:center}.info small{display:block;color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:.06em}.info b{font-size:14px}.okc{color:var(--ok)}
+h4{margin:16px 0 8px;font:600 12px 'Segoe UI';letter-spacing:.1em;text-transform:uppercase;color:var(--gd)}.fac{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;font-size:13px;color:#ddd}
+.pm{background:#0a0a0a;padding-top:56px;padding-bottom:60px;text-align:center}.pm h2{font:300 21px 'Segoe UI';letter-spacing:.16em;margin:0;text-transform:uppercase}
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;text-align:left}
+.pc{position:relative;min-height:320px;background:center/cover linear-gradient(135deg,#3a2f26,#14110e);display:flex;align-items:flex-end;overflow:hidden;border:1px solid var(--bd);cursor:pointer;transition:.3s}.pc:hover{border-color:var(--gd);transform:translateY(-4px)}
+.pc:before{content:'';position:absolute;inset:0;background:linear-gradient(#0000 25%,#000e)}.pc>div{position:relative;padding:22px}.pc .o{position:absolute;top:14px;right:18px;font-size:30px;color:var(--gd);opacity:.55}
+.pc .tp{color:var(--gd);font-size:11px;letter-spacing:.18em;text-transform:uppercase}.pc h3{font:400 21px Georgia,serif;margin:4px 0 6px}.pc p{margin:0;color:#d8cfc0;font-size:13px}
+.qt{background:linear-gradient(#0c0a08e6,#0c0a08e6),linear-gradient(135deg,#3a2f26,#14110e);text-align:center;padding-top:64px;padding-bottom:64px;border-top:1px solid var(--bd)}
+.qt .orn{color:var(--gd);font-size:22px;letter-spacing:10px}.qt blockquote{font:italic clamp(18px,3vw,26px)/1.5 Georgia,serif;max-width:720px;margin:14px auto}.qt cite{color:var(--gd);font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-style:normal}
+footer b{color:var(--gd);letter-spacing:.1em}
+.srt{flex-wrap:wrap}
+
+/* ===== Latar foto hotel pada Kamar Kami ===== */
+.rm{background:linear-gradient(#0a0806cc,#0a0806ee),var(--bgimg,none) center top/cover #14110e!important;color:#f2ede4}
+.rm h2{color:#fff}.fl button{background:#ffffff14!important;color:#eee!important;border-color:#ffffff40!important}.fl button.on{background:var(--gd)!important;border-color:var(--gd)!important;color:#fff!important}
+.srt{color:#d8cfc0!important}.srt select{background:#1d1813!important;color:#fff!important;border-color:#ffffff40!important}
+.rc .d{color:#cfc6b6!important}.rc .a{color:#b8ad9a!important}.rc .p{color:#fff!important}.rc .p small{color:#b8ad9a!important}.rc .im{box-shadow:0 10px 28px #0008}
+.hero{background-position:center 20%!important}.hero:before{background:#000000a8!important}
+
+/* ===== TEMA FLYER: putih + hitam + emas ===== */
+:root{--gd:#e2ae2f;--gg:linear-gradient(180deg,#ffe58a,#e0a62a);--bk:#0b0b0d;--cd:#161618;--bd:#34343a;--mu:#b3aea4}
+body{background:#0b0b0d}
+.hero{min-height:380px;display:flex!important;align-items:center;justify-content:flex-start;text-align:left;padding-top:40px;padding-bottom:70px}
+.hero:before{background:linear-gradient(90deg,#000c 0%,#0005 55%,#0002 100%)!important}
+.hero{padding-left:max(18px,calc((100% - 960px)/2))!important}.hero .hc{position:relative;max-width:520px}
+.hero h1{font:700 clamp(30px,7vw,50px)/1.12 Georgia,serif;text-transform:none;margin:0;color:#fff}
+.hero h1 em{display:block;color:var(--gd);font-style:italic;font-weight:400;font-size:.92em;margin-top:4px}
+.hero .hc:after{content:'';display:block;width:56px;border-top:3px solid var(--gd);margin-top:16px}
+.hero>.promo{position:absolute;right:max(16px,calc((100% - 960px)/2));bottom:28px;background:#d6141c;color:#fff;text-align:center;padding:8px 26px 10px;transform:rotate(-4deg);box-shadow:0 8px 22px #0009;border:2px solid #fff3}
+.hero .hk{display:flex;align-items:center;gap:12px;color:var(--gd);font:600 11px 'Segoe UI',sans-serif;letter-spacing:.42em;text-transform:uppercase;margin:0 0 14px}.hero .hk:before{content:'';width:34px;border-top:1px solid var(--gd)}.hero .hk:empty{display:none}.hero h1{text-shadow:0 2px 18px #000a;letter-spacing:.01em}.hero .hcs{margin:14px 0 0;font:italic 400 clamp(14px,3.6vw,17px)/1.6 Georgia,serif;color:#eadfc6;letter-spacing:.04em;text-shadow:0 1px 10px #000b}.hero .hcs:empty{display:none}.hero h1 em{background:linear-gradient(90deg,#f6dc8e,var(--gd,#e2ae2f) 60%,#c4922a);-webkit-background-clip:text;background-clip:text;color:transparent!important;-webkit-text-fill-color:transparent;padding-right:4px}.promo.off{display:none}.vis-lock #nS,.vis-lock #nM,.vis-lock #cg,.vis-lock #vFab,.vis-lock #vp{display:none!important}
+.promo b{display:block;font:italic 900 28px/1 Georgia,serif;letter-spacing:.04em}.promo small{display:block;font:700 11px 'Segoe UI',system-ui,sans-serif;letter-spacing:.14em;margin-top:5px;padding-top:5px;border-top:1px solid #fff8}
+.bk{background:#141416!important;border-top:3px solid var(--gd);border-bottom:1px solid var(--bd)}
+.bk label{color:var(--gd)}.bk input,.bk select{background:#232327!important;border:1px solid var(--bd)!important;border-radius:6px}
+.gold,.btn.p{background:var(--gg)!important;color:#1b1405!important;border:0!important;border-radius:8px;font-weight:700}
+.pill{display:table;margin:0 auto 18px;padding:9px 30px;border-radius:99px;background:var(--gg);color:#1b1405;font:800 14px 'Segoe UI',system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 4px 14px #e2ae2f44}
+.rm{background:#0b0b0d!important;color:#f2ede4;padding-top:34px;padding-bottom:40px}
+.panel{background:#161618;border:1px solid #3a3a40;border-radius:18px;padding:12px;max-width:900px;margin:0 auto}
+#tl,#cl{display:grid;gap:10px}
+.rc{background:#0e0e10;border:1px solid #3a3a40;border-radius:10px;overflow:hidden;transition:.2s}
+.rc:hover{border-color:var(--gd);transform:translateY(-3px)}.rc.sel{outline:2px solid var(--gd)}
+.rc .im{aspect-ratio:16/11;box-shadow:none!important}
+.rc .nm{padding:8px 6px 2px;text-align:center;color:#fff;font:700 13px/1.25 'Segoe UI',system-ui,sans-serif}
+.rc .pr{margin:6px 8px 9px;padding:6px 4px 7px;border-radius:7px;background:var(--gg);color:#1b1405;text-align:center;line-height:1.2}
+.rc .pr small{display:block;font:600 10px 'Segoe UI',system-ui,sans-serif}.rc .pr span{font-size:11px;font-weight:700}.rc .pr b{font:800 17px 'Segoe UI',system-ui,sans-serif}.rc .pr u{text-decoration:none;font-size:10px;font-weight:600}
+.rc .bdg{background:#000b;color:#fde68a}.rc .bdg.x{background:#7f1d1dcc;color:#fecaca}.rc.full{opacity:.85}
+.lst{max-width:900px;margin:30px auto 0}
+.lh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.lh h3{margin:0;font:700 15px 'Segoe UI',system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--gd)}
+.lh button{background:none;border:1px solid var(--gd);color:var(--gd);padding:5px 14px;border-radius:99px;font:inherit;font-size:12px;cursor:pointer}
+.fl{display:none!important}
+#cl{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+@media(max-width:639px){#tl{grid-template-columns:repeat(2,1fr)}#tl .rc:last-child:nth-child(odd){grid-column:1/-1;display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:1fr auto}#tl .rc:last-child:nth-child(odd) .im{grid-row:1/3;aspect-ratio:auto;min-height:130px}#tl .rc:last-child:nth-child(odd) .nm{align-self:end}}
+@media(min-width:640px){#tl{grid-template-columns:repeat(3,1fr)}#tl .rc:last-child:nth-child(3n+1){grid-column:1/-1;display:grid;grid-template-columns:1.3fr 1fr;grid-template-rows:1fr auto}#tl .rc:last-child:nth-child(3n+1) .im{grid-row:1/3;aspect-ratio:auto;min-height:150px}#tl .rc:last-child:nth-child(3n+1) .nm{align-self:end;font-size:15px}}
+.pm{background:#0b0b0d!important;padding-top:34px;padding-bottom:40px}.pm h2{display:table;margin:0 auto 18px;padding:9px 30px;border-radius:99px;background:var(--gg);color:#1b1405;font:800 14px 'Segoe UI',system-ui,sans-serif;letter-spacing:.14em}
+.pm .ln{display:none}.pc{border-radius:12px}.pc .tp{color:var(--gd)}
+.fx{background:#111113;border-top:1px solid var(--bd);padding-top:22px;padding-bottom:22px}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;max-width:900px;margin:0 auto}
+.ft1{display:flex;gap:10px;align-items:center}.ft1 svg{flex:none;width:34px;height:34px;stroke:var(--gd);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ft1 b{display:block;font-size:12px;color:#fff;line-height:1.2}.ft1 small{color:var(--mu);font-size:11px;line-height:1.2;display:block}
+.wa{background:#0b0b0d;padding-top:22px;padding-bottom:26px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+.wa .wl{font:italic 700 20px/1.25 Georgia,serif;color:var(--gd);flex:1 1 200px}
+.wab{display:flex;align-items:center;gap:12px;background:#12161a;border:2px solid #25d366;border-radius:99px;padding:8px 22px 8px 10px;color:#fff;text-decoration:none;transition:.2s}.wab:hover{background:#25d36622}
+.wab svg{width:42px;height:42px;flex:none}.wab small{display:block;font:600 11px 'Segoe UI',system-ui,sans-serif;color:#ddd}.wab b{font:800 19px 'Segoe UI',system-ui,sans-serif;letter-spacing:.02em}
+.wa .wn{flex:1 1 100%;color:#8d887e;font-size:11px}
+footer{background:#000}
+@media(max-width:639px){.hero{min-height:400px;align-items:flex-start;padding-bottom:96px}.promo{right:14px;bottom:18px;padding:6px 18px 8px}.promo b{font-size:22px}.hero .hc{max-width:70%}}
+
+/* ===== SIDEBAR (sama di tamu & resepsionis) ===== */
+header.hd{position:fixed!important;left:0;top:0;bottom:0;width:236px;display:flex!important;flex-direction:column;align-items:stretch;text-align:left!important;padding:24px 16px 18px!important;background:#050506!important;color:#fff;border:0!important;border-right:1px solid #3a3a40!important;overflow-y:auto;z-index:30;transition:transform .25s;backdrop-filter:none!important}
+header.hd .stars{color:var(--gd,#e2ae2f);letter-spacing:6px;font-size:11px}
+header.hd .logo,header.hd .lg{font:700 22px/1.2 Georgia,'Times New Roman',serif;color:#fff!important;letter-spacing:.04em;text-transform:uppercase;margin-top:6px;width:auto;height:auto;background:none;border-radius:0;display:block}
+header.hd .tg{color:var(--gd,#e2ae2f)!important;font:11px Georgia,serif;letter-spacing:.18em;text-transform:uppercase;margin-top:6px}
+header.hd nav{display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:2px;margin:22px 0 0;flex:1;justify-content:flex-start}
+header.hd nav a{display:block;padding:11px 12px;color:#cfc9bd;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:0;border-left:3px solid transparent;cursor:pointer;text-decoration:none}
+header.hd nav a:hover,header.hd nav a.on{color:#fff;background:#ffffff0d;border-color:transparent;border-left-color:var(--gd,#e2ae2f)}
+header.hd .srv{margin-top:auto;padding:14px 12px 0;color:#9a958a}
+.tb{display:none}
+body{padding-left:236px}
+@media(max-width:899px){body{padding-left:0;padding-top:52px}
+.tb{display:flex;position:fixed;top:0;left:0;right:0;height:52px;align-items:center;gap:12px;padding:0 14px;background:#050506;border-bottom:2px solid var(--gd,#e2ae2f);z-index:25;color:#fff;font:700 12px 'Segoe UI',system-ui,sans-serif;letter-spacing:.14em}
+.tb button{background:none;border:1px solid var(--gd,#e2ae2f);color:var(--gd,#e2ae2f);font-size:20px;line-height:1;padding:4px 11px;border-radius:8px;cursor:pointer}
+header.hd{transform:translateX(-100%);width:262px;z-index:40}header.hd.open{transform:none;box-shadow:0 0 40px #000c}
+#scrim{position:fixed;inset:0;background:#000a;opacity:0;pointer-events:none;transition:.25s;z-index:35}#scrim.on{opacity:1;pointer-events:auto}}
+@media(min-width:900px){#scrim{display:none}}
+#nH:before{content:'🏠  '}#nK:before{content:'🛏️  '}#nB:before{content:'📅  '}#nS:before{content:'🔑  '}#nM:before{content:'🧾  '}
+
+/* ===== NOTIFIKASI ===== */
+.toast{top:18px!important;bottom:auto!important;border-radius:12px!important;background:#161618!important;border:1px solid #3a3a40!important;border-left:5px solid #e2ae2f!important;padding:13px 20px!important;font-size:15px!important;font-weight:600;box-shadow:0 12px 34px #000b;transform:translate(-50%,-14px)!important;z-index:150!important;color:#fff}
+.toast.s{transform:translate(-50%,0)!important}
+#ntf{position:fixed;top:14px;right:14px;z-index:200;display:flex;flex-direction:column;gap:10px;width:min(390px,calc(100vw - 28px));pointer-events:none}
+.nt{pointer-events:auto;display:flex;gap:12px;align-items:flex-start;background:#121214;border:1px solid #3a3a40;border-left:6px solid var(--nc,#e2ae2f);border-radius:14px;padding:14px 14px 14px 12px;box-shadow:0 14px 40px #000c;animation:ntin .35s cubic-bezier(.2,1.4,.4,1);cursor:pointer;color:#fff}
+.nt.sk{animation:ntin .35s cubic-bezier(.2,1.4,.4,1),ntp 1s .35s infinite alternate}
+.nt i{font-style:normal;font-size:30px;line-height:1;flex:none}
+.nt b{display:block;font:800 12px 'Segoe UI',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--nc,#e2ae2f)}
+.nt span{display:block;font-size:15px;font-weight:600;line-height:1.35;margin-top:3px;word-break:break-word}
+.nt u{display:block;text-decoration:none;font-size:11px;color:#8d887e;margin-top:4px}
+@keyframes ntin{from{opacity:0;transform:translateX(40px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes ntp{to{box-shadow:0 0 0 3px var(--nc,#e2ae2f),0 14px 40px #000c}}
+@media(max-width:899px){#ntf{top:62px;right:7px;left:7px;width:auto}.toast{top:64px!important}}
+
+.rv{background:#0b0b0d;padding-top:46px;padding-bottom:50px}.rvs{max-width:860px;margin:0 auto}
+.rvh{display:grid;grid-template-columns:150px 1fr;gap:24px;align-items:center;margin:6px 0 18px}@media(max-width:560px){.rvh{grid-template-columns:1fr}}
+.rvavg{text-align:center}.rvavg b{font:700 54px Georgia,serif;display:block;line-height:1;color:#fff}.rvavg .st{color:var(--gd);letter-spacing:3px;font-size:18px;display:block;margin:6px 0 2px}.rvavg small{color:var(--mu)}
+.rvd div{display:grid;grid-template-columns:34px 1fr 30px;gap:8px;align-items:center;font-size:12px;color:var(--mu);margin:4px 0}.rvd i{display:block;height:7px;background:#ffffff14}.rvd i u{display:block;height:100%;background:var(--gd)}
+.rvf{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:0 0 14px}.rvf button{border:1px solid var(--bd);background:var(--cd);color:var(--mu);padding:6px 14px;font:inherit;font-size:12px;cursor:pointer}.rvf button.on{border-color:var(--gd);color:#fff}
+.ri{border:1px solid var(--bd);background:var(--cd);padding:14px 16px;margin-bottom:10px;text-align:left;color:#fff}.ri .rt{display:flex;justify-content:space-between;gap:8px;font-size:13px}.ri .rt span{color:var(--gd);letter-spacing:2px}.ri p{margin:6px 0 0;font-size:13px;color:#ddd;white-space:pre-wrap;word-break:break-word}.ri small{color:var(--mu)}
+
+/* ===== ULASAN TAMU — tampilan mewah (beranda) ===== */
+.rv{position:relative;background:radial-gradient(900px 340px at 50% -60px,#e2ae2f22,transparent 70%),linear-gradient(#0b0b0d,#0e0c09);padding-top:64px;padding-bottom:64px;border-top:1px solid #e2ae2f55;border-bottom:1px solid #e2ae2f33;text-align:center;overflow:hidden}
+#rv{scroll-margin-top:64px}.vr-k{color:var(--gd);font:600 11px 'Segoe UI',sans-serif;letter-spacing:.38em;text-transform:uppercase}
+.vr-h{font:400 clamp(24px,4.4vw,36px)/1.25 Georgia,'Times New Roman',serif;margin:10px 0 0;color:#fff;letter-spacing:.02em}
+.vr-o{display:flex;align-items:center;justify-content:center;gap:14px;margin:18px auto 30px;color:var(--gd);font-size:11px;max-width:260px}.vr-o i{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gd))}.vr-o i:last-child{background:linear-gradient(270deg,transparent,var(--gd))}
+.rv .rvs{max-width:1040px}
+.vr-st{display:inline-block;font-size:20px;letter-spacing:4px;background:linear-gradient(90deg,#ffd76a var(--p,100%),#ffffff2e var(--p,100%));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;line-height:1.2}
+.vr-sum{display:grid;grid-template-columns:230px 1fr;gap:34px;align-items:center;text-align:left;border:1px solid #e2ae2f40;background:linear-gradient(145deg,#1b1812,#0f0d0a);padding:26px 32px;box-shadow:0 18px 50px #000a,inset 0 1px 0 #ffffff0d;position:relative}
+.vr-sum:before{content:'';position:absolute;left:-1px;right:-1px;top:-1px;height:2px;background:var(--gg)}
+.vr-big{text-align:center;border-right:1px solid #e2ae2f33;padding-right:30px}
+.vr-big>b{display:block;font:400 68px/1 Georgia,serif;background:var(--gg);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.vr-big .vr-st{font-size:22px;margin:8px 0 4px}.vr-big small{display:block;color:var(--mu);letter-spacing:.12em;text-transform:uppercase;font-size:11px}
+.vr-pct{margin-top:12px;font-size:12px;color:#d8cfc0}.vr-pct b{color:var(--gd);font-size:15px}
+.vr-bars div{display:grid;grid-template-columns:30px 1fr 28px;gap:10px;align-items:center;font-size:12px;color:var(--mu);margin:7px 0}.vr-bars i{display:block;height:6px;background:#ffffff14;border-radius:9px;overflow:hidden}.vr-bars u{display:block;height:100%;background:var(--gg);border-radius:9px}
+.vr-f{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:26px 0 20px}.vr-f button{border:1px solid #e2ae2f40;background:transparent;color:#cfc6b6;padding:7px 18px;border-radius:99px;font:inherit;font-size:12px;letter-spacing:.06em;cursor:pointer;transition:.2s}.vr-f button:hover{border-color:var(--gd);color:#fff}.vr-f button.on{background:var(--gg);border-color:transparent;color:#1b1405;font-weight:700}
+.vr-w{position:relative}
+.vr-tr{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:8px 4px 22px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.vr-tr::-webkit-scrollbar{display:none}
+.vr-c{position:relative;flex:0 0 min(360px,84%);scroll-snap-align:start;text-align:left;border:1px solid #3a3226;background:linear-gradient(160deg,#1c1913,#100e0b);padding:30px 26px 22px;display:flex;flex-direction:column;box-shadow:0 14px 34px #0009;transition:.3s}
+.vr-c:hover{border-color:var(--gd);transform:translateY(-4px);box-shadow:0 20px 44px #000c,0 0 0 1px #e2ae2f33}
+.vr-c:before{content:'';position:absolute;left:26px;top:0;width:44px;height:2px;background:var(--gg)}
+.vr-q{position:absolute;right:20px;top:2px;font:400 84px/1 Georgia,serif;color:var(--gd);opacity:.22;font-style:normal;pointer-events:none}
+.vr-c .vr-st{font-size:16px;letter-spacing:3px}
+.vr-c p{margin:14px 0 20px;font:italic 15px/1.75 Georgia,'Times New Roman',serif;color:#ece4d4;flex:1;white-space:pre-wrap;word-break:break-word}
+.vr-c footer{display:flex;gap:12px;align-items:center;border-top:1px solid #ffffff12;padding:14px 0 0;background:none;text-align:left;color:inherit;font-size:inherit}
+.vr-av{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--gg);color:#1b1405;font:700 16px Georgia,serif}
+.vr-c footer b{display:block;font-size:13px;color:#fff;letter-spacing:.02em}.vr-c footer small{color:var(--mu);font-size:11px}
+.vr-c footer em{margin-left:auto;font-style:normal;color:#6ee7b7;font-size:10px;letter-spacing:.08em;text-transform:uppercase;text-align:right;line-height:1.3}
+.vr-n{position:absolute;top:calc(50% - 30px);width:44px;height:44px;border-radius:50%;border:1px solid var(--gd);background:#0b0b0dee;color:var(--gd);font-size:22px;cursor:pointer;z-index:2;display:grid;place-items:center;transition:.2s;padding:0}.vr-n:hover{background:var(--gd);color:#1b1405}.vr-n.p{left:-18px}.vr-n.x{right:-18px}
+@media(max-width:1120px){.vr-n.p{left:2px}.vr-n.x{right:2px}}
+.vr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}.vr-grid .vr-c{flex:initial}
+.vr-m{margin-top:8px}.vr-all{background:transparent;border:1px solid var(--gd);color:var(--gd);padding:12px 30px;font:600 12px 'Segoe UI';letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:.2s}.vr-all:hover{background:var(--gd);color:#1b1405}
+.vr-e{border:1px dashed #e2ae2f55;padding:34px 20px;color:#d8cfc0;font:italic 15px Georgia,serif}.vr-e .vr-st{display:block;margin-bottom:8px;font-style:normal}
+.vr-b{display:inline-flex;align-items:center;gap:10px;margin-top:16px;padding:8px 18px;border:1px solid #e2ae2f99;background:#0009;backdrop-filter:blur(6px);color:#fff;font-size:12px;letter-spacing:.06em;cursor:pointer;transition:.2s;text-decoration:none}.vr-b:hover{background:#000c;border-color:var(--gd)}.vr-b .vr-st{font-size:14px;letter-spacing:2px}.vr-b b{color:var(--gd);font:700 16px Georgia,serif}.vr-b span.t{color:#d8cfc0}
+@media(max-width:700px){.vr-sum{grid-template-columns:1fr;gap:20px;padding:22px 18px}.vr-big{border-right:0;border-bottom:1px solid #e2ae2f33;padding:0 0 18px}.vr-n{display:none}.rv{padding-top:50px;padding-bottom:50px}}
+
+/* ===== TANYA RESEPSIONIS (calon tamu): strip konsierge, tombol melayang, panel chat ===== */
+.cg{background:linear-gradient(90deg,#14110e,#1b1710 50%,#14110e);border-top:1px solid #e2ae2f33;border-bottom:1px solid #e2ae2f33;padding-top:26px;padding-bottom:26px}
+.cg-in{display:flex;gap:22px;align-items:center;justify-content:space-between;flex-wrap:wrap;max-width:960px;margin:0 auto}.cg-t{flex:1 1 320px}
+.cg h3{font:400 clamp(19px,3vw,25px)/1.3 Georgia,serif;margin:6px 0 4px;color:#fff}.cg p{margin:0;color:#cfc6b6;font-size:13px}
+.cg-b{display:flex;gap:10px;flex-wrap:wrap}.cg-o{background:transparent;border:1px solid var(--gd);color:var(--gd);padding:11px 18px;font:600 12px 'Segoe UI';letter-spacing:.06em;cursor:pointer;transition:.2s}.cg-o:hover{background:var(--gd);color:#1b1405}
+.vf{position:fixed;right:14px;bottom:max(66px,calc(52px + env(safe-area-inset-bottom)));z-index:2147481000;display:flex;align-items:center;gap:8px;padding:12px 18px;border:0;border-radius:99px;background:var(--gg);color:#1b1405;font:700 13px 'Segoe UI',system-ui,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:0 8px 26px #000a,0 0 0 1px #ffe58a66;transition:.2s}.vf:hover{transform:translateY(-2px)}.vf-i{font-size:17px}
+.vf i{position:absolute;top:-6px;right:-4px;min-width:20px;height:20px;border-radius:99px;background:#ef4444;color:#fff;font:700 11px/20px system-ui;text-align:center;font-style:normal;padding:0 5px}
+.vp{position:fixed;right:18px;bottom:18px;width:380px;height:min(580px,calc(100vh - 36px));z-index:2147482500;display:flex;flex-direction:column;background:#0f0d0a;border:1px solid #e2ae2f66;box-shadow:0 24px 70px #000d;overflow:hidden}
+.vp:before{content:'';height:3px;background:var(--gg);flex:none}
+.vp-h{display:flex;align-items:center;gap:12px;padding:14px 14px;background:linear-gradient(#1b1812,#13110d);border-bottom:1px solid #e2ae2f33;flex:none}
+.vp-av{width:40px;height:40px;border-radius:50%;background:var(--gg);color:#1b1405;display:grid;place-items:center;font:700 15px Georgia,serif;flex:none}
+.vp-w{flex:1;min-width:0}.vp-w b{display:block;color:#fff;font:600 15px Georgia,serif;letter-spacing:.02em}.vp-w small{color:var(--mu);font-size:11px}.vp-w small i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--er);margin-right:6px}.vp-w small.on i{background:var(--ok)}
+.vp-h button{background:#ffffff0d;border:1px solid #e2ae2f44;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:15px;padding:0;margin:0}.vp-h button:hover{border-color:var(--gd)}
+.vp-call{padding:14px;background:#14110e;border-bottom:1px solid #e2ae2f33;text-align:center;flex:none}.vp-call #vCallT{color:#fff;font-size:13px}.vp-call .wave{margin:8px 0}
+.vp-cb{display:flex;gap:8px}.vp-cb button{flex:1;padding:10px;border:1px solid var(--bd);background:#ffffff0d;color:#fff;font:inherit;font-size:12px;cursor:pointer}.vp-cb .end{background:#b91c1c;border-color:#b91c1c;font-weight:700}
+.vp-body{flex:1;overflow-y:auto;padding:16px 14px;display:flex;flex-direction:column;gap:9px;background:radial-gradient(400px 200px at 50% 0,#e2ae2f12,transparent 70%)}
+.vb{max-width:84%;padding:9px 13px;font-size:13.5px;line-height:1.5;white-space:pre-wrap;word-break:break-word;border-radius:16px}
+.vb.r{align-self:flex-start;background:#1d1a15;border:1px solid #3a3226;color:#ece4d4;border-bottom-left-radius:4px}
+.vb.g{align-self:flex-end;background:var(--gg);color:#1b1405;border-bottom-right-radius:4px}
+.vb small{display:block;font-size:10px;opacity:.65;margin-top:2px;text-align:right}.vb.g small.bad{color:#7f1d1d;opacity:1;font-weight:700;cursor:pointer}
+.vp-off{padding:9px 14px;background:#3b2a0a;color:#fde68a;font-size:12px;border-top:1px solid #e2ae2f55;flex:none}.vp-off a{color:#6ee7b7;font-weight:700}
+.vp-q{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px 0;flex:none}.vp-q:empty{display:none}.vp-q button{background:transparent;border:1px solid #e2ae2f55;color:#d8cfc0;padding:6px 12px;border-radius:99px;font:inherit;font-size:11.5px;cursor:pointer}.vp-q button:hover{border-color:var(--gd);color:#fff}
+#vForm{padding:10px 12px 12px;flex:none;display:flex;flex-direction:column;gap:7px}#vForm input{background:#1d1813;border:1px solid var(--bd);padding:10px 12px}#vNm{font-size:12px;padding:8px 12px!important}.vp-r{display:flex;gap:8px}.vp-r input{flex:1;min-width:0}.vp-r .gold{padding:10px 18px}
+@media(max-width:640px){.vp{right:0;bottom:0;left:0;top:0;width:auto;height:100dvh;height:100svh}.vf .vf-t{display:none}.vf{padding:14px 16px}}
+.bk3{font-size:12px;color:#fbbf24;margin:8px 0 0}
+</style></head><body>
+<script>
+/* ===== Mesin notifikasi: bunyi beda tiap jenis + suara bicara + banner ===== */
+(()=>{
+const T={bell:{ic:'🔔',c:'#f59e0b',t:'Panggilan Bell',sk:1,w:1800},call:{ic:'📞',c:'#34d399',t:'Panggilan Suara Masuk',sk:1,w:1500},sos:{ic:'🚨',c:'#ef4444',t:'DARURAT / SOS',sk:1,w:2900},
+reg:{ic:'📝',c:'#e2ae2f',t:'Pendaftaran Tamu',w:1200},req:{ic:'🛎️',c:'#60a5fa',t:'Permintaan Layanan',w:700},chat:{ic:'💬',c:'#a78bfa',t:'Pesan Baru',w:600},
+late:{ic:'⏱️',c:'#fb7185',t:'Perlu Perhatian',w:1300},ok:{ic:'✅',c:'#34d399',t:'Berhasil',w:600},no:{ic:'⛔',c:'#fb7185',t:'Ditolak',w:700},wake:{ic:'⏰',c:'#e2ae2f',t:'Wake-up Call',sk:1,w:3200}};
+let NAC=null,BT='',tf=0,last={};
+const AC=()=>{try{NAC=NAC||new(window.AudioContext||window.webkitAudioContext)();if(NAC.state==='suspended')NAC.resume();return NAC}catch(e){return null}};
+const tn=(f,t,d,ty,v,f2)=>{const a=AC();if(!a)return;const o=a.createOscillator(),g=a.createGain(),s=a.currentTime+t;o.type=ty||'sine';o.frequency.setValueAtTime(f,s);if(f2)o.frequency.linearRampToValueAtTime(f2,s+d);g.gain.setValueAtTime(.0001,s);g.gain.exponentialRampToValueAtTime(v||.3,s+.02);g.gain.exponentialRampToValueAtTime(.0001,s+d);o.connect(g);g.connect(a.destination);o.start(s);o.stop(s+d+.05)};
+const P={
+bell:()=>{for(let i=0;i<2;i++){tn(659,i*1.3,.9,'triangle',.5);tn(523,i*1.3+.45,1,'triangle',.5)}},
+call:()=>{for(let i=0;i<3;i++)[0,.5].forEach(x=>{tn(440,i*1.4+x,.4,'sine',.4);tn(480,i*1.4+x,.4,'sine',.4)})},
+sos:()=>{for(let i=0;i<8;i++)tn(i%2?770:960,i*.35,.34,'sawtooth',.45)},
+reg:()=>{[523,659,784].forEach((f,i)=>tn(f,i*.14,.25,'triangle',.45));tn(1047,.45,.7,'triangle',.45)},
+req:()=>{[988,784,659].forEach((f,i)=>tn(f,i*.18,.2,'square',.2))},
+chat:()=>{tn(900,0,.12,'sine',.4);tn(1350,.14,.2,'sine',.4)},
+late:()=>{tn(330,0,.5,'square',.22);tn(330,.7,.5,'square',.22)},
+ok:()=>{tn(784,0,.15,'sine',.35);tn(1047,.15,.45,'sine',.35)},
+no:()=>{tn(300,0,.25,'sawtooth',.28);tn(220,.28,.4,'sawtooth',.28)},
+wake:()=>{for(let i=0;i<6;i++){tn(880,i*.5,.18,'square',.3);tn(880,i*.5+.22,.18,'square',.3)}}};
+const say=t=>{try{const s=window.speechSynthesis;if(!s||!t)return;s.cancel();const u=new SpeechSynthesisUtterance(String(t).replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\uFE0F]/gu,'').replace(/\bSOS\b/g,'S O S').trim());u.lang='id-ID';u.rate=.95;u.volume=1;const v=(s.getVoices()||[]).find(v=>/^id/i.test(v.lang));if(v)u.voice=v;s.speak(u)}catch(e){}};
+const box=()=>{let b=document.getElementById('ntf');if(!b){b=document.createElement('div');b.id='ntf';document.body.appendChild(b)}return b};
+const banner=(d,msg,sticky)=>{const b=box(),n=document.createElement('div');n.className='nt'+(sticky?' sk':'');n.style.setProperty('--nc',d.c);
+n.innerHTML='<i>'+d.ic+'</i><div><b>'+d.t+'</b><span></span><u>'+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})+' · klik untuk menutup</u></div>';n.querySelector('span').textContent=msg;
+const rm=()=>{n.style.transition='.25s';n.style.opacity=0;n.style.transform='translateX(30px)';setTimeout(()=>n.remove(),260)};n.onclick=rm;b.prepend(n);while(b.children.length>4)b.lastChild.remove();setTimeout(rm,sticky?45000:7000)};
+const flash=m=>{if(!document.hidden)return;BT=BT||document.title;clearInterval(tf);let k=0;tf=setInterval(()=>{document.title=k++%2?BT:'🔔 '+m},900);const f=()=>{if(!document.hidden){clearInterval(tf);document.title=BT;BT='';document.removeEventListener('visibilitychange',f)}};document.addEventListener('visibilitychange',f)};
+window.notify=(type,msg,o)=>{o=o||{};const d=T[type]||T.req,k=type+msg,now=Date.now();if(last[k]&&now-last[k]<1500)return;last[k]=now;
+const mute=typeof muted!=='undefined'&&muted;
+if(!mute){try{P[type]&&P[type]()}catch(e){}if(o.say!==false)setTimeout(()=>say(o.say||msg),d.w)}
+banner(d,msg,d.sk);
+try{navigator.vibrate&&navigator.vibrate(type=='sos'?[300,100,300,100,300]:o.vib||[200,100,200])}catch(e){}
+flash(msg);try{if(document.hidden&&window.Notification&&Notification.permission==='granted')(window.HS_NOTIFY?HS_NOTIFY(d.t,msg,type):new Notification(d.t,{body:msg,tag:type}))}catch(e){}
+const a=NAC;if(!mute&&a&&a.state!=='running'&&!notify.h){notify.h=1;banner({ic:'🔇',c:'#fbbf24',t:'Suara belum aktif'},'Klik di mana saja pada halaman ini sekali agar bunyi & suara bicara aktif.',0)}};
+const unlock=()=>{AC();try{window.speechSynthesis&&window.speechSynthesis.getVoices();const u=new SpeechSynthesisUtterance(' ');u.volume=0;window.speechSynthesis.speak(u)}catch(e){}try{window.Notification&&Notification.permission==='default'&&Notification.requestPermission()}catch(e){}};
+['pointerdown','keydown'].forEach(e=>addEventListener(e,unlock,{once:true}));
+})();
+</script>
+<div class="tb"><button id="mb" aria-label="Menu">☰</button><span>MENU</span></div><div id="scrim"></div>
+<header class="hd"><div class="stars">★★★★★</div><div class="logo" id="hn"></div><div class="tg" id="tg"></div>
+<nav><a id="nH">Beranda</a><a id="nK">Kamar</a><a id="nB">Reservasi</a><a id="nR">Ulasan</a><a id="nA">👤 Akun</a><a id="nS">Smart Room</a><a id="nM" class="hide">Kamar Saya</a><span class="srv" id="srv"><i></i><b>Mencari server…</b></span></nav></header>
+
+<div id="vHome">
+<section class="hero" id="hero"><div class="hc"><div class="hk" id="hK"></div><h1><span id="hA"></span><em id="hB"></em></h1><p class="hcs" id="hC"></p><a class="vr-b hide" id="hRv" role="button" tabindex="0"></a></div><div class="promo"><b id="p1"></b><small id="p2"></small></div></section>
+<section class="bk pad" id="bk">
+<div class="f"><label>Check-in</label><input type="date" id="bIn"></div><div class="f"><label>Malam</label><select id="bN"></select></div>
+<div class="f"><label>Check-out</label><input type="date" id="bOut"></div><div class="f"><label>Dewasa</label><select id="bA"></select></div>
+<div class="f"><label>Anak</label><select id="bC"></select></div><button class="gold" id="bGo">Cek Ketersediaan</button></section>
+<section class="cg pad hide" id="cg"><div class="cg-in"><div class="cg-t"><div class="vr-k" style="text-align:left">Layanan Konsierge</div><h3>Ada pertanyaan sebelum memesan?</h3><p>Tanyakan ketersediaan, harga, fasilitas, atau permintaan khusus langsung kepada resepsionis kami.</p></div><div class="cg-b"><button class="gold" id="cgChat" type="button">💬 Chat Resepsionis</button><button class="cg-o" id="cgCall" type="button">📞 Panggil Resepsionis</button></div></div></section>
+<section class="rv pad hide" id="rv"><div class="vr-k">Kata Tamu Kami</div><h2 class="vr-h">Pengalaman Menginap yang Dikenang</h2><div class="vr-o"><i></i><b>◆</b><i></i></div><div class="rvs" id="rvBox"></div><div class="obf-w" style="margin-top:26px"><button class="p" id="rvWrite" type="button">✍️ Tulis Ulasan &amp; Curhat</button><button class="o" id="rvAcc" type="button">👤 Daftar / Masuk</button></div><div class="obf" id="cmBox"></div></section>
+<section class="rm pad" id="rooms"><div class="pill">Pilihan Tipe Kamar</div>
+<div class="panel"><div id="tl"><p style="grid-column:1/-1;text-align:center">Memuat…</p></div></div>
+<div class="lst" id="lst"><div class="lh"><h3 id="lt">Semua Kamar</h3><button id="lx" class="hide">Tampilkan semua</button></div>
+<div class="fl" id="fl"></div>
+<div class="srt"><span>Urutkan</span><select id="sort"><option value="no">Nomor kamar</option><option value="lo">Harga termurah</option><option value="hi">Harga termahal</option></select><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" id="onlyFree" style="width:auto"> Hanya yang tersedia</label><b id="cnt"></b></div>
+<div class="cl" id="cl"><p>Memuat…</p></div></div></section>
+<section class="pm pad" id="pm"><h2>Penawaran Spesial</h2><div class="pg" id="pg"></div></section>
+<section class="fx pad"><div class="fg" id="fx"></div></section>
+<section class="wa pad"><div class="wl">Jangan Lewatkan<br>Promo Spesial Ini!</div>
+<a class="wab" id="waBtn" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#25d366"/><path fill="#fff" d="M16.1 6.6a9.4 9.4 0 0 0-8 14.3l-1.2 4.5 4.6-1.2a9.4 9.4 0 1 0 4.6-17.6Zm0 17.2c-1.5 0-2.9-.4-4.1-1.1l-.3-.2-2.7.7.7-2.6-.2-.3a7.8 7.8 0 1 1 6.6 3.5Zm4.3-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.4 6.4 0 0 1-3.2-2.8c-.2-.4.2-.4.7-1.3.1-.1 0-.3 0-.4l-.7-1.6c-.2-.4-.3-.4-.5-.4h-.4c-.2 0-.4.1-.6.3-.2.2-.9.9-.9 2.100s.9 2.500 1 2.700c.1.2 1.800 2.800 4.400 3.900 1.600.7 2.300.8 3.100.6.500-.1 1.400-.6 1.600-1.200.2-.6.2-1.100.1-1.200l-.5-.3Z"/></svg><span><small>Reservasi WhatsApp</small><b id="waNum"></b></span></a>
+<div class="wn" id="wn"></div></section>
+</div>
+
+<main class="wrap hide" id="vReg"><button class="btn" id="rBack" style="width:auto;padding:8px 16px;margin:0 0 16px;font-size:13px">← Kembali ke daftar kamar</button>
+<div class="g2"><div class="card" id="rSel"></div>
+<div><div class="card" id="rForm"><h2 class="h">Pendaftaran tamu</h2><p class="m">Resepsionis akan memeriksa data Anda lalu mengirim PIN & QR kamar ke HP ini.</p>
+<label>Nama lengkap</label><input id="rName" placeholder="Nama sesuai identitas"><label>No. HP</label><input id="rPhone" inputmode="tel" placeholder="08xxxxxxxxxx">
+<label>Jumlah tamu</label><input id="rPax" type="number" min="1" max="8" value="1">
+<div class="two"><div><label>Check-in</label><input id="rIn" type="date"></div><div><label>Check-out</label><input id="rOut" type="date"></div></div>
+<button class="btn p" id="rGo">Kirim pendaftaran</button><div class="msg" id="rmsg"></div></div><div class="card hide" id="rFull"></div></div></div></main>
+
+<main class="wrap nr hide" id="vStat"><div class="card"><h2 class="h" id="sT"></h2><p class="m" id="sP"></p><div id="sRv"></div>
+<div class="tok hide" id="sBox"><small>Kamar</small><div style="font-size:30px;font-weight:700" id="sRoom"></div><small>PIN</small><div class="mono" style="font-size:30px;color:var(--gd)" id="sTok"></div><canvas id="sQr" style="display:block;margin:14px auto 6px;background:#fff"></canvas><small id="sInfo" style="display:block"></small></div>
+<button class="btn p hide" id="sGo">Masuk ke Smart Room</button><button class="btn" id="sBack">Kembali</button></div></main>
+
+<main class="wrap nr hide" id="vLogin"><div class="card"><h2 class="h">Masuk Smart Room</h2><p class="m">Pindai QR di kamar Anda, atau isi manual.</p>
+<label>Nomor kamar</label><input id="room" inputmode="numeric" placeholder="101"><label>PIN</label><input id="token" inputmode="numeric" placeholder="123456" autocapitalize="characters">
+<button class="btn p" id="login">Masuk ke kamar</button><div class="msg" id="lmsg"></div>
+<details id="rsBox"><summary>PIN hilang / tidak bisa masuk? Minta kirim ulang</summary><p class="m" style="margin-top:10px">Isi nomor kamar di atas dan No. HP yang dipakai saat mendaftar. Resepsionis akan mengirim ulang PIN & QR ke HP ini.</p><input id="rsPhone" inputmode="tel" placeholder="08xxxxxxxxxx"><button class="btn" id="rsGo">Minta kirim ulang PIN & QR</button><div class="msg" id="rsmsg"></div></details></div></main>
+
+<main class="wrap nr hide" id="vApp"><div class="ah" id="ah"><div><small style="color:#ddd">Anda berada di</small><h2 class="h" style="font-size:28px">Kamar <span id="rn"></span></h2><div id="rt" style="color:#ddd"></div></div>
+<button class="btn" id="out" style="position:absolute;top:10px;right:10px;z-index:2;width:auto;margin:0;padding:6px 14px;font-size:12px;background:#000a">Keluar</button></div>
+<button class="btn bell" id="bell">🔔 Panggil Resepsionis</button>
+<div class="tiles"><button class="tile" id="door"><b id="dI">🔒</b>Pintu<br><small id="dS">Terkunci</small></button><button class="tile" id="light"><b id="lI">💡</b>Lampu<br><small id="lS">Mati</small></button></div>
+<div class="card" id="cIdle" style="margin-top:12px"><b>📞 Panggilan suara</b><p class="m">Telepon resepsionis, housekeeping, atau kamar lain (sesuai izin hotel).</p><button class="btn p" id="ic">Buka interkom</button></div>
+<div class="card hide" id="cCall" style="margin-top:12px"><b id="cT"></b><div class="wave hide" id="w"></div><button class="btn" id="mt" style="margin-bottom:6px">🎤 Mikrofon ON</button><button class="btn" id="end" style="background:#9f1239">Akhiri</button></div>
+<button class="btn hide" id="myKey">🔑 Lihat PIN & QR kamar saya</button>
+<details><summary>🧪 Uji keamanan (simulasi serangan)</summary>
+<button class="btn" data-a="direct">Tembak HTTP langsung ke 192.168.1.101</button><button class="btn" data-a="garden">Kirim perintah "lampu_taman"</button>
+<button class="btn" data-a="other">Kontrol kamar lain</button><button class="btn" data-a="old">Pakai token lama</button></details></main>
+<footer id="fo"></footer><div class="toast" id="toast"></div>
+<script>
+/* ===== KONFIGURASI ===== */
+const CHANNEL='hotel-sim', HOTEL_NAME='Nama Hotel Anda', TAGLINE='Reservasi & Smart Room';
+const CONTACT='Alamat hotel Anda · 0812-0000-0000 · info@hotelanda.com';
+const HERO_A='Menginap Nyaman', HERO_B='di Pusat Kota', PROMO=['PROMO','HARGA TERBAIK'];
+const WA='0812-0000-0000'; /* nomor WhatsApp reservasi */
+const NOTE='Harga dapat berubah sewaktu-waktu tergantung tanggal & ketersediaan.';
+const FEATS=[['pin','Lokasi Strategis','di pusat kota'],['bld','Akses Mudah','ke pusat bisnis'],['wifi','WiFi Gratis','di seluruh area'],['car','Fasilitas Lengkap','untuk kenyamanan Anda']];
+const ICO={pin:'<path d="M16 29s9-8.500 9-15a9 9 0 0 0-18 0c0 6.500 9 15 9 15Z"/><circle cx="16" cy="14" r="3.500"/>',bld:'<path d="M6 29V7l12-3v25M18 12l8 3v14M3 29h26M10 11h4M10 16h4M10 21h4"/>',wifi:'<path d="M3 12a19 19 0 0 1 26 0M7 17a13 13 0 0 1 18 0M11 22a7 7 0 0 1 10 0"/><circle cx="16" cy="26" r="1.200"/>',car:'<path d="M5 20l2.500-7a3 3 0 0 1 2.800-2h11.400a3 3 0 0 1 2.800 2l2.500 7v6h-4v-2H9v2H5v-6Z"/><circle cx="10" cy="19" r="1.200"/><circle cx="22" cy="19" r="1.200"/>'};
+const PROMOS_DEFAULT=[];
+/* ======================= */
+const $=id=>document.getElementById(id), ch=new BroadcastChannel(CHANNEL), tell=m=>ch.postMessage(m);
+const SCN=(t,wide)=>{const T={'Standard Room':{w:'#4a3a2e',w2:'#241c16',b:'#e2d3b6',a:'#9a7a4c',n:1},'Deluxe Room':{w:'#35474d',w2:'#162126',b:'#ece7dc',a:'#4f9a9b',n:1},'Family Room':{w:'#4a382d',w2:'#21191a',b:'#efe3cb',a:'#b5623a',n:2},'Suite':{w:'#3a312a',w2:'#15110e',b:'#f4e9d2',a:'#c9a96b',n:1,s:1}},c=T[t]||T['Standard Room'];let s=7;const R=()=>(s=(s*9301+49297)%233280)/233280;
+let o='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+c.w+'"/><stop offset="1" stop-color="'+c.w2+'"/></linearGradient><linearGradient id="k" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1633"/><stop offset=".6" stop-color="#3a3a6e"/><stop offset="1" stop-color="#e59a6a"/></linearGradient><linearGradient id="f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3322"/><stop offset="1" stop-color="#120c08"/></linearGradient><linearGradient id="c" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="'+c.a+'"/><stop offset=".5" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="'+c.a+'"/></linearGradient><radialGradient id="g"><stop offset="0" stop-color="#ffd48a" stop-opacity=".95"/><stop offset="1" stop-color="#ffd48a" stop-opacity="0"/></radialGradient><radialGradient id="v" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></radialGradient></defs>';
+o+='<rect width="800" height="600" fill="url(#w)"/><rect y="400" width="800" height="200" fill="url(#f)"/><rect y="396" width="800" height="6" fill="#0006"/>';
+o+='<rect x="238" y="58" width="324" height="226" fill="#120d09"/><rect x="246" y="66" width="308" height="210" fill="url(#k)"/><circle cx="500" cy="104" r="15" fill="#fff3d0"/>';
+for(let x=246,h;x<554;x+=h){const w=18+R()*26|0;h=w;const bh=40+R()*95|0,y=276-bh;o+='<rect x="'+x+'" y="'+y+'" width="'+Math.min(w,554-x)+'" height="'+bh+'" fill="#0b0f22"/>';for(let i=0;i<7;i++)if(R()>.45)o+='<rect x="'+(x+3+R()*(w-9)|0)+'" y="'+(y+5+R()*(bh-12)|0)+'" width="3" height="4" fill="#ffd77a"/>'}
+o+='<rect x="396" y="66" width="8" height="210" fill="#120d09"/><rect x="246" y="160" width="308" height="6" fill="#120d09"/>';
+o+='<rect x="196" y="46" width="60" height="300" fill="url(#c)"/><rect x="544" y="46" width="60" height="300" fill="url(#c)"/><rect x="186" y="40" width="428" height="8" fill="#0009"/>';
+const n=c.n,bw=n==1?360:240,gap=n==1?0:30,x0=400-(n*bw+(n-1)*gap)/2;
+o+='<ellipse cx="400" cy="520" rx="330" ry="46" fill="'+c.a+'" opacity=".3"/>';
+for(let i=0;i<n;i++){const x=x0+i*(bw+gap);o+='<rect x="'+(x-12)+'" y="292" width="'+(bw+24)+'" height="90" rx="10" fill="'+c.a+'"/><rect x="'+(x-12)+'" y="292" width="'+(bw+24)+'" height="90" rx="10" fill="#0004"/><rect x="'+x+'" y="378" width="'+bw+'" height="40" fill="#1d130c"/><rect x="'+(x+14)+'" y="318" width="'+(bw/2-20)+'" height="46" rx="14" fill="#fff" opacity=".92"/><rect x="'+(x+bw/2+6)+'" y="318" width="'+(bw/2-20)+'" height="46" rx="14" fill="#f0eadc"/><rect x="'+(x-4)+'" y="350" width="'+(bw+8)+'" height="62" rx="8" fill="'+c.b+'"/><rect x="'+(x-4)+'" y="384" width="'+(bw+8)+'" height="18" fill="'+c.a+'"/><rect x="'+(x-4)+'" y="404" width="'+(bw+8)+'" height="8" fill="#0003"/>'}
+const lx=[x0-86,x0+n*bw+(n-1)*gap+16];lx.forEach(x=>{o+='<circle cx="'+(x+35)+'" cy="318" r="95" fill="url(#g)"/><rect x="'+x+'" y="352" width="70" height="66" rx="4" fill="#3a2616"/><rect x="'+(x+32)+'" y="326" width="6" height="26" fill="#c9a96b"/><path d="M'+(x+16)+' 328 L'+(x+54)+' 328 L'+(x+46)+' 296 L'+(x+24)+' 296Z" fill="#ffe3a8"/>'});
+if(c.s){o+='<rect x="30" y="360" width="120" height="58" rx="10" fill="#6b5a45"/><rect x="30" y="338" width="120" height="30" rx="10" fill="#7d6a52"/>';[330,470,640].forEach(x=>o+='<line x1="'+x+'" y1="0" x2="'+x+'" y2="30" stroke="#c9a96b"/><circle cx="'+x+'" cy="36" r="10" fill="#ffe3a8"/><circle cx="'+x+'" cy="36" r="36" fill="url(#g)" opacity=".5"/>')}
+o+='<rect width="800" height="600" fill="url(#v)"/></svg>';return 'data:image/svg+xml;utf8,'+encodeURIComponent(o)};
+
+const PH="data:image/svg+xml;utf8,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="600" height="450"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a2f26"/><stop offset="1" stop-color="#1a1511"/></linearGradient></defs><rect width="600" height="450" fill="url(#g)"/><text x="300" y="235" font-size="70" text-anchor="middle">🛏️</text><text x="300" y="300" font-size="20" fill="#b69a6b" text-anchor="middle" font-family="sans-serif">Foto kamar belum ditambahkan</text></svg>');
+/* ===== Pembuat QR Code (byte mode, level M, versi 1-10) ===== */
+const QRM=(text)=>{const data=[...new TextEncoder().encode(text)],EC=[0,10,16,26,18,24,16,18,22,22,26],NB=[0,1,1,1,2,2,4,4,4,5,5];
+ const raw=v=>{let r=(16*v+128)*v+64;if(v>=2){const a=(v/7|0)+2;r-=(25*a-10)*a-55;if(v>=7)r-=36}return r>>3};
+ let ver=1;for(;ver<=10;ver++){const cap=raw(ver)-EC[ver]*NB[ver],cb=ver<10?8:16;if(4+cb+8*data.length<=cap*8)break}
+ if(ver>10)throw new Error('QR: data terlalu panjang');
+ const cap=raw(ver)-EC[ver]*NB[ver],bits=[],put=(v,n)=>{for(let i=n-1;i>=0;i--)bits.push((v>>>i)&1)};
+ put(4,4);put(data.length,ver<10?8:16);data.forEach(b=>put(b,8));put(0,Math.min(4,cap*8-bits.length));while(bits.length%8)bits.push(0);
+ for(let p=0xEC;bits.length<cap*8;p^=0xEC^0x11)put(p,8);
+ const cw=[];for(let i=0;i<bits.length;i+=8)cw.push(parseInt(bits.slice(i,i+8).join(''),2));
+ const mul=(x,y)=>{let z=0;for(let i=7;i>=0;i--){z=(z<<1)^((z>>>7)*0x11D);z^=((y>>>i)&1)*x}return z};
+ const ne=EC[ver],gen=Array(ne).fill(0);gen[ne-1]=1;for(let i=0,root=1;i<ne;i++){for(let j=0;j<ne;j++){gen[j]=mul(gen[j],root);if(j+1<ne)gen[j]^=gen[j+1]}root=mul(root,2)}
+ const rem=d=>{const r=Array(ne).fill(0);for(const b of d){const f=b^r.shift();r.push(0);gen.forEach((c,i)=>r[i]^=mul(c,f))}return r};
+ const nb=NB[ver],tot=raw(ver),sl=(tot/nb|0),ns=nb-tot%nb,blocks=[];
+ for(let i=0,k=0;i<nb;i++){const len=sl-ne+(i<ns?0:1),d=cw.slice(k,k+len);k+=len;blocks.push({d,e:rem(d)})}
+ const all=[];for(let i=0;i<blocks[nb-1].d.length;i++)blocks.forEach((b,j)=>{if(i<b.d.length)all.push(b.d[i])});
+ for(let i=0;i<ne;i++)blocks.forEach(b=>all.push(b.e[i]));
+ const N=ver*4+17,M=[...Array(N)].map(()=>Array(N).fill(false)),F=[...Array(N)].map(()=>Array(N).fill(false)),sf=(x,y,d)=>{M[y][x]=d;F[y][x]=true};
+ for(let i=0;i<N;i++){sf(6,i,i%2==0);sf(i,6,i%2==0)}
+ const finder=(cx,cy)=>{for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){const d=Math.max(Math.abs(dx),Math.abs(dy)),x=cx+dx,y=cy+dy;if(x>=0&&x<N&&y>=0&&y<N)sf(x,y,d!=2&&d!=4)}};
+ finder(3,3);finder(N-4,3);finder(3,N-4);
+ if(ver>1){const na=(ver/7|0)+2,st=ver==32?26:Math.ceil((ver*4+4)/(na*2-2))*2,pos=[6];for(let p=N-7;pos.length<na;p-=st)pos.splice(1,0,p);
+  pos.forEach((a,i)=>pos.forEach((b,j)=>{if((i==0&&j==0)||(i==0&&j==na-1)||(i==na-1&&j==0))return;for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++)sf(a+dx,b+dy,Math.max(Math.abs(dx),Math.abs(dy))!=1)}))}
+ const fmt=m=>{const d=(0<<3)|m;let r=d;for(let i=0;i<10;i++)r=(r<<1)^((r>>>9)*0x537);const b=((d<<10)|r)^0x5412,g=i=>((b>>>i)&1)==1;
+  for(let i=0;i<=5;i++)sf(8,i,g(i));sf(8,7,g(6));sf(8,8,g(7));sf(7,8,g(8));for(let i=9;i<15;i++)sf(14-i,8,g(i));
+  for(let i=0;i<8;i++)sf(N-1-i,8,g(i));for(let i=8;i<15;i++)sf(8,N-15+i,g(i));sf(8,N-8,true)};
+ fmt(0);
+ if(ver>=7){let r=ver;for(let i=0;i<12;i++)r=(r<<1)^((r>>>11)*0x1F25);const b=(ver<<12)|r;for(let i=0;i<18;i++){const d=((b>>>i)&1)==1,a=N-11+i%3,c=i/3|0;sf(a,c,d);sf(c,a,d)}}
+ for(let i=0,right=N-1;right>=1;right-=2){if(right==6)right=5;for(let v=0;v<N;v++)for(let j=0;j<2;j++){const x=right-j,up=((right+1)&2)==0,y=up?N-1-v:v;if(!F[y][x]&&i<all.length*8){M[y][x]=((all[i>>>3]>>>(7-(i&7)))&1)==1;i++}}}
+ const mk=(m,x,y)=>[(x+y)%2==0,y%2==0,x%3==0,(x+y)%3==0,((x/3|0)+(y/2|0))%2==0,x*y%2+x*y%3==0,(x*y%2+x*y%3)%2==0,((x+y)%2+x*y%3)%2==0][m];
+ const apply=m=>{for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(!F[y][x]&&mk(m,x,y))M[y][x]=!M[y][x]};
+ const pen=()=>{let p=0;const line=g=>{let run=1;for(let i=1;i<N;i++){if(g(i)==g(i-1)){run++;if(run==5)p+=3;else if(run>5)p++}else run=1}
+   for(let i=0;i+10<N;i++){const s=[...Array(11)].map((_,k)=>g(i+k)?1:0).join('');if(s=='10111010000'||s=='00001011101')p+=40}};
+  for(let y=0;y<N;y++)line(i=>M[y][i]);for(let x=0;x<N;x++)line(i=>M[i][x]);
+  for(let y=0;y<N-1;y++)for(let x=0;x<N-1;x++)if(M[y][x]==M[y][x+1]&&M[y][x]==M[y+1][x]&&M[y][x]==M[y+1][x+1])p+=3;
+  let dk=0;M.forEach(r=>r.forEach(c=>dk+=c));p+=(Math.abs(dk*20-N*N*10)/(N*N)|0)*10;return p};
+ let best=0,bp=1e9;for(let m=0;m<8;m++){apply(m);fmt(m);const p=pen();if(p<bp){bp=p;best=m}apply(m)}
+ apply(best);fmt(best);return M};
+function qrDraw(cv,text,px){const M=QRM(text),q=4,n=M.length+q*2,s=Math.max(2,Math.floor(px/n));cv.width=cv.height=n*s;const c=cv.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,n*s,n*s);c.fillStyle='#000';M.forEach((r,y)=>r.forEach((d,x)=>{if(d)c.fillRect((x+q)*s,(y+q)*s,s,s)}));cv.style.width=cv.style.height=n*s+'px'}
+
+const rp=n=>Number(n||0).toLocaleString('id-ID');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let sess=null,pending=null,online=false,wv,rid=null,regInfo=null,lastAv='',AV={rooms:[],catalog:{}},fType='',selRoom='';
+function toast(t){$('toast').textContent=t;$('toast').classList.add('s');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('s'),2800)}
+const V=['vHome','vReg','vStat','vLogin','vApp'],NAV={vHome:'nH',vLogin:'nS',vApp:'nS',vStat:'nM'};let curV='vHome';
+function show(v){curV=v;V.forEach(x=>$(x).classList.toggle('hide',x!=v));['nH','nK','nB','nR','nS','nM'].forEach(n=>$(n).classList.toggle('on',n==NAV[v]));scrollTo(0,0)}
+/* --- PIN & QR tersimpan di HP sampai check-out --- */
+let stay=null,reqId=null;try{stay=JSON.parse(localStorage.getItem('hs_stay'))}catch(e){}
+let resvs=[];try{resvs=JSON.parse(localStorage.getItem('ob_resv'))||[];if(!Array.isArray(resvs))resvs=[]}catch(e){resvs=[]}
+const saveResvs=()=>{try{localStorage.setItem('ob_resv',JSON.stringify(resvs))}catch(e){}$('nM').classList.toggle('hide',!stay&&!resvs.length)};
+const saveStay=v=>{stay=v;try{v?localStorage.setItem('hs_stay',JSON.stringify(v)):localStorage.removeItem('hs_stay')}catch(e){}$('nM').classList.toggle('hide',!stay&&!resvs.length);$('myKey').classList.toggle('hide',!stay)};
+const setPend=v=>{try{v?localStorage.setItem('hs_pend',JSON.stringify(v)):localStorage.removeItem('hs_pend')}catch(e){}};
+const stayUrl=i=>location.href.split(/[?#]/)[0]+'?room='+encodeURIComponent(i.room)+'&token='+encodeURIComponent(i.token);
+function checkStay(){if(stay&&online)tell({type:'stay_check',room:stay.room,rid:stay.rid});if(online)resvs.forEach(x=>tell({type:'reg_status',rid:x.rid}))}
+function showStay(t,p){if(stay)status('ok',t||'Kunci Kamar Anda',p||'PIN & QR tersimpan di HP ini dan tetap ada sampai Anda check-out.',stay)}
+function endStay(){saveStay(null);regInfo=null;rid=null;sess=null;callUI('idle');$('room').value='';$('token').value='';if(['vStat','vApp','vLogin'].includes(curV))show('vHome');toast('Terima kasih! Check-out selesai, PIN & QR sudah dihapus.')}
+$('nH').onclick=()=>show('vHome');$('nK').onclick=()=>{show('vHome');$('rooms').scrollIntoView({behavior:'smooth'})};
+$('nB').onclick=()=>{show('vHome');$('bk').scrollIntoView({behavior:'smooth'})};$('nS').onclick=()=>show(sess?'vApp':'vLogin');$('nM').onclick=()=>stay?showStay():showResv();$('nR').onclick=()=>{show('vHome');$('rv').scrollIntoView({behavior:'smooth'})};$('myKey').onclick=()=>showStay();
+function setSrv(o){online=o;$('srv').className='srv'+(o?' on':'');$('srv').lastChild.textContent=o?'Server terhubung':'Server tidak ditemukan'}
+let gotAv=false;tell({type:'hello',need:true});setTimeout(()=>{if(!online)setSrv(false)},1200);setInterval(()=>tell({type:'hello',need:!gotAv}),3000);
+
+/* --- beranda: booking bar, fitur, katalog --- */
+$('hn').textContent=HOTEL_NAME;$('tg').textContent=TAGLINE;$('hA').textContent=HERO_A;$('hB').textContent=HERO_B;$('p1').textContent=PROMO[0];$('p2').textContent=PROMO[1];$('waNum').textContent=WA;$('wn').textContent=NOTE;
+{let w=WA.replace(/\D/g,'');if(w[0]=='0')w='62'+w.slice(1);$('waBtn').href='https://wa.me/'+w+'?text='+encodeURIComponent('Halo, saya ingin reservasi kamar di '+HOTEL_NAME)}
+$('fx').innerHTML=FEATS.map(f=>`<div class="ft1"><svg viewBox="0 0 32 32">${ICO[f[0]]}</svg><div><b>${esc(f[1])}</b><small>${esc(f[2])}</small></div></div>`).join('');$('fo').innerHTML='<b>'+esc(HOTEL_NAME.toUpperCase())+'</b><br>'+esc(CONTACT)+'<br>© '+new Date().getFullYear();
+const HOME0={hn:HOTEL_NAME,tag:TAGLINE,contact:CONTACT,wa:WA,note:NOTE,heroA:HERO_A,heroB:HERO_B,heroK:'Selamat Datang',heroC:'Kenyamanan istimewa untuk setiap momen Anda',promoA:PROMO[0],promoB:PROMO[1]};let HM={};
+function applyHome(m){['hn','tag','contact','wa','note','heroA','heroB','heroK','heroC','promoA','promoB','promoOff','feats'].forEach(k=>{if(m[k]!=null)HM[k]=String(m[k]).trim()});
+ try{localStorage.setItem('ob_home',JSON.stringify(HM))}catch(e){}
+ const g=k=>(k=='promoOff'||k=='note'||k=='contact'||k=='tag')?((k in HM)?HM[k]:(HOME0[k]||'')):(HM[k]||HOME0[k]||'');
+ const hn=g('hn');$('hn').textContent=hn;$('tg').textContent=g('tag');$('hA').textContent=g('heroA');$('hB').textContent=g('heroB');$('hK').textContent=g('heroK');$('hC').textContent=g('heroC');$('p1').textContent=g('promoA');$('p2').textContent=g('promoB');document.querySelector('.hero>.promo').classList.toggle('off',g('promoOff')=='1');$('wn').textContent=g('note');
+ const wa=g('wa');$('waNum').textContent=wa;{let w=wa.replace(/\D/g,'');if(w[0]=='0')w='62'+w.slice(1);$('waBtn').href='https://wa.me/'+w+'?text='+encodeURIComponent('Halo, saya ingin reservasi kamar di '+hn);$('waBtn').style.display=w?'':'none'}
+ const ct=g('contact');$('fo').innerHTML=(hn?'<b>'+esc(hn.toUpperCase())+'</b><br>':'')+(ct?esc(ct)+'<br>':'')+'© '+new Date().getFullYear();
+ if(HM.feats!=null){const L=HM.feats.split('\n').map(x=>x.split('|').map(y=>y.trim())).filter(x=>x[0]).slice(0,4),K=['pin','bld','wifi','car'];$('fx').innerHTML=L.map((f,i)=>`<div class="ft1"><svg viewBox="0 0 32 32">${ICO[K[i]]}</svg><div><b>${esc(f[0])}</b><small>${esc(f[1]||'')}</small></div></div>`).join('')}waVis()}
+try{HM=JSON.parse(localStorage.getItem('ob_home'))||{}}catch(e){HM={}}
+const iso=d=>new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const addD=(s,n)=>{const d=new Date(s+'T00:00');d.setDate(d.getDate()+n);return iso(d)};
+const opt=(a,b)=>Array.from({length:b-a+1},(_,i)=>`<option>${a+i}</option>`).join('');
+$('bN').innerHTML=opt(1,14);$('bA').innerHTML=opt(1,6);$('bC').innerHTML=opt(0,4);
+$('bIn').value=iso(new Date());$('bOut').value=addD($('bIn').value,1);
+$('bIn').min=iso(new Date());$('bIn').onchange=$('bN').onchange=()=>{$('bOut').value=addD($('bIn').value,+$('bN').value);renderCat()};
+$('bOut').onchange=()=>{const n=Math.round((new Date($('bOut').value)-new Date($('bIn').value))/864e5);if(n>=1&&n<=14)$('bN').value=n;renderCat()};
+$('bGo').onclick=()=>{if($('bOut').value<=$('bIn').value)return toast('Check-out harus setelah check-in');renderCat();$('rooms').scrollIntoView({behavior:'smooth'});{const cat=AV.catalog||{},L=(AV.all||AV.rooms).map(String),f=L.filter(n=>isFree(n,cat[n])&&!((cat[n]||{}).max&&need()>cat[n].max)).length;toast(f?f+' kamar tersedia untuk tanggal Anda':'Semua kamar sudah dipesan pada tanggal tersebut')}};
+const need=()=>+$('bA').value+ +$('bC').value;
+/* ketersediaan berdasarkan TANGGAL yang dipilih (bukan status kamar saat ini): kamar yang dipesan tgl 28 tetap kosong untuk tgl 26-27 */
+const T0=()=>AV.today||iso(new Date());
+const dsh=d=>{try{return new Date(d+'T00:00').toLocaleDateString('id-ID',{day:'numeric',month:'short'})}catch(e){return d}};
+const busyFor=(n,a,b)=>((AV.book||{})[n]||[]).filter(([x,y])=>a<y&&x<b);
+const isFree=(n,c,a,b)=>{a=a||$('bIn').value;b=b||$('bOut').value;c=c||{};if(!AV.book||!a||!b||b<=a)return c.free!==false;if(a<T0())return false;if(busyFor(n,a,b).length)return false;if(a<=T0()&&c.dirty)return false;return true};
+const bookedTxt=n=>((AV.book||{})[n]||[]).map(([x,y])=>dsh(x)+' – '+dsh(y)).join(', ');
+const card=(n,c)=>{const full=!isFree(n,c),small=c.max&&need()>c.max;return `<div class="rc ${full?'full':''}" data-n="${n}"><div class="im" style="background-image:url('${c.photo||SCN(c.type)}')"><span class="bdg ${full?'x':small?'w':''}">${full?'Sudah dipesan':small?'Kapasitas kurang':'Tersedia'}</span></div><div class="nm">${esc(c.type||'Kamar')} · ${n}</div><div class="pr"><small>Per malam</small><span><i style="font-style:normal">Rp</i> <b>${rp(c.price)}</b></span></div></div>`};
+const tcard=(t,L,cat)=>{const fr=L.filter(n=>isFree(n,cat[n])).length,pr=Math.min(...L.map(n=>(cat[n]||{}).price||0)),pic=L.map(n=>cat[n]||{}).find(c=>c.photo);return `<div class="rc ${fr?'':'full'} ${t===fType?'sel':''}" data-t="${esc(t)}"><div class="im" style="background-image:url('${pic?pic.photo:SCN(t)}')"><span class="bdg ${fr?'':'x'}">${fr?fr+' tersedia':'Sudah dipesan'}</span></div><div class="nm">${esc(t)}</div><div class="pr"><small>Mulai dari</small><span><i style="font-style:normal">Rp</i> <b>${rp(pr)}</b> <u>/ malam</u></span></div></div>`};
+function waVis(){const hp=$('pg').children.length>0,hw=$('waBtn').style.display!=='none',e=document.querySelector('section.wa');if(e)e.style.display=(hp||hw)?'':'none'}
+function renderPromos(a){a=a||[];$('pm').style.display=a.length?'':'none';document.querySelectorAll('.wl').forEach(e=>e.style.display=a.length?'':'none');$('pg').innerHTML=a.map(p=>`<div class="pc" style="${p.img?`background-image:url('${p.img}')`:''}"><span class="o">✦</span><div><div class="tp">Promo</div><h3>${esc(p.title)}</h3><p>${esc(p.text)}</p></div></div>`).join('');waVis()}
+applyHome({});renderPromos(PROMOS_DEFAULT);$('hero').style.backgroundImage=`url('${SCN('Suite')}')`;$('rooms').style.setProperty('--bgimg',`url('${SCN('Deluxe Room')}')`);$('pg').onclick=()=>$('rooms').scrollIntoView({behavior:'smooth'});
+function renderCat(){const cat=AV.catalog||{};let ids=(AV.all||AV.rooms).map(String);const types=[...new Set(ids.map(n=>(cat[n]||{}).type||'Kamar'))];if(fType&&!types.includes(fType))fType='';
+ $('tl').innerHTML=types.length?types.map(t=>tcard(t,ids.filter(n=>((cat[n]||{}).type||'Kamar')===t),cat)).join(''):'<p style="grid-column:1/-1;text-align:center">Belum ada data kamar.</p>';$('lt').textContent=fType||'Semua Kamar';$('lx').classList.toggle('hide',!fType);
+ $('fl').innerHTML=types.length>1?['',...types].map(x=>`<button class="${x===fType?'on':''}" data-t="${esc(x)}">${x?esc(x):'Semua'}</button>`).join(''):'';
+ if(fType)ids=ids.filter(n=>(cat[n]||{}).type===fType);if($('onlyFree').checked)ids=ids.filter(n=>isFree(n,cat[n]));
+ const s=$('sort').value,P=n=>(cat[n]||{}).price||0;ids.sort((a,b)=>s=='lo'?P(a)-P(b):s=='hi'?P(b)-P(a):a-b);
+ $('cnt').textContent=ids.filter(n=>isFree(n,cat[n])).length+' dari '+ids.length+' kamar tersedia';
+ $('cl').innerHTML=ids.length?ids.map(n=>card(n,cat[n]||{})).join(''):'<p style="grid-column:1/-1;text-align:center">Maaf, tidak ada kamar yang tersedia pada tanggal ini.</p>'}
+$('tl').onclick=e=>{const c=e.target.closest('.rc');if(!c)return;fType=fType===c.dataset.t?'':c.dataset.t;renderCat();$('lst').scrollIntoView({behavior:'smooth'})};$('lx').onclick=()=>{fType='';renderCat()};$('sort').onchange=renderCat;$('bA').onchange=$('bC').onchange=$('onlyFree').onchange=renderCat;
+$('cl').onclick=e=>{const c=e.target.closest('.rc');if(!c)return;selRoom=c.dataset.n;const k=(AV.catalog||{})[selRoom]||{},full=!isFree(selRoom,k),mx=k.max||8;
+ $('rSel').innerHTML=`<div class="im big" style="background-image:url('${k.photo||SCN(k.type)}')"></div><h2 class="h">${esc(k.type||'Kamar')} – Kamar ${selRoom}</h2><div class="pp">Rp ${rp(k.price)} / malam</div>
+ <div class="info"><div><small>Maks. tamu</small><b>👥 ${k.max||'-'} orang</b></div><div><small>Luas kamar</small><b>📐 ${k.size||'-'} m²</b></div><div><small>Status</small><b id="rSt" class="${full?'er':'okc'}">${full?'Sudah dipesan':'Tersedia'}</b></div></div>
+ <h4>Fasilitas kamar</h4><ul class="fac">${(k.facs||'').split(',').filter(x=>x.trim()).map(x=>`<li>✓ ${esc(x.trim())}</li>`).join('')}</ul><h4>Tentang kamar</h4><p class="m">${esc(k.desc||'-')}</p>`;
+ $('rPax').max=mx;
+ $('rIn').value=$('bIn').value;$('rOut').value=$('bOut').value;$('rPax').value=Math.min(need(),mx);$('rmsg').textContent='';chkSel();show('vReg')};
+/* status kamar terpilih mengikuti tanggal di formulir */
+function chkSel(){const k=(AV.catalog||{})[selRoom]||{},a=$('rIn').value,b=$('rOut').value,ok=isFree(selRoom,k,a,b),bt=bookedTxt(selRoom);
+ $('rForm').classList.remove('hide');$('rFull').classList.toggle('hide',ok);$('rGo').disabled=!ok;
+ const st=$('rSt');if(st){st.textContent=ok?'Tersedia':'Sudah dipesan';st.className=ok?'okc':'er'}
+ $('rFull').innerHTML='<h2 class="h">Kamar sudah dipesan pada tanggal ini</h2><p class="m">Kamar '+esc(selRoom)+' tidak tersedia untuk '+esc(dsh(a))+' → '+esc(dsh(b))+'. Ubah tanggal di formulir atau pilih kamar lain.</p>'+(bt?'<p class="bk3">Tanggal yang sudah dipesan: '+esc(bt)+'</p>':'');
+ let n=$('rbk');if(!n){n=document.createElement('p');n.id='rbk';n.className='bk3';$('rPax').parentNode.insertBefore(n,$('rPax').nextSibling)}n.textContent=bt&&ok?'Tanggal lain yang sudah dipesan: '+bt:''}
+$('rIn').onchange=$('rOut').onchange=()=>{$('rmsg').textContent='';chkSel()};$('rIn').min=iso(new Date());
+$('rBack').onclick=()=>show('vHome');
+
+/* --- pendaftaran & status --- */
+function status(k,t,p,info){show('vStat');$('sRv').innerHTML='';$('sT').textContent=t;$('sP').textContent=p;$('sBox').classList.toggle('hide',k!='ok');$('sGo').classList.toggle('hide',k!='ok');$('sBack').textContent=k=='wait'?'Batalkan':k=='ok'?'Beranda':'Kembali';regInfo=info||null;if(info){$('sRoom').textContent=info.room;$('sTok').textContent=info.token;$('sInfo').textContent=[info.name,info.cin&&info.cout?info.cin+' → '+info.cout:''].filter(Boolean).join(' · ');try{qrDraw($('sQr'),stayUrl(info),200)}catch(e){}}}
+$('rGo').onclick=()=>{const g={name:$('rName').value.trim(),phone:$('rPhone').value.trim(),pax:$('rPax').value,room:selRoom,cin:$('rIn').value,cout:$('rOut').value},M=h=>$('rmsg').innerHTML='<span class="er">'+h+'</span>';
+ if(!online)return M('Server tidak ditemukan. Buka resepsionis.html di tab lain.');
+ if(!g.name||!g.phone||!g.room)return M('Lengkapi nama dan no. HP.');
+ if(g.cout<=g.cin)return M('Tanggal check-out harus setelah check-in.');if(g.cin<T0())return M('Tanggal check-in sudah lewat.');if(!isFree(selRoom,(AV.catalog||{})[selRoom],g.cin,g.cout))return M('Kamar sudah dipesan pada tanggal tersebut. Pilih tanggal atau kamar lain.');const mx=((AV.catalog||{})[selRoom]||{}).max;if(mx&&+g.pax>mx)return M('Maksimal '+mx+' tamu untuk kamar ini.');
+ rid='R'+Date.now().toString(36);tell({type:'register',rid,...g});setPend({rid,room:g.room,phone:g.phone,name:g.name,cin:g.cin,cout:g.cout});status('wait','Menunggu persetujuan','Pendaftaran terkirim. Resepsionis akan segera memeriksa data Anda.')};
+$('sBack').onclick=()=>{if($('sT').textContent.startsWith('Menunggu')){tell({type:'reg_cancel',rid});setPend(null)}rid=null;show('vHome')};
+$('sGo').onclick=()=>{$('room').value=regInfo.room;$('token').value=regInfo.token;show('vLogin');$('login').click()};
+
+/* --- login & Smart Room --- */
+const q=new URLSearchParams(location.search);$('room').value=q.get('room')||(stay?stay.room:'');$('token').value=q.get('token')||(stay?stay.token:'');
+$('rsGo').onclick=()=>{const room=$('room').value.trim(),phone=$('rsPhone').value.trim(),M=h=>$('rsmsg').innerHTML=h;if(!online)return M('<span class="er">Server tidak ditemukan. Buka resepsionis.html di tab lain.</span>');if(!room||!phone)return M('<span class="er">Isi nomor kamar dan No. HP.</span>');reqId='Q'+Date.now().toString(36);tell({type:'resend_req',reqid:reqId,room,phone});M('Permintaan dikirim. Menunggu resepsionis…')};
+$('login').onclick=()=>{const room=$('room').value.trim(),token=$('token').value.trim().toUpperCase();if(!online)return $('lmsg').innerHTML='<span class="er">Buka resepsionis.html di tab lain dulu.</span>';
+ pending={room,token};tell({type:'login',room,token});$('lmsg').textContent='Memeriksa…'};
+function showState(s){$('dI').textContent=s.door?'🔒':'🔓';$('dS').textContent=s.door?'Terkunci':'Terbuka 4 dtk';$('lI').textContent=s.light?'💡':'🌑';$('lS').textContent=s.light?'Menyala':'Mati';$('light').classList.toggle('on',s.light)}
+function logout(msg){sess=null;callUI('idle');show('vLogin');$('lmsg').innerHTML=msg?'<span class="er">'+msg+'</span>':''}
+$('out').onclick=()=>logout('');
+const cmd=(c,x={})=>sess&&tell({type:'cmd',room:sess.room,token:sess.token,sessionRoom:sess.room,cmd:c,...x});
+$('bell').onclick=()=>{cmd('bell');toast('Memanggil resepsionis…')};$('door').onclick=()=>cmd('door');$('light').onclick=()=>cmd('light');
+
+/* ===== Panggilan suara asli (WebRTC) ===== */
+let pc=null,ls=null,ra=null,lvlL=0,lvlR=0,stL=null,stR=null,micOn=true;
+const gatherDone=p=>new Promise(res=>{if(p.iceGatheringState=='complete')return res();const f=()=>{if(p.iceGatheringState=='complete'){p.removeEventListener('icegatheringstatechange',f);res()}};p.addEventListener('icegatheringstatechange',f);setTimeout(res,4000)});
+function levelOf(stream,cb){try{const c=new(window.AudioContext||window.webkitAudioContext)(),an=c.createAnalyser();an.fftSize=256;c.createMediaStreamSource(stream).connect(an);const d=new Uint8Array(an.frequencyBinCount),t=setInterval(()=>{an.getByteFrequencyData(d);let s=0;for(const v of d)s+=v;cb(s/d.length/255)},100);return()=>{clearInterval(t);try{c.close()}catch(e){}}}catch(e){return()=>{}}}
+function rtcStop(){try{pc&&pc.close()}catch(e){}pc=null;if(ls){ls.getTracks().forEach(t=>t.stop());ls=null}if(ra){ra.srcObject=null;ra.remove();ra=null}stL&&stL();stR&&stR();stL=stR=null;lvlL=lvlR=0;micOn=true;const b=$('mt');if(b)b.textContent='🎤 Mikrofon ON'}
+async function micGet(){if(!window.isSecureContext||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){toast('Mikrofon butuh alamat HTTPS. Buka lewat link/QR dari hotel.');return null}
+ try{return await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}})}catch(e){toast('Izinkan akses mikrofon di browser untuk memakai panggilan suara');return null}}
+async function rtcAnswer(m){
+ if(!ls||!m.sdp)return;
+ try{pc&&pc.close()}catch(e){}
+ const p=pc=new RTCPeerConnection({iceServers:Array.isArray(m.ice)&&m.ice.length?m.ice.slice(0,6):[{urls:'stun:stun.l.google.com:19302'}]});
+ ra=ra||document.body.appendChild(Object.assign(document.createElement('audio'),{autoplay:true,playsInline:true}));
+ p.ontrack=e=>{const s=e.streams[0]||new MediaStream([e.track]);ra.srcObject=s;ra.play().catch(()=>{toast('Ketuk layar untuk mengaktifkan suara');document.addEventListener('click',()=>ra&&ra.play(),{once:true})});stR&&stR();stR=levelOf(s,v=>lvlR=v)};
+ p.onconnectionstatechange=()=>{if(p.connectionState=='failed'&&pc===p){toast('Koneksi suara gagal. Coba lagi atau hubungi resepsionis.');cmd('ic_end');callUI('idle')}};
+ ls.getTracks().forEach(t=>p.addTrack(t,ls));stL&&stL();stL=levelOf(ls,v=>lvlL=v);
+ try{await p.setRemoteDescription({type:'offer',sdp:String(m.sdp)});await p.setLocalDescription(await p.createAnswer());await gatherDone(p)}catch(e){return toast('Gagal menyiapkan suara: '+e.message)}
+ if(pc!==p)return;
+ cmd('rtc',{k:'answer',sdp:p.localDescription.sdp})}
+$('ic').onclick=()=>IC.open();
+$('mt').onclick=()=>{micOn=!micOn;if(ls)ls.getAudioTracks().forEach(t=>t.enabled=micOn);$('mt').textContent='🎤 Mikrofon '+(micOn?'ON':'OFF (dimatikan)')};$('end').onclick=()=>{cmd('ic_end');callUI('idle')};
+function callUI(s){if(s=='idle')rtcStop();$('cIdle').classList.toggle('hide',s!='idle');$('cCall').classList.toggle('hide',s=='idle');$('cCall').classList.toggle('ring',s=='ring');
+ $('cT').textContent=s=='ring'?'Menghubungi resepsionis…':'🎙️ Tersambung dengan resepsionis';$('w').classList.toggle('hide',s!='live');clearInterval(wv);
+ if(s=='live'){$('w').innerHTML='<i></i>'.repeat(24);wv=setInterval(()=>document.querySelectorAll('#w i').forEach(i=>i.style.height=(5+Math.min(1,Math.max(lvlL,lvlR)*5)*Math.random()*32)+'px'),110)}}
+document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const a=b.dataset.a;
+ if(a=='direct')return tell({type:'cmd',cmd:'direct_http'});if(a=='garden')return cmd('lampu_taman');
+ if(a=='other')return tell({type:'cmd',room:sess.room=='101'?'102':'101',token:sess.token,sessionRoom:sess.room,cmd:'door'});
+ if(a=='old')return tell({type:'cmd',room:sess.room,token:'LAMA00',sessionRoom:sess.room,cmd:'door'})});
+
+ch.onmessage=e=>{const m=e.data;
+ if(m.type=='pong'){const was=online;setSrv(true);if(!was){checkStay();const pd=getPend();if(pd&&!stay)tell({type:'reg_status',rid:pd.rid})}return}
+ if(m.type=='avail'){const k=JSON.stringify(m);if(k===lastAv)return;lastAv=k;AV=m;gotAv=true;Object.values(m.catalog||{}).forEach(c=>{c.photo=c.pi>=0?(m.photos||[])[c.pi]:''});renderCat();renderRev();const f=(m.all||m.rooms).map(n=>(m.catalog||{})[n]).find(c=>c&&c.photo);if(Array.isArray(m.promos))renderPromos(m.promos);$('hero').style.backgroundImage=`url('${f?f.photo:SCN('Suite')}')`;return}
+ if(m.type=='reg_approved'&&m.future){const pd=getPend(),mine=m.rid===rid||(pd&&pd.rid===m.rid)||resvs.some(x=>x.rid===m.rid);if(!mine)return;
+  const i=resvs.findIndex(x=>x.rid===m.rid),old=i>=0?resvs[i]:null,it={rid:m.rid,room:String(m.rm),name:m.name||(old&&old.name)||(pd&&pd.name)||'',phone:(old&&old.phone)||(pd&&pd.rid===m.rid&&pd.phone)||'',cin:m.cin,cout:m.cout};
+  if(i>=0)resvs[i]=it;else resvs.push(it);saveResvs();if(pd&&pd.rid===m.rid)setPend(null);const first=!old;
+  if(first||curV=='vStat')showResv(first?'Reservasi disetujui 🎉':null);return}
+ if(m.type=='reg_approved'){const sr=m.stayRid||m.rid;
+  if(m.rid===rid||m.rid===reqId||resvs.some(x=>x.rid===m.rid)||(stay&&stay.rid===sr&&String(stay.room)===String(m.room))){resvs=resvs.filter(x=>x.rid!==m.rid);saveResvs();const again=!!m.resend;saveStay({room:String(m.room),token:m.token,name:m.name||'',cin:m.cin||'',cout:m.cout||'',rid:sr});setPend(null);reqId=null;$('rsmsg').textContent='';
+   $('room').value=stay.room;$('token').value=stay.token;
+   status('ok',again?'PIN & QR dikirim ulang 🔑':'Pendaftaran disetujui 🎉','Selamat datang! PIN & QR tersimpan di HP ini dan tetap ada sampai Anda check-out.',stay);if(again)toast('PIN & QR diterima dari resepsionis')}
+  return}
+ if(m.type=='reg_rejected'&&m.rid&&resvs.some(x=>x.rid===m.rid)){resvs=resvs.filter(x=>x.rid!==m.rid);saveResvs();toast(m.why||'Reservasi dibatalkan');if(curV=='vStat')resvs.length?showResv():show('vHome');return}
+ if(m.type=='reg_rejected'&&m.rid&&m.rid===rid){setPend(null);status('no','Pendaftaran ditolak',m.why||'Silakan hubungi resepsionis.');return}
+ if(m.type=='resend_fail'&&m.rid&&m.rid===reqId){reqId=null;$('rsmsg').innerHTML='<span class="er">'+esc(m.why||'Gagal.')+'</span>';return}
+ if(stay&&m.rid&&m.rid===stay.rid&&String(m.room)===String(stay.room)){
+  if(m.type=='stay_ok'){if(m.token&&m.token!==stay.token){saveStay({...stay,token:m.token,name:m.name||stay.name,cin:m.cin||stay.cin,cout:m.cout||stay.cout});$('room').value=stay.room;$('token').value=stay.token;if(curV=='vStat')showStay($('sT').textContent,$('sP').textContent);toast('PIN diperbarui oleh resepsionis')}return}
+  if(m.type=='stay_gone'||m.type=='checkout'){endStay();return}}
+ if(m.type=='door_res'&&sess&&m.to==sess.room){toast(m.ok?'🔓 '+m.msg:'⛔ Pintu: '+m.msg);return}
+ if(m.type=='denied'&&(!m.to||(sess&&m.to==sess.room))){toast('⛔ Ditolak server: '+(m.why||''));return}
+ if(m.type=='login_ok'&&pending&&m.to==pending.room&&m.token==pending.token){sess=pending;pending=null;$('rn').textContent=sess.room;const inf=m.info||{};$('ah').style.backgroundImage=`url('${inf.photo||SCN(inf.type)}')`;$('rt').textContent=inf.type||'';showState(m.state);$('myKey').classList.toggle('hide',!stay);show('vApp');toast('Terhubung ✔');return}
+ if(m.type=='login_fail'&&pending&&m.to==pending.room){$('lmsg').innerHTML='<span class="er">PIN salah atau kamar belum check-in.</span>';pending=null;return}
+ if(!sess||m.to!=sess.room)return;
+ if(m.type=='state')showState(m.state);
+ if(m.type=='revoked')logout('Sesi berakhir (PIN diganti). Masuk lagi dengan PIN yang baru.');
+ if(m.type=='ack')toast('✅ Resepsionis menanggapi panggilan Anda');
+ if(m.type=='call_live')callUI('live');
+ if(m.type=='rtc'&&m.k=='offer')rtcAnswer(m);
+ if(m.type=='call_end'){callUI('idle');toast('Panggilan suara selesai')}};
+const getPend=()=>{try{return JSON.parse(localStorage.getItem('hs_pend'))}catch(e){return null}};
+saveStay(stay);setInterval(checkStay,15000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){tell({type:'hello',need:!gotAv});checkStay()}});
+const pd0=getPend();
+if(q.get('token'))show('vLogin');else if(stay)showStay();else if(pd0){rid=pd0.rid;status('wait','Menunggu persetujuan','Pendaftaran Anda sedang diperiksa resepsionis. PIN & QR akan muncul di sini setelah disetujui.')}else show('vHome');
+
+/* ===== SMART ROOM LANJUTAN (fitur tamu di dalam kamar) ===== */
+document.head.insertAdjacentHTML('beforeend','<style>.xt{display:flex;gap:4px;margin:14px 0 8px}.xt button{flex:1;padding:9px 2px;background:var(--cd);border:1px solid var(--bd);color:var(--mu);font:inherit;font-size:12px;cursor:pointer}.xt button.on{color:#fff;border-color:var(--gd)}.xg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.xg .btn{margin:0;font-size:13px;padding:11px 6px}.xg .btn.on{border-color:var(--gd);background:#b69a6b33}.xr{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:13px}.xr small{color:var(--mu)}.xbig{font:700 36px Georgia,serif;text-align:center;margin:6px 0}.cb{max-height:260px;overflow:auto;display:flex;flex-direction:column;gap:6px;margin-bottom:8px}.cb div{padding:7px 11px;max-width:82%;font-size:13px;background:#ffffff12}.cb .g{align-self:flex-end;background:#b69a6b44}.sb{font-size:11px;padding:2px 9px;border-radius:99px;background:#ffffff14}.sb.s{background:#34d39922;color:var(--ok)}.sb.p{background:#fbbf2422;color:#fbbf24}.xs button{background:none;border:0;font-size:30px;cursor:pointer;filter:grayscale(1);width:auto;margin:0;padding:4px}.xs button.on{filter:none}</style>');
+$('cCall').insertAdjacentHTML('afterend','<div id="xp"><div class="xt" id="xt"></div><div id="xb"></div><div id="xch" class="hide"><div class="cb" id="xcl"></div><div style="display:flex;gap:6px"><input id="xci" maxlength="200" placeholder="Tulis pesan ke resepsionis…"><button class="btn p" id="xcs" style="width:auto;margin:0;padding:0 18px">Kirim</button></div></div></div>');
+let E={ac:24,fan:2,orders:[],chat:[],bill:{}},GI={},xtab='K',RV={v:0,c:null};
+const XT=[['K','🎛 Kontrol'],['L','🛎 Layanan'],['C','💬 Chat'],['I','ℹ️ Info']],QK=[['🧺','Handuk tambahan','Housekeeping'],['🛏️','Bantal / selimut','Housekeeping'],['🧴','Amenities (sabun, sampo)','Housekeeping'],['🛌','Extra bed','Housekeeping'],['👕','Layanan laundry','Laundry'],['🔧','AC / TV / air bermasalah','Teknisi'],['💧','Air minum','Lainnya'],['🍽️','Makanan (sebut menu di Chat)','Lainnya']];
+const xc=(c,a)=>cmd(c,{a});
+const cdn=()=>{if(!stay||!stay.cout)return'';const ms=new Date(stay.cout+'T'+(GI.cout||'12:00'))-new Date();if(isNaN(ms))return'';if(ms<=0)return'Waktu check-out telah lewat';const h=Math.floor(ms/36e5);return (h>=24?Math.floor(h/24)+' hari '+h%24+' jam':h+' jam '+Math.floor(ms%36e5/6e4)+' menit')+' lagi'};
+function drawX(){$('xt').innerHTML=XT.map(([k,l])=>`<button class="${k==xtab?'on':''}" data-x="${k}">${l}</button>`).join('');$('xch').classList.toggle('hide',xtab!='C');$('xb').classList.toggle('hide',xtab=='C');
+ if(xtab=='C'){$('xcl').innerHTML=E.chat.length?E.chat.map(c=>`<div class="${c.f=='g'?'g':''}">${esc(c.m)}</div>`).join(''):'<p class="m">Belum ada pesan. Tanyakan apa saja ke resepsionis.</p>';$('xcl').scrollTop=1e9;return}
+ let h='';
+ if(xtab=='K')h=`<div class="card"><b>❄️ Pendingin udara</b><div class="xbig">${E.ac}°C</div><div class="xg"><button class="btn" data-a="ac-">− Turunkan</button><button class="btn" data-a="ac+">+ Naikkan</button></div><div class="xg" style="margin-top:8px">${[1,2,3].map(f=>`<button class="btn ${E.fan==f?'on':''}" data-a="fan${f}">Kipas ${f}</button>`).join('')}</div></div>
+<div class="card"><b>🎬 Suasana kamar</b><div class="xg" style="margin-top:10px">${[['tidur','🌙 Tidur'],['santai','🛋 Santai'],['kerja','💻 Kerja'],['romantis','🕯 Romantis']].map(([k,l])=>`<button class="btn ${E.scene==k?'on':''}" data-a="sc-${k}">${l}</button>`).join('')}</div></div>
+<div class="card xg"><button class="btn ${E.dnd?'on':''}" data-a="dnd">🔕 Jangan ganggu<br><small>${E.dnd?'AKTIF':'mati'}</small></button><button class="btn ${E.mur?'on':''}" data-a="mur">🧹 Mohon dibersihkan<br><small>${E.mur?'diminta':'tidak'}</small></button></div>
+<div class="card"><b>⏰ Wake-up call</b><p class="m">${E.wake?'Alarm aktif pukul '+E.wake+' (tiap hari sampai check-out)':'Alarm akan berbunyi di HP ini.'}</p><div style="display:flex;gap:6px"><input type="time" id="xw" value="${E.wake||'06:00'}"><button class="btn p" id="xws" style="width:auto;margin:0">Atur</button>${E.wake?'<button class="btn" data-a="wx" style="width:auto;margin:0">Batal</button>':''}</div></div>`;
+ if(xtab=='L'){const S={baru:['Menunggu','p'],proses:['Diproses','p'],selesai:['Selesai','s']};
+  h=`<div class="card"><b>Permintaan cepat</b><div class="xg" style="margin-top:10px">${QK.map((q,i)=>`<button class="btn" data-a="qk${i}">${q[0]} ${q[1]}</button>`).join('')}</div></div>`+
+  ((GI.sv||[]).length?`<div class="card"><b>Layanan berbayar</b>${GI.sv.map((s,i)=>`<div class="xr"><span>${esc(s.n)}<br><small>Rp ${rp(s.p)}</small></span><button class="btn p" data-a="sv${i}" style="width:auto;margin:0;padding:7px 14px">Pesan</button></div>`).join('')}</div>`:'')+
+  `<div class="card"><b>Check-out</b><div class="xg" style="margin-top:10px"><button class="btn" data-a="lco">🕑 Late check-out</button><button class="btn" data-a="ext">➕ Perpanjang 1 malam</button></div></div><div class="card"><b>Pesanan saya</b>${E.orders.length?E.orders.slice().reverse().map(o=>`<div class="xr"><span>${esc(o.item)}${o.qty>1?' ×'+o.qty:''}<br><small>${new Date(o.t).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})}${o.price?' · Rp '+rp(o.price*o.qty):''}</small></span><span class="sb ${S[o.st][1]}">${S[o.st][0]}</span></div>`).join(''):'<p class="m">Belum ada pesanan.</p>'}</div>`}
+ if(xtab=='I'){const b=E.bill||{};h=`<div class="card"><b>🧾 Tagihan saya</b><div class="xr"><span>Kamar</span><span>Rp ${rp(b.room)}</span></div><div class="xr"><span>Layanan tambahan</span><span>Rp ${rp(b.svc)}</span></div>${b.dep?`<div class="xr"><span>Deposit (dikembalikan)</span><span>Rp ${rp(b.dep)}</span></div>`:''}<div class="xr"><b>Total</b><b>Rp ${rp((b.room||0)+(b.svc||0))}</b></div><p class="m">Estimasi. Pembayaran diselesaikan di resepsionis.</p></div>
+<div class="card"><b>📶 WiFi</b><div class="xr"><span>${esc(GI.wifi||'-')}</span><span class="mono">${esc(GI.wpass||'')}</span></div>${GI.wpass?'<button class="btn" data-a="cp">Salin password</button>':''}</div>
+<div class="card"><b>🍳 Sarapan</b><p class="m">${esc(GI.bf||'-')}</p><b>⏳ Check-out</b><p class="m">${stay?esc(stay.cout):'-'} pukul ${esc(GI.cout||'12:00')}<br>${cdn()}</p>${GI.emg?`<b>📞 Info penting</b><p class="m">${esc(GI.emg)}</p>`:''}${GI.pol?`<b>📜 Aturan hotel</b><p class="m">${esc(GI.pol)}</p>`:''}</div>
+<div class="card"><b>⭐ Beri penilaian & ulasan</b><div class="xs" style="text-align:center">${[1,2,3,4,5].map(i=>`<button class="${(RV.v||E.rate)>=i?'on':''}" data-a="rt${i}">⭐</button>`).join('')}</div><textarea id="xrc" rows="3" maxlength="300" placeholder="Ceritakan pengalaman menginap Anda (opsional)" style="width:100%;margin-top:6px">${esc(RV.c!=null?RV.c:(E.rcm||''))}</textarea><button class="btn p" data-a="rsend" style="margin-top:8px">${E.rate?'Perbarui ulasan':'Kirim ulasan'}</button><p class="m" style="margin-top:6px">Ulasan Anda tampil di halaman Ulasan Tamu dengan nama singkat (contoh: Budi S.).</p></div>
+<button class="btn" style="background:#9f1239" data-a="sos">🚨 Darurat (SOS)</button>`}
+ $('xb').innerHTML=h}
+$('xp').onclick=e=>{const t=e.target.closest('[data-x]');if(t){xtab=t.dataset.x;return drawX()}if(e.target.id=='xws'&&sess){xc('wake',{t:$('xw').value});return toast('Wake-up call diatur')}
+ const b=e.target.closest('[data-a]');if(!b||!sess)return;const a=b.dataset.a;
+ if(a=='ac-'||a=='ac+')xc('ac',{t:E.ac+(a=='ac+'?1:-1)});else if(a.startsWith('fan'))xc('ac',{f:+a[3]});else if(a.startsWith('sc-'))xc('scene',{s:a.slice(3)});
+ else if(a=='dnd')xc('dnd',{v:!E.dnd});else if(a=='mur')xc('mur',{v:!E.mur});else if(a=='wx')xc('wake',{t:''});
+ else if(a.startsWith('qk')){const q=QK[+a.slice(2)];xc('order',{item:q[1],role:q[2]});toast('Permintaan terkirim')}
+ else if(a.startsWith('sv')){xc('order',{sv:+a.slice(2)});toast('Pesanan terkirim')}
+ else if(a=='lco'||a=='ext'){xc('req',{kind:a});toast('Permintaan terkirim ke resepsionis')}
+ else if(a.startsWith('rt')){RV.v=+a.slice(2);drawX()}else if(a=='rsend'){const v=RV.v||E.rate;if(!v)return toast('Pilih jumlah bintang dulu');const t=$('xrc')?$('xrc').value:(RV.c||'');xc('rate',{v,c:t});RV={v:0,c:null};toast('Terima kasih atas ulasan Anda!')}
+ else if(a=='sos'){if(confirm('Kirim sinyal DARURAT ke resepsionis & keamanan?'))xc('sos',{})}
+ else if(a=='cp'){navigator.clipboard&&navigator.clipboard.writeText(GI.wpass||'').then(()=>toast('Password disalin'))}};
+const sendC=()=>{const t=$('xci').value.trim();if(!t||!sess)return;xc('chat',{m:t});$('xci').value=''};$('xcs').onclick=sendC;$('xci').onkeydown=e=>{if(e.key=='Enter')sendC()};
+function wakeRing(){toast('⏰ Wake-up call! Selamat pagi');navigator.vibrate&&navigator.vibrate([400,200,400,200,400]);try{const a=new AudioContext();[0,.6,1.2,1.8,2.4].forEach(t=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=880;g.gain.value=.15;o.connect(g);g.connect(a.destination);o.start(a.currentTime+t);o.stop(a.currentTime+t+.3)})}catch(e){}}
+ch.addEventListener('message',e=>{const m=e.data;if(!m)return;if(m.type=='info'){GI=m.info||{};if(sess)drawX();return}
+ if(m.type=='login_ok'&&sess&&m.to==sess.room){xtab='K';E={ac:24,fan:2,orders:[],chat:[],bill:{}};drawX();xc('sync',{});return}
+ if(!sess||m.to!=sess.room)return;
+ if(m.type=='ext'){const pc=E.chat.length;E=m.e;if(E.chat.length>pc&&E.chat.slice(-1)[0].f=='r'&&xtab!='C')0;drawX()}
+ if(m.type=='wakeup')wakeRing()});
+
+/* ===== Fitur tersembunyi dari Owner (tamu) ===== */
+let GX={ft:{},cm:[],ann:''},E2={tv:0,vol:10,ch:1,cur:0,clean:''};
+const xtabs=()=>{XT.length=4;const f=GX.ft||{};if(f.dev||f.tip||f.comp||f.clean||(f.ann&&GX.ann))XT.push(['X','🧩 Lainnya']);(GX.cm||[]).forEach(c=>XT.push(['M'+c.id,c.icon+' '+c.name]));if(!XT.some(t=>t[0]==xtab))xtab='K'};
+document.head.insertAdjacentHTML('beforeend','<style>.xt{overflow-x:auto}.xt button{min-width:84px;white-space:nowrap}</style>');
+const _dx=drawX;drawX=function(){_dx();if(xtab!='X'&&xtab[0]!='M')return;const f=GX.ft||{};let h='';
+ if(xtab=='X'){if(document.activeElement&&document.activeElement.id=='xcm')return;
+  if(f.ann&&GX.ann)h+=`<div class="card"><b>📣 Pengumuman hotel</b><p class="m" style="margin-top:8px;color:#fff">${esc(GX.ann)}</p></div>`;
+  if(f.dev)h+=`<div class="card"><b>📺 TV</b><div class="xg" style="margin-top:10px"><button class="btn ${E2.tv?'on':''}" data-a="dv:tv:${E2.tv?0:1}">${E2.tv?'⏻ Matikan':'⏻ Nyalakan'}</button><button class="btn" data-a="dv:ch:${E2.ch+1}">Channel ${E2.ch} ▶</button><button class="btn" data-a="dv:vol:${E2.vol-2}">🔉 Vol −</button><button class="btn" data-a="dv:vol:${E2.vol+2}">🔊 Vol + (${E2.vol})</button></div></div><div class="card"><b>🪟 Tirai (${E2.cur}% terbuka)</b><div class="xg" style="margin-top:10px"><button class="btn" data-a="dv:cur:0">Tutup</button><button class="btn" data-a="dv:cur:50">Setengah</button><button class="btn" data-a="dv:cur:100" style="grid-column:1/-1">Buka penuh</button></div></div>`;
+  if(f.clean)h+=`<div class="card"><b>🧹 Jam pembersihan kamar</b><p class="m">${E2.clean?'Pilihan Anda: '+E2.clean:'Kapan saja.'}</p><div style="display:flex;gap:6px"><input type="time" id="xcl2" value="${E2.clean||'10:00'}"><button class="btn p" id="xcs2" style="width:auto;margin:0">Atur</button><button class="btn" data-a="cl:" style="width:auto;margin:0">Kapan saja</button></div></div>`;
+  if(f.tip)h+=`<div class="card"><b>💝 Beri tip untuk staf</b><div class="xg" style="margin-top:10px">${(GX.tips||'10000,20000,50000').split(',').map(Number).filter(Boolean).slice(0,5).map(v=>`<button class="btn" data-a="tp:${v}">Rp ${rp(v)}</button>`).join('')}</div></div>`;
+  if(f.comp)h+=`<div class="card"><b>📝 Keluhan / saran pribadi</b><p class="m">Langsung dibaca resepsionis & manajer.</p><textarea id="xcm" rows="3" maxlength="300" placeholder="Tulis keluhan atau saran…"></textarea><button class="btn p" id="xcms">Kirim</button></div>`}
+ else{const c=(GX.cm||[]).find(z=>'M'+z.id==xtab);if(c)h=c.k=='info'?`<div class="card"><b>${esc(c.icon+' '+c.name)}</b><p class="m" style="margin-top:8px;color:#fff;white-space:pre-wrap">${esc(c.text||'-')}</p></div>`:`<div class="card"><b>${esc(c.icon+' '+c.name)}</b>${(c.items||[]).map((it,i)=>`<div class="xr"><span>${esc(it.n)}<br><small>${it.p?'Rp '+rp(it.p):'Gratis'}</small></span><button class="btn p" data-a="xo${c.id}:${i}" style="width:auto;margin:0;padding:7px 14px">Pesan</button></div>`).join('')||'<p class="m">Belum ada item.</p>'}</div>`}
+ $('xb').innerHTML=h};
+$('xp').addEventListener('click',e=>{if(!sess)return;if(e.target.id=='xcs2')return xc('clean',{t:$('xcl2').value}),toast('Jam bersih diatur');if(e.target.id=='xcms'){const t=$('xcm').value.trim();if(!t)return;xc('comp',{m:t});$('xcm').value='';return toast('Terkirim ke manajer')}
+ const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,p=a.split(':');
+ if(p[0]=='dv')xc('dev',{k:p[1],v:+p[2]});else if(p[0]=='cl')xc('clean',{t:''});else if(p[0]=='tp'){xc('tip',{v:+p[1]});toast('Terima kasih! 💝')}else if(p[0].startsWith('xo')){xc('xorder',{id:p[0].slice(2),i:+p[1]});toast('Pesanan terkirim')}});
+ch.addEventListener('message',e=>{const m=e.data;if(!m)return;if(m.type=='info2'){GX={ft:m.ft||{},ann:m.ann||'',cm:m.cm||[],tips:m.tips};xtabs();if(sess)drawX();return}if(sess&&m.to==sess.room&&m.type=='ext2'){E2=m.e;drawX()}});
+
+/* ===== Fitur tambahan tamu (tab ✨ Lebih) ===== */
+let E3={sleep:0,away:0,dlog:[],poin:0,tier:'Bronze',svy:null,wel:''},SV={k:0,p:0,f:0},WS=0;
+const Y3=['sleep','lost','xout','away','dlog','vis','survey','loy','welcome'];
+const _dy=drawX;drawX=function(){_dy();if(xtab!='Y')return;const a=document.activeElement;if(a&&/INPUT|TEXTAREA/.test(a.tagName)&&a.closest('#xb'))return;const f=GX.ft||{};let h='';
+ if(f.welcome&&E3.wel)h+=`<div class="card"><b>👋 ${esc(E3.wel)}</b></div>`;
+ if(f.loy)h+=`<div class="card"><b>👑 Poin loyalitas</b><div class="xbig">${E3.poin} poin</div><p class="m" style="text-align:center">Level ${E3.tier} · poin dihitung dari nilai menginap saat check-out</p></div>`;
+ if(f.sleep)h+=`<div class="card"><b>😴 Timer tidur</b><p class="m">${E3.sleep?'Lampu mati & AC 26° dalam '+E3.sleep+' menit':'Lampu otomatis mati dan AC dinaikkan.'}</p><div class="xg"><button class="btn" data-a="sl:15">15 menit</button><button class="btn" data-a="sl:30">30 menit</button><button class="btn" data-a="sl:60">60 menit</button><button class="btn" data-a="sl:0">Batal</button></div></div>`;
+ if(f.away)h+=`<div class="card"><button class="btn ${E3.away?'on':''}" data-a="aw:${E3.away?0:1}" style="margin:0">🚶 ${E3.away?'Saya sudah kembali':'Saya keluar kamar (hemat energi)'}</button></div>`;
+ if(f.vis)h+=`<div class="card"><b>👥 Daftarkan tamu undangan</b><p class="m">Satpam & resepsionis akan menerima nama tamu Anda.</p><input id="xvn" placeholder="Nama tamu"><input id="xvt" type="time" style="margin-top:6px"><button class="btn p" id="xvs">Daftarkan</button></div>`;
+ if(f.lost)h+=`<div class="card"><b>🔍 Barang hilang / tertinggal</b><textarea id="xlt" rows="2" maxlength="200" placeholder="Jelaskan barangnya…"></textarea><button class="btn p" id="xls">Laporkan</button></div>`;
+ if(f.survey){h+=`<div class="card"><b>📋 Survei kepuasan</b>${E3.svy?'<p class="m">Terima kasih, survei Anda sudah terkirim ✔</p>':[['k','Kebersihan'],['p','Pelayanan'],['f','Fasilitas']].map(([k,l])=>`<div class="xr"><span>${l}</span><span class="xs">${[1,2,3,4,5].map(i=>`<button class="${SV[k]>=i?'on':''}" data-a="sy:${k}:${i}" style="font-size:20px">⭐</button>`).join('')}</span></div>`).join('')+'<button class="btn p" id="xss">Kirim survei</button>'}</div>`}
+ if(f.xout)h+=`<div class="card"><b>🚪 Check-out mandiri</b><p class="m">${E3.xout?'Pengajuan terkirim. Resepsionis akan memproses.':'Tanpa antre — kabari resepsionis bahwa Anda siap check-out.'}</p>${E3.xout?'':'<button class="btn p" data-a="xt:1">Ajukan check-out</button>'}</div>`;
+ if(f.dlog)h+=`<div class="card"><b>🔓 Riwayat pintu kamar</b>${(E3.dlog||[]).slice().reverse().map(t=>`<div class="xr"><span>Pintu dibuka</span><small>${new Date(t).toLocaleString('id-ID',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</small></div>`).join('')||'<p class="m">Belum ada.</p>'}</div>`;
+ $('xb').innerHTML=h||'<p class="m">Belum ada fitur aktif.</p>'};
+$('xp').addEventListener('click',e=>{if(!sess)return;const id=e.target.id;
+ if(id=='xvs'){const n=$('xvn').value.trim();if(!n)return;xc('vis',{n,t:$('xvt').value});$('xvn').value='';return toast('Tamu undangan didaftarkan')}
+ if(id=='xls'){const t=$('xlt').value.trim();if(!t)return;xc('lost',{m:t});$('xlt').value='';return toast('Laporan terkirim')}
+ if(id=='xss'){if(!SV.k||!SV.p||!SV.f)return toast('Isi ketiga penilaian');xc('survey',SV);return toast('Terima kasih atas survei Anda!')}
+ const b=e.target.closest('[data-a]');if(!b)return;const p=b.dataset.a.split(':');
+ if(p[0]=='sl')xc('sleep',{v:+p[1]});else if(p[0]=='aw')xc('away',{v:+p[1]});else if(p[0]=='sy'){SV[p[1]]=+p[2];drawX()}else if(p[0]=='xt'&&confirm('Ajukan check-out sekarang?'))xc('xout',{})});
+ch.addEventListener('message',e=>{const m=e.data;if(!m)return;
+ if(m.type=='popup'&&sess&&(!m.to||m.to==sess.room))return alert('📢 Pengumuman penting\n\n'+m.text);
+ if(m.type=='info2'){const f=GX.ft||{};if(Y3.some(k=>f[k])&&!XT.some(t=>t[0]=='Y'))XT.splice(Math.min(XT.length,XT.some(t=>t[0]=='X')?5:4),0,['Y','✨ Lebih']);if(sess)drawX();return}
+ if(m.type=='login_ok'){WS=0;E3.svy=null;SV={k:0,p:0,f:0}}
+ if(sess&&m.to==sess.room&&m.type=='ext3'){E3=m.e;if(!WS&&GX.ft&&GX.ft.welcome&&E3.wel){WS=1;toast('👋 '+E3.wel)}drawX()}});
+
+/* ===== Tab 🌟 Ekstra (tamu) ===== */
+let E4={lcol:'netral',lb:60,dndF:'',dndT:''};const Z4=['sur','mood','dndS'];
+const _dz=drawX;drawX=function(){_dz();if(xtab!='Z')return;const a=document.activeElement;if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)&&a.closest('#xb'))return;const f=GX.ft||{};let h='';
+ if(f.mood)h+=`<div class="card"><b>💡 Lampu mood</b><p class="m">${E4.lcol} · ${E4.lb}%</p><div class="xg">${[['hangat','🟠 Hangat'],['netral','⚪ Netral'],['dingin','🔵 Dingin']].map(([k,l])=>`<button class="btn ${E4.lcol==k?'on':''}" data-a="mc:${k}">${l}</button>`).join('')}<button class="btn" data-a="mb:${Math.max(0,E4.lb-20)}">🔅 Redup</button><button class="btn" data-a="mb:${Math.min(100,E4.lb+20)}">🔆 Terang</button></div></div>`;
+ if(f.dndS)h+=`<div class="card"><b>🔕 Jangan ganggu terjadwal</b><p class="m">${E4.dndF?'Aktif otomatis '+E4.dndF+' – '+E4.dndT:'Atur jam istirahat Anda.'}</p><div style="display:flex;gap:6px"><input type="time" id="xdf" value="${E4.dndF||'22:00'}"><input type="time" id="xdt" value="${E4.dndT||'07:00'}"></div><div class="xg" style="margin-top:8px"><button class="btn p" id="xds">Atur</button><button class="btn" data-a="dh:0">Hapus</button></div></div>`;
+ if(f.sur)h+=`<div class="card"><b>🎁 Kejutan di kamar</b><p class="m">Dekorasi, kue, atau bunga — hotel yang menyiapkan.</p><select id="xso">${['Ulang tahun','Anniversary','Bulan madu','Lamaran'].map(o=>`<option>${o}</option>`).join('')}</select><textarea id="xsn" rows="2" maxlength="150" placeholder="Catatan (nama, ucapan, waktu)…" style="margin-top:6px"></textarea><button class="btn p" id="xsu">Pesan kejutan</button></div>`;
+ $('xb').innerHTML=h||'<p class="m">Belum ada fitur aktif.</p>'};
+$('xp').addEventListener('click',e=>{if(!sess)return;const id=e.target.id;
+ if(id=='xds'){xc('dnds',{f:$('xdf').value,t:$('xdt').value});return toast('DND terjadwal diatur')}
+ if(id=='xsu'){xc('sur',{o:$('xso').value,n:$('xsn').value});$('xsn').value='';return toast('Permintaan kejutan terkirim 🎁')}
+ const b=e.target.closest('[data-a]');if(!b)return;const p=b.dataset.a.split(':');if(p[0]=='mc')xc('mood',{c:p[1]});else if(p[0]=='mb')xc('mood',{b:+p[1]});else if(p[0]=='dh')xc('dnds',{f:'',t:''})});
+ch.addEventListener('message',e=>{const m=e.data;if(!m)return;if(m.type=='info2'){const f=GX.ft||{};if(Z4.some(k=>f[k])&&!XT.some(t=>t[0]=='Z'))XT.push(['Z','🌟 Ekstra']);if(sess)drawX();return}if(sess&&m.to==sess.room&&m.type=='ext4'){E4=m.e;drawX()}});
+
+/* ===== Tab 💼 Praktis (tamu) + branding dari owner ===== */
+let GP={};const W5=['payinfo','wifiqr','pax','bag'];
+const _dw=drawX;drawX=function(){_dw();if(xtab!='W')return;const a=document.activeElement;if(a&&/INPUT|SELECT/.test(a.tagName)&&a.closest('#xb'))return;const f=GX.ft||{};let h='';
+ if(f.payinfo)h+=`<div class="card"><b>💳 Pembayaran</b><p class="m">Diterima: ${esc(GP.pay||'-')}</p>${GP.bank?`<p class="m" style="color:#fff;white-space:pre-wrap">${esc(GP.bank)}</p>`:''}<button class="btn p" data-a="bil:1">Minta rincian tagihan / bayar</button></div>`;
+ if(f.wifiqr&&GI.wifi)h+=`<div class="card" style="text-align:center"><b>📶 Scan untuk sambung WiFi</b><canvas id="xwq" style="display:block;margin:12px auto;background:#fff"></canvas><small class="m">${esc(GI.wifi)}</small></div>`;
+ if(f.pax)h+=`<div class="card"><b>👥 Ubah jumlah tamu</b><p class="m">Beri tahu resepsionis bila ada tamu bertambah/berkurang.</p><div style="display:flex;gap:6px"><input type="number" id="xpx" min="1" max="8" value="2"><button class="btn p" id="xpb" style="width:auto;margin:0">Kirim</button></div></div>`;
+ if(f.bag)h+=`<div class="card"><b>🧳 Bantuan bagasi</b><div class="xg" style="margin-top:10px"><button class="btn" data-a="bg:Bantuan angkat bagasi ke kamar">Angkat bagasi</button><button class="btn" data-a="bg:Titip bagasi setelah check-out">Titip bagasi</button></div></div>`;
+ $('xb').innerHTML=h||'<p class="m">Belum ada fitur aktif.</p>';const c=$('xwq');if(c)try{qrDraw(c,`WIFI:T:WPA;S:${GI.wifi};P:${GI.wpass||''};;`,180)}catch(e){}};
+$('xp').addEventListener('click',e=>{if(!sess)return;if(e.target.id=='xpb'){xc('pax',{n:$('xpx').value});return toast('Terkirim ke resepsionis')}const b=e.target.closest('[data-a]');if(!b)return;const p=b.dataset.a.split(':');
+ if(p[0]=='bil'){xc('bill',{});toast('Permintaan tagihan terkirim')}else if(p[0]=='bg'){xc('order',{item:p[1],role:'Lainnya'});toast('Permintaan terkirim')}});
+ch.addEventListener('message',e=>{const m=e.data;if(!m)return;
+ if(m.type=='info'&&m.info&&m.info.hn&&!HM.hn){$('hn').textContent=m.info.hn}
+ if(m.type=='info3'){GP=m;applyHome(m);if(m.ac)document.documentElement.style.setProperty('--gd',m.ac);if(sess&&xtab=='W')drawX()}
+ if(m.type=='info2'){const f=GX.ft||{};if(W5.some(k=>f[k])&&!XT.some(t=>t[0]=='W'))XT.push(['W','💼 Praktis']);if(sess)drawX()}});
+
+/* ===== Praktis+ (tamu): rutinitas, laporan kerusakan, amenities, sarapan terjadwal, voucher ===== */
+W5.push('fix','amen','brk','routine','voucher');let AM={};const AMI=['Handuk','Bantal','Selimut','Sabun','Sampo','Sandal','Sikat gigi','Tisu'],FXC=['Lampu','AC','TV','Air panas','Pintu/kunci','WiFi','Toilet','Lainnya'];
+const _d6=drawX;drawX=function(){_d6();if(xtab!='W')return;const a=document.activeElement;if(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&a.closest('#xb'))return;const f=GX.ft||{};let h='';
+ if(f.routine)h+=`<div class="card"><b>🌗 Rutinitas</b><div class="xg" style="margin-top:10px"><button class="btn" data-a="rn:night">🌙 Selamat tidur</button><button class="btn" data-a="rn:morning">☀️ Selamat pagi</button></div><p class="m">Tidur: lampu mati, AC 26°, jangan ganggu. Pagi: lampu nyala, tirai terbuka.</p></div>`;
+ if(f.fix)h+=`<div class="card"><b>🔧 Laporkan kerusakan</b><div class="xg" style="margin-top:10px">${FXC.map(c=>`<button class="btn" data-a="fx:${c}">${c}</button>`).join('')}</div></div>`;
+ if(f.amen)h+=`<div class="card"><b>🧺 Amenities</b>${AMI.map((n,i)=>`<div class="xr"><span>${n}</span><span><button class="btn" data-a="am:-:${i}" style="width:auto;margin:0;padding:4px 12px">−</button> <b>${AM[i]||0}</b> <button class="btn" data-a="am:+:${i}" style="width:auto;margin:0;padding:4px 12px">+</button></span></div>`).join('')}<button class="btn p" id="xam">Kirim permintaan</button></div>`;
+ if(f.brk)h+=`<div class="card"><b>🥐 Sarapan ke kamar</b><div style="display:flex;gap:6px"><select id="xbt">${['06:30','07:00','07:30','08:00','08:30','09:00','09:30'].map(t=>`<option>${t}</option>`).join('')}</select><input type="number" id="xbn" min="1" max="8" value="1" style="width:70px"></div><input id="xbc" maxlength="40" placeholder="Menu / catatan" style="margin-top:6px"><button class="btn p" id="xbk">Pesan</button></div>`;
+ if(f.voucher&&GP.vouch)h+=`<div class="card"><b>🎟 Voucher untuk Anda</b>${E.rate>=(GP.vcRate||4)?`<p class="m" style="color:#fff;white-space:pre-wrap">${esc(GP.vouch)}</p>`:`<p class="m">Beri penilaian minimal ${GP.vcRate||4} ⭐ di tab Info untuk membuka voucher kunjungan berikutnya.</p>`}</div>`;
+ if(h){const p=$('xb').firstElementChild;if(p&&p.tagName=='P')p.remove();$('xb').insertAdjacentHTML('beforeend',h)}};
+$('xp').addEventListener('click',e=>{if(!sess)return;const id=e.target.id;
+ if(id=='xam'){const l=AMI.map((n,i)=>AM[i]?n+'×'+AM[i]:'').filter(Boolean).join(', ');if(!l)return toast('Pilih jumlah dulu');xc('order',{item:'Amenities: '+l,role:'Housekeeping'});AM={};drawX();return toast('Permintaan terkirim')}
+ if(id=='xbk'){xc('order',{item:`Sarapan ${$('xbt').value} ×${$('xbn').value} ${$('xbc').value}`.trim(),role:'Lainnya'});return toast('Pesanan sarapan terkirim')}
+ const b=e.target.closest('[data-a]');if(!b)return;const p=b.dataset.a.split(':');
+ if(p[0]=='am'){const i=+p[2];AM[i]=Math.max(0,Math.min(9,(AM[i]||0)+(p[1]=='+'?1:-1)));drawX()}
+ else if(p[0]=='fx'){xc('order',{item:'Kerusakan: '+p[1],role:'Teknisi'});toast('Laporan terkirim ke teknisi')}
+ else if(p[0]=='rn'){if(p[1]=='night'){xc('scene',{s:'tidur'});xc('dnd',{v:true});toast('Selamat tidur 🌙')}else{xc('scene',{s:'santai'});xc('dnd',{v:false});xc('dev',{k:'cur',v:100});toast('Selamat pagi ☀️')}}});
+
+/* ===== Renderer blok menu tab (dipakai tamu & karyawan) ===== */
+document.head.insertAdjacentHTML('beforeend','<style>.cmb{background:var(--cd,#1d1813);border:1px solid var(--bd,#3a3126);padding:14px;margin-bottom:12px;text-align:left}.cmb h3{margin:0 0 8px;font-size:15px}.cmb.warn{border-color:#f59e0b}.cmb.hi{border-color:var(--gd,#b69a6b);background:#b69a6b22}.cmr{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--bd,#3a3126);font-size:13px}.cmr small{color:var(--mu,#9a8f7e);display:block}.cmb select,.cmb input,.cmb textarea{width:100%;margin-top:6px;box-sizing:border-box}.cmb .cmq{display:flex;gap:4px;align-items:center;white-space:nowrap}.cmb button,.cmb a.btn{cursor:pointer}.cmb details{border-bottom:1px solid var(--bd,#3a3126);padding:8px 0;font-size:13px}.cmb summary{cursor:pointer}.cmb img{max-width:100%}.cmbar{height:6px;background:var(--gd,#b69a6b);margin-top:4px}.cmg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cmb .sm{width:auto;margin:0;padding:7px 12px}.cmb a.btn{display:block;text-align:center;text-decoration:none;margin:0 0 8px}</style>');
+const CMF=n=>'Rp '+Math.round(+n||0).toLocaleString('id-ID'),CMH=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const CMW=(f,t)=>{if(!f||!t)return true;const d=new Date(),h=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');return f<=t?(h>=f&&h<t):(h>=f||h<t)};
+const CMV=(c,rt)=>c.on!==false&&CMW(c.from,c.to)&&(!(c.types||[]).length||(!!rt&&c.types.map(x=>x.toLowerCase()).includes(String(rt).toLowerCase())));
+function CMR(c,S){return (c.blocks||[]).map((b,bi)=>{if(!CMW(b.from,b.to))return'';const id=c.id+'-'+bi,hd=b.title?`<h3>${CMH(b.title)}</h3>`:'',w=h=>`<div class="cmb ${b.style||''}" ${c.color?`style="border-top:3px solid ${CMH(c.color)}"`:''}>${hd}${h}</div>`;
+ if(b.type=='text')return w(`<div style="white-space:pre-wrap;font-size:13px">${CMH(b.text)}</div>`);
+ if(b.type=='menu')return w((b.items||[]).map((it,i)=>{const k=id+'-'+i,out=it.st!=null&&it.st<=0;return `<div class="cmr"><span>${CMH(it.n)}${it.d?`<small>${CMH(it.d)}</small>`:''}${it.p?`<small>${CMF(it.p)}</small>`:''}${it.st!=null?`<small>${out?'Habis':'Stok: '+it.st}</small>`:''}${(it.o||[]).length?`<select id="co-${k}">${it.o.map(o=>`<option>${CMH(o)}</option>`).join('')}</select>`:''}</span><span class="cmq"><button class="btn sm" data-cm="q:${c.id}:${bi}:${i}:-1">−</button><b id="cq-${k}">${S.q[k]||1}</b><button class="btn sm" data-cm="q:${c.id}:${bi}:${i}:1">+</button><button class="btn p sm" data-cm="m:${c.id}:${bi}:${i}" ${out?'disabled':''}>Pesan</button></span></div>`}).join('')+`<input id="cn-${c.id}-${bi}" maxlength="60" placeholder="Catatan (opsional)">`);
+ if(b.type=='buttons')return w(`<div class="cmg">${(b.items||[]).map((it,i)=>`<button class="btn" style="margin:0" data-cm="b:${c.id}:${bi}:${i}">${CMH(it.l)}</button>`).join('')}</div>`);
+ if(b.type=='form')return w((b.f||[]).map((f,j)=>{const i=`cf-${id}-${j}`,l=`<label style="font-size:12px;display:block;margin-top:8px">${CMH(f.l)}`;return l+(f.t=='select'?`<select id="${i}"><option value="">— pilih —</option>${(f.o||[]).map(o=>`<option>${CMH(o)}</option>`).join('')}</select>`:f.t=='textarea'?`<textarea id="${i}" rows="2" maxlength="120"></textarea>`:`<input id="${i}" type="${f.t}" maxlength="120">`)+'</label>'}).join('')+`<button class="btn p" style="margin-top:10px" data-cm="f:${c.id}:${bi}:0">Kirim</button>`);
+ if(b.type=='links')return w((b.items||[]).map(it=>`<a class="btn" href="${CMH(it.u)}" ${/^https?:/.test(it.u)?'target="_blank" rel="noopener"':''}>${CMH(it.l)}</a>`).join(''));
+ if(b.type=='faq')return w((b.items||[]).map(it=>`<details><summary>${CMH(it.q)}</summary><p style="margin:6px 0 0;color:var(--mu,#9a8f7e)">${CMH(it.a)}</p></details>`).join(''));
+ if(b.type=='poll'){const cn=(S.pv||{})[b.id]||[],tot=(b.items||[]).reduce((a,_,i)=>a+(cn[i]||0),0),my=(S.my||{})[b.id];return w((b.items||[]).map((it,i)=>my!=null?`<div style="font-size:13px;margin-top:8px">${CMH(it.n)}${my==i?' ✔':''} — ${tot?Math.round((cn[i]||0)*100/tot):0}%<div class="cmbar" style="width:${tot?(cn[i]||0)*100/tot:0}%"></div></div>`:`<button class="btn" style="margin:0 0 8px" data-cm="v:${c.id}:${bi}:${i}">${CMH(it.n)}</button>`).join(''))}
+ if(b.type=='img')return b.u?w((/^F/.test(b.u)?`<img data-fid="${CMH(b.u)}" alt="">`:`<img src="${CMH(b.u)}" alt="">`)+(b.c?`<small>${CMH(b.c)}</small>`:'')):'';
+ if(b.type=='file')return w((b.items||[]).map(it=>`<div class="cmr"><span>📄 ${CMH(it.l)}<small>${fSz(it.s)}${it.t?' · '+CMH(it.t):''}</small></span><button class="btn p sm" data-cm="d:${it.id}" data-fn="${CMH(it.l)}">⬇ Unduh</button></div>`).join(''));
+ if(b.type=='chat')return w(`<div class="cmc" id="cl-${b.id}" style="max-height:240px;overflow:auto;font-size:13px">${CMM((S.rc||{})[b.id])}</div><div style="display:flex;gap:6px;margin-top:8px;align-items:center"><input id="cc-${id}" maxlength="200" placeholder="Tulis pesan…" style="margin:0;flex:1"><label class="btn sm" style="margin:0;display:inline-block;width:auto">📎<input type="file" id="cu-${id}" hidden></label><button class="btn p sm" data-cm="c:${c.id}:${bi}:0">Kirim</button></div>`);
+ return''}).join('')}
+function CMC(e,S,go){const b=e.target.closest('[data-cm]');if(!b)return;const p=b.dataset.cm.split(':'),k=p[1]+'-'+p[2]+'-'+p[3],g=i=>{const el=document.getElementById(i);return el?el.value:''};
+ if(p[0]=='q'){S.q[k]=Math.max(1,Math.min(9,(S.q[k]||1)+(+p[4])));const el=document.getElementById('cq-'+k);if(el)el.textContent=S.q[k];return}
+ if(p[0]=='d'){cmDl(p[1],b.dataset.fn);return}
+ if(p[0]=='c'){cmSend(p,go);return}
+ if(p[0]=='m')go({tid:p[1],bi:+p[2],i:+p[3],q:S.q[k]||1,o:g('co-'+k),nt:g('cn-'+p[1]+'-'+p[2])});
+ else if(p[0]=='b'||p[0]=='v')go({tid:p[1],bi:+p[2],i:+p[3]});
+ else if(p[0]=='f'){const v=[];for(let j=0;j<12;j++){const el=document.getElementById('cf-'+p[1]+'-'+p[2]+'-'+j);if(!el)break;v.push(el.value)}go({tid:p[1],bi:+p[2],v});(document.querySelectorAll('[id^="cf-'+p[1]+'-'+p[2]+'-"]')).forEach(el=>el.value='')}}
+
+/* ===== Menu tab builder v2 (tamu) ===== */
+let CMS={q:{},my:{},pv:{},rc:{}},CMT='';
+const fixM=()=>{for(let i=XT.length-1;i>=0;i--)if(XT[i][0][0]=='M'){const c=(GX.cm||[]).find(z=>'M'+z.id==XT[i][0]);if(!c||!CMV(c,CMT))XT.splice(i,1)}if(!XT.some(t=>t[0]==xtab))xtab='K'};
+const _d7=drawX;drawX=function(){if(xtab[0]=='M'){const a=document.activeElement;if(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&a.closest('#xb'))return}_d7();if(xtab[0]!='M')return;const c=(GX.cm||[]).find(z=>'M'+z.id==xtab);if(c){$('xb').innerHTML=CMR(c,CMS)||'<p class="m">Belum ada isi.</p>';CMI($('xb'))}};
+$('xb').addEventListener('click',e=>{if(sess)CMC(e,CMS,a=>xc('cmact',a))});
+ch.addEventListener('message',e=>{const m=e.data;if(!m)return;if(m.type=='info2'){fixM();if(sess)drawX();return}
+ if(!sess||m.to!=sess.room)return;
+ if(m.type=='cmv'){CMS.pv=m.pv||{};CMS.rc=m.rc||{};CMS.my=m.my||{};CMT=m.rt||'';fixM();drawX()}if(m.type=='cmres'&&m.msg)toast('✔ '+m.msg)});
+setInterval(()=>{if(sess){const n=XT.length;fixM();if(XT.length!=n)drawX()}},60000);
+
+/* ===== File (IndexedDB), ruang chat, unduh ===== */
+const FDB=()=>new Promise((ok,no)=>{const q=indexedDB.open('hs_files',1);q.onupgradeneeded=()=>q.result.createObjectStore('f');q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)});
+const fPut=async(id,b)=>{const r=await fetch('/hs/file?id='+encodeURIComponent(id),{method:'POST',body:b});if(!r.ok)throw new Error('upload')};
+const fGet=async id=>{try{const r=await fetch('/hs/file?id='+encodeURIComponent(id));return r.ok?await r.blob():null}catch(e){return null}};
+const fSz=n=>n>1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round((n||0)/1024))+' KB';
+async function cmDl(id,fn){const b=await fGet(id);if(!b)return typeof toast=='function'&&toast('File tidak ditemukan di perangkat ini');const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=fn||'file';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
+const CMI=root=>{root.querySelectorAll('img[data-fid]').forEach(async im=>{const b=await fGet(im.dataset.fid);if(b)im.src=URL.createObjectURL(b)});root.querySelectorAll('.cmc').forEach(e=>e.scrollTop=1e9)};
+const CMM=ms=>(ms||[]).map(x=>`<div style="padding:4px 0;border-bottom:1px solid var(--bd,#3a3126)"><b style="color:var(--gd,#b69a6b)">${CMH(x.f)}</b> <small style="color:var(--mu,#9a8f7e)">${new Date(x.t).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})}</small><br>${CMH(x.m)}${x.fl?`<br><button class="btn sm" style="margin-top:4px;width:auto" data-cm="d:${x.fl.id}" data-fn="${CMH(x.fl.n)}">📎 ${CMH(x.fl.n)} (${fSz(x.fl.s)})</button>`:''}</div>`).join('')||'<small style="color:var(--mu,#9a8f7e)">Belum ada pesan. Jadilah yang pertama.</small>';
+function CMU(bid,ms){const e=document.getElementById('cl-'+bid);if(e){e.innerHTML=CMM(ms);e.scrollTop=1e9}}
+async function cmSend(p,go){const k=p[1]+'-'+p[2],i=document.getElementById('cc-'+k),u=document.getElementById('cu-'+k),f=u&&u.files[0],m=i?i.value.trim():'';if(!m&&!f)return;let fl;if(f){if(f.size>8*1048576)return typeof toast=='function'&&toast('File maksimal 8 MB');const id='F'+Math.random().toString(36).slice(2,10);await fPut(id,f);fl={id,n:f.name,s:f.size}}go({tid:p[1],bi:+p[2],m:m||'(file)',f:fl});if(i)i.value='';if(u)u.value=''}
+ch.addEventListener('message',e=>{const m=e.data;if(m&&m.type=='rchat'&&typeof CMS!='undefined'){CMS.rc[m.bid]=m.msgs;CMU(m.bid,m.msgs)}});
+</script><script>(()=>{const h=document.querySelector('header.hd'),s=document.getElementById('scrim'),o=v=>{h.classList.toggle('open',v);s.classList.toggle('on',v)};document.getElementById('mb').onclick=()=>o(!h.classList.contains('open'));s.onclick=()=>o(false);const nv=h.querySelector('nav');nv.addEventListener('click',e=>{const a=e.target.closest('a,button');if(!a)return;o(false);if(a.getAttribute('href'))nv.querySelectorAll('a').forEach(x=>x.classList.toggle('on',x===a))})})();</script>
+<script>
+window.wakeRing=()=>notify('wake','Selamat pagi! Ini wake-up call dari resepsionis.',{vib:[400,200,400,200,400]});
+let _lc=null;
+ch.addEventListener('message',e=>{const m=e.data;if(!m)return;
+ if(m.type=='reg_approved'&&(m.rid===rid||m.rid===reqId||(stay&&stay.rid===(m.stayRid||m.rid)&&String(stay.room)===String(m.room))))notify('ok',m.resend?'PIN & QR Anda dikirim ulang oleh resepsionis.':'Pendaftaran disetujui! PIN & QR kamar sudah siap.',{say:m.resend?'PIN dan QR Anda sudah dikirim ulang':'Pendaftaran Anda disetujui'});
+ else if(m.type=='reg_rejected'&&m.rid&&m.rid===rid)notify('no','Pendaftaran ditolak. '+(m.why||'Silakan hubungi resepsionis.'),{say:'Pendaftaran Anda ditolak'});
+ else if(m.type=='ack')notify('ok','Resepsionis menanggapi panggilan Anda.',{say:'Resepsionis menanggapi panggilan Anda'});
+ else if(m.type=='call_live')notify('ok','Panggilan suara tersambung. Silakan bicara.',{say:false});
+ else if(m.type=='ext'&&m.e){const c=m.e.chat||[];if(_lc!==null&&c.length>_lc&&c[c.length-1].f=='r')notify('chat','Balasan resepsionis: '+(c[c.length-1].m||''),{say:'Ada balasan dari resepsionis'});_lc=c.length}});
+</script>
+<script>/* Interkom: tamu login -> daftar kontak dari hub resepsionis */
+const _acc=()=>{const m=window.OBACC&&OBACC.me();return m&&m.st!=='wait'&&m.st!=='no'?m:null};
+IC.setSend(p=>{if(!sess&&_acc())OBACC.ic(p);else cmd('ic2',{m:p})});
+setInterval(()=>{const m=_acc();   /* tamu menginap: identitas kamar (T:) | akun aplikasi yang sudah masuk: identitas akun (U:), menerima panggilan dari resepsionis/owner */
+ if(sess)IC.setSelf({id:'T:'+sess.room,name:'Kamar '+sess.room});
+ else if(m){IC.setSelf({id:'U:'+m.id,name:m.name});IC.setGD({on:AV.ia?1:0,out:[{id:'R',name:'Resepsionis',sub:'Front office'}],inn:['R','O'],ice:OBACC.ice()})}
+ else IC.setSelf(null);
+ IC.setFabHidden(!sess)},800);   /* tombol interkom hanya tampil saat tamu sedang di kamar (login kamar aktif); panggilan masuk & panggilan yang sedang berjalan tetap muncul */
+
+/* ===== ULASAN TAMU (publik) & RESERVASI SAYA ===== */
+let rvF=0,rvAll=false,rvPause=0;const RVC='ob_rv_cache';
+const rvDt=t=>{try{return new Date(t).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}catch(e){return''}};
+const rvS=(v,big)=>`<span class="vr-st" style="--p:${Math.max(0,Math.min(5,v))*20}%" aria-label="${(+v).toFixed(1)} dari 5">★★★★★</span>`;
+function renderRev(){
+ let R=AV.rev;
+ try{if(gotAv){if(R)localStorage.setItem(RVC,JSON.stringify(R));else localStorage.removeItem(RVC)}else if(!R){R=JSON.parse(localStorage.getItem(RVC)||'null')}}catch(e){}
+ $('rv').classList.toggle('hide',!R);const hb=$('hRv');hb.classList.toggle('hide',!(R&&R.n));if(!R)return;
+ const n=R.n||0,dist=R.dist||[0,0,0,0,0],mx=Math.max(1,...dist);
+ if(!n){$('rvBox').innerHTML='<div class="vr-e">'+rvS(5)+'Jadilah tamu pertama yang berbagi cerita menginap di sini.</div>';return}
+ const avg=+R.avg||0,pct=Math.round(((dist[3]||0)+(dist[4]||0))*100/n),L=(R.list||[]).filter(x=>!rvF||x.v===rvF);
+ hb.innerHTML=`${rvS(avg)}<b>${avg.toFixed(1)}</b><span class="t">${n} ulasan tamu</span>`;
+ const card=x=>`<article class="vr-c"><i class="vr-q">“</i>${rvS(x.v)}<p>${x.c?esc(x.c):'Memberi penilaian '+x.v+' dari 5 bintang.'}</p><footer><span class="vr-av">${esc(((x.n||'T')[0]||'T').toUpperCase())}</span><div><b>${esc(x.n||'Tamu')}</b><small>${rvDt(x.t)}${x.ty?' · '+esc(x.ty):''}</small></div><em>✔ Tamu<br>menginap</em></footer></article>`;
+ const LC=L.filter(x=>x.c),show=LC.length?LC:L;
+ $('rvBox').innerHTML=`<div class="vr-sum"><div class="vr-big"><b>${avg.toFixed(1)}</b>${rvS(avg)}<small>${n} ulasan tamu</small><div class="vr-pct"><b>${pct}%</b> tamu merasa puas</div></div>
+ <div class="vr-bars">${[5,4,3,2,1].map(i=>`<div><span>${i} ★</span><i><u style="width:${(dist[i-1]||0)*100/mx}%"></u></i><span>${dist[i-1]||0}</span></div>`).join('')}</div></div>
+ <div class="vr-f">${[0,5,4,3,2,1].map(i=>`<button class="${rvF===i?'on':''}" data-f="${i}">${i?i+' ★':'Semua'}</button>`).join('')}</div>
+ ${show.length?(rvAll?`<div class="vr-grid">${show.map(card).join('')}</div>`:`<div class="vr-w"><button class="vr-n p" data-n="-1" aria-label="Sebelumnya">‹</button><div class="vr-tr" id="rvTr">${show.map(card).join('')}</div><button class="vr-n x" data-n="1" aria-label="Berikutnya">›</button></div>`)
+ +(show.length>2?`<div class="vr-m"><button class="vr-all" data-all="1">${rvAll?'Tampilkan lebih ringkas':'Lihat semua '+show.length+' ulasan'}</button></div>`:''):'<p class="m" style="text-align:center">Belum ada ulasan dengan bintang ini.</p>'}`}
+function rvStep(d){const t=$('rvTr');if(!t||!t.firstElementChild)return;const w=t.firstElementChild.offsetWidth+18;if(d>0&&t.scrollLeft+t.clientWidth>=t.scrollWidth-6)t.scrollTo({left:0});else if(d<0&&t.scrollLeft<=4)t.scrollTo({left:t.scrollWidth});else t.scrollBy({left:d*w})}
+$('rvBox').onclick=e=>{const f=e.target.closest('[data-f]'),nx=e.target.closest('[data-n]'),al=e.target.closest('[data-all]');if(f){rvF=+f.dataset.f;renderRev()}else if(nx){rvPause=Date.now()+12000;rvStep(+nx.dataset.n)}else if(al){rvAll=!rvAll;renderRev();if(!rvAll)$('rv').scrollIntoView({behavior:'smooth'})}};
+['touchstart','mouseenter','focusin'].forEach(ev=>$('rvBox').addEventListener(ev,()=>{rvPause=Date.now()+12000},{passive:true}));
+setInterval(()=>{if(rvAll||document.hidden||Date.now()<rvPause||!$('rvTr'))return;const r=$('rv').getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;rvStep(1)},5500);
+$('hRv').onclick=()=>{show('vHome');$('rv').scrollIntoView({behavior:'smooth'})};$('hRv').onkeydown=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();$('hRv').click()}};
+function showResv(t){status('rv',t||'Reservasi Anda','Kamar Anda sudah dipesan. PIN & QR dikirim otomatis saat hari check-in dan muncul di sini.');
+ $('sRv').innerHTML=resvs.map(x=>`<div class="ri" style="margin-top:10px"><div class="rt"><b>Kamar ${esc(x.room)}</b><small>${esc(x.name)}</small></div><small>${esc(dsh(x.cin))} → ${esc(dsh(x.cout))}</small><button class="btn" data-cx="${esc(x.rid)}" style="margin-top:8px">Batalkan reservasi</button></div>`).join('')}
+$('sRv').onclick=e=>{const b=e.target.closest('[data-cx]');if(!b)return;const x=resvs.find(z=>z.rid===b.dataset.cx);if(!x)return;if(!x.phone)return toast('Hubungi resepsionis untuk membatalkan');if(!confirm('Batalkan reservasi kamar '+x.room+'?'))return;tell({type:'reg_cancel',rid:x.rid,phone:x.phone});toast('Permintaan pembatalan dikirim')};
+saveResvs();
+{const _dX=drawX;drawX=function(){const a=document.activeElement;if(a&&a.id=='xrc'&&xtab=='I'&&sess)return;_dX()};$('xp').addEventListener('input',e=>{if(e.target.id=='xrc')RV.c=e.target.value})}
+renderRev();
+</script>
+<button id="vFab" class="vf hide" type="button" aria-label="Tanya resepsionis"><span class="vf-i">💬</span><span class="vf-t">Tanya Resepsionis</span><i id="vFb" class="hide">0</i></button>
+<div id="vp" class="vp hide" role="dialog" aria-label="Chat dengan resepsionis">
+ <div class="vp-h"><div class="vp-av">OB</div><div class="vp-w"><b>Resepsionis</b><small id="vSt"></small></div><button id="vCallB" type="button" title="Panggilan suara" aria-label="Panggilan suara">📞</button><button id="vX" type="button" aria-label="Tutup">✕</button></div>
+ <div id="vCallU" class="vp-call hide"><div id="vCallT"></div><div class="wave" id="vW"></div><div class="vp-cb"><button type="button" id="vMt">🎤 Mikrofon ON</button><button type="button" id="vEnd" class="end">Akhiri</button></div></div>
+ <div id="vBody" class="vp-body"></div>
+ <div id="vOff" class="vp-off hide"></div>
+ <div id="vQ" class="vp-q"></div>
+ <form id="vForm" autocomplete="off"><input id="vNm" maxlength="40" placeholder="Nama Anda (opsional)"><div class="vp-r"><input id="vIn" maxlength="300" placeholder="Tulis pertanyaan Anda…"><button class="gold" type="submit">Kirim</button></div></form>
+</div>
+<script>/* ===== TANYA RESEPSIONIS (calon tamu): chat + panggilan suara dari beranda, sebelum reservasi ===== */
+(()=>{
+const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}return null};
+let vid=LS('ob_vid');if(!/^[A-Za-z0-9]{8,24}$/.test(vid||'')){vid=Array.from(crypto.getRandomValues(new Uint8Array(14)),b=>'abcdefghijklmnopqrstuvwxyz0123456789'[b%36]).join('');LS('ob_vid',vid)}
+let msgs=[];try{msgs=JSON.parse(LS('ob_vchat')||'[]').filter(x=>x&&(x.f=='g'||x.f=='r'))}catch(e){}
+let un=0,isOpen=false,wasOnline=false;
+const send=o=>tell({type:'visit',vid,...o}),save=()=>LS('ob_vchat',JSON.stringify(msgs.slice(-40))),nameV=()=>($('vNm').value||'').trim().slice(0,40);
+const hm=t=>{try{return new Date(t).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'})}catch(e){return''}};
+const hotel=()=>($('hn').textContent||'One Bliss').trim();
+$('vNm').value=LS('ob_vname')||'';
+
+/* ---------- tampil/sembunyi ---------- */
+const okView=()=>['vHome','vReg','vLogin'].includes(curV);
+function sync(){const on=AV.vc!==0,v=on&&okView(),cs0=cs!='idle';
+ $('vFab').classList.toggle('hide',!v||isOpen);$('cg').classList.toggle('hide',!(on&&curV=='vHome'));
+ $('vp').classList.toggle('hide',!(isOpen&&on&&(okView()||cs0)));
+ const b=$('vFb');b.textContent=un>9?'9+':un;b.classList.toggle('hide',!un)}
+{const _sh=show;show=function(v){_sh(v);sync()}}
+{const _rr=renderRev;renderRev=function(){_rr();sync()}}
+
+/* ---------- chat ---------- */
+function draw(){
+ const B=$('vBody'),near=B.scrollHeight-B.scrollTop-B.clientHeight<80,now=Date.now();
+ const hi=`<div class="vb r">Selamat datang di ${esc(hotel())}! 😊 Ada yang bisa kami bantu sebelum Anda memesan kamar?<small>Resepsionis</small></div>`;
+ B.innerHTML=hi+msgs.map(x=>x.f=='r'?`<div class="vb r">${esc(x.m)}<small>${hm(x.t)}</small></div>`
+  :`<div class="vb g">${esc(x.m)}<small ${x.s=='p'&&now-x.t>9000?`class="bad" data-rs="${esc(x.i)}">Belum terkirim · ketuk untuk kirim ulang`:`>${x.s=='p'?'Mengirim…':'✓ Terkirim'} · ${hm(x.t)}`}</small></div>`).join('');
+ if(near||!B._i){B.scrollTop=B.scrollHeight;B._i=1}
+ $('vQ').innerHTML=msgs.some(x=>x.f=='g')?'':['Apakah ada kamar kosong?','Berapa harga per malam?','Jam check-in & check-out?','Fasilitas apa saja?'].map(q=>`<button type="button" data-q="${esc(q)}">${esc(q)}</button>`).join('')}
+function status(){const on=typeof online!='undefined'&&online,s=$('vSt');s.className=on?'on':'';s.innerHTML='<i></i>'+(on?'Online · biasanya membalas cepat':'Offline · tinggalkan pesan atau hubungi via WhatsApp');
+ const off=$('vOff'),wa=$('waBtn');const w=wa&&wa.style.display!=='none'&&wa.href&&/wa\.me/.test(wa.href)?wa.href:'';
+ off.classList.toggle('hide',on);off.innerHTML=on?'':'Resepsionis sedang tidak terhubung. Pesan Anda akan dikirim saat tersambung.'+(w?` Atau <a href="${esc(w)}" target="_blank" rel="noopener">chat via WhatsApp</a>.`:'');
+ if(on&&!wasOnline){wasOnline=true;send({k:'hi',n:nameV()});flush()}if(!on)wasOnline=false}
+function flush(){msgs.filter(x=>x.f=='g'&&x.s=='p').forEach(x=>send({k:'chat',m:x.m,i:x.i,n:nameV()}))}
+function addMsg(text){const m={f:'g',m:text,t:Date.now(),i:'c'+Math.random().toString(36).slice(2,10),s:'p'};msgs.push(m);msgs=msgs.slice(-40);save();draw();send({k:'chat',m:text,i:m.i,n:nameV()})}
+$('vForm').onsubmit=e=>{e.preventDefault();const t=$('vIn').value.trim().slice(0,300);if(!t)return;LS('ob_vname',nameV());$('vIn').value='';addMsg(t)};
+$('vp').addEventListener('click',e=>{const q=e.target.closest('[data-q]'),r=e.target.closest('[data-rs]');if(q){LS('ob_vname',nameV());addMsg(q.dataset.q)}else if(r){const x=msgs.find(m=>m.i===r.dataset.rs);if(x){x.t=Date.now();send({k:'chat',m:x.m,i:x.i,n:nameV()});draw()}}});
+function openP(){isOpen=true;un=0;sync();draw();status();send({k:'hi',n:nameV()});setTimeout(()=>{$('vBody').scrollTop=1e9;if(innerWidth>640)$('vIn').focus()},60)}
+function closeP(){isOpen=false;sync()}
+$('vFab').onclick=openP;$('vX').onclick=()=>{if(cs!='idle'&&!confirm('Akhiri panggilan dan tutup?'))return;if(cs!='idle'){send({k:'end'});callEnd()}closeP()};
+$('cgChat').onclick=openP;
+
+/* ---------- panggilan suara (WebRTC, signaling lewat 'visit'/'visit_r') ---------- */
+let cs='idle',vpc=null,vls=null,vra=null,micV=true,stL=null,stR=null,lvL=0,lvR=0,wv=0,ringT=0,secs=0,tk=0;
+function callUI(){const u=$('vCallU');u.classList.toggle('hide',cs=='idle');$('vCallB').style.opacity=cs=='idle'?'1':'.4';
+ $('vCallT').textContent=cs=='ring'?'📞 Menghubungi resepsionis…':cs=='live'?'🎙️ Tersambung · 00:00':'';$('vW').classList.toggle('hide',cs!='live');clearInterval(wv);clearInterval(tk);
+ if(cs=='live'){secs=0;$('vW').innerHTML='<i></i>'.repeat(24);wv=setInterval(()=>document.querySelectorAll('#vW i').forEach(i=>i.style.height=(5+Math.min(1,Math.max(lvL,lvR)*5)*Math.random()*32)+'px'),110);tk=setInterval(()=>{secs++;$('vCallT').textContent='🎙️ Tersambung · '+String(secs/60|0).padStart(2,'0')+':'+String(secs%60).padStart(2,'0')},1000)}
+ sync()}
+function callEnd(msg){clearTimeout(ringT);try{vpc&&vpc.close()}catch(e){}vpc=null;if(vls){vls.getTracks().forEach(t=>t.stop());vls=null}if(vra){vra.srcObject=null;vra.remove();vra=null}stL&&stL();stR&&stR();stL=stR=null;lvL=lvR=0;micV=true;$('vMt').textContent='🎤 Mikrofon ON';cs='idle';callUI();if(msg)toast(msg)}
+async function callStart(){
+ if(cs!='idle')return openP();
+ if(!(typeof online!='undefined'&&online))return toast('Resepsionis belum terhubung. Silakan kirim pesan lewat chat.');
+ const s=await micGet();if(!s)return;vls=s;cs='ring';openP();callUI();send({k:'call',n:nameV()});
+ ringT=setTimeout(()=>{if(cs=='ring'){send({k:'end'});callEnd('Resepsionis belum menjawab. Silakan tinggalkan pesan lewat chat.')}},45000)}
+async function vAnswer(m){
+ if(!vls||!m.sdp)return;try{vpc&&vpc.close()}catch(e){}
+ const p=vpc=new RTCPeerConnection({iceServers:Array.isArray(m.ice)&&m.ice.length?m.ice.slice(0,6):[{urls:'stun:stun.l.google.com:19302'}]});
+ vra=vra||document.body.appendChild(Object.assign(document.createElement('audio'),{autoplay:true,playsInline:true}));
+ p.ontrack=e=>{const s=e.streams[0]||new MediaStream([e.track]);vra.srcObject=s;vra.play().catch(()=>{toast('Ketuk layar untuk mengaktifkan suara');document.addEventListener('click',()=>vra&&vra.play(),{once:true})});stR&&stR();stR=levelOf(s,v=>lvR=v)};
+ p.onconnectionstatechange=()=>{if(p.connectionState=='failed'&&vpc===p){send({k:'end'});callEnd('Koneksi suara gagal. Silakan coba lagi atau gunakan chat.')}};
+ vls.getTracks().forEach(t=>p.addTrack(t,vls));stL&&stL();stL=levelOf(vls,v=>lvL=v);
+ try{await p.setRemoteDescription({type:'offer',sdp:String(m.sdp)});await p.setLocalDescription(await p.createAnswer());await gatherDone(p)}catch(e){return toast('Gagal menyiapkan suara: '+e.message)}
+ if(vpc!==p)return;send({k:'answer',sdp:p.localDescription.sdp})}
+$('vCallB').onclick=callStart;$('cgCall').onclick=callStart;
+$('vEnd').onclick=()=>{send({k:'end'});callEnd('Panggilan selesai')};
+$('vMt').onclick=()=>{micV=!micV;if(vls)vls.getAudioTracks().forEach(t=>t.enabled=micV);$('vMt').textContent='🎤 Mikrofon '+(micV?'ON':'OFF (dimatikan)')};
+
+/* ---------- pesan dari resepsionis ---------- */
+ch.addEventListener('message',e=>{const m=e.data;if(!m||m.type!='visit_r'||m.vid!==vid)return;
+ if(m.k=='hist'){let add=0;(m.msgs||[]).forEach(x=>{if(x.f!='r')return;const t=+x.t||0,tx=String(x.m||'').slice(0,300);if(!tx||msgs.some(y=>y.f=='r'&&y.t===t&&y.m===tx))return;msgs.push({f:'r',m:tx,t});add++});
+  if(add){msgs.sort((a,b)=>a.t-b.t);msgs=msgs.slice(-40);save();if(!isOpen){un+=add;sync()}draw()}return}
+ if(m.k=='msg'){const t=+m.t||Date.now(),tx=String(m.m||'').slice(0,300);if(!tx||msgs.some(y=>y.f=='r'&&y.t===t&&y.m===tx))return;msgs.push({f:'r',m:tx,t});msgs=msgs.slice(-40);save();
+  if(!isOpen||document.hidden){if(!isOpen)un++;notify('chat','Balasan resepsionis: '+tx,{say:'Ada balasan dari resepsionis'});sync()}draw();return}
+ if(m.k=='ack'){const x=msgs.find(y=>y.i===m.i);if(x&&x.s=='p'){x.s='k';save();draw()}return}
+ if(m.k=='live'&&cs=='ring'){clearTimeout(ringT);cs='live';callUI();return}
+ if(m.k=='offer'&&cs!='idle'){vAnswer(m);return}
+ if(m.k=='busy'&&cs=='ring'){callEnd('Resepsionis sedang melayani panggilan lain. Silakan kirim pesan lewat chat.');return}
+ if(m.k=='end'&&cs!='idle'){callEnd('Panggilan suara selesai')}});
+setInterval(()=>{status();if(isOpen&&msgs.some(x=>x.s=='p'&&Date.now()-x.t>9000))draw();if(typeof online!='undefined'&&online&&msgs.some(x=>x.f=='g'&&x.s=='p'&&Date.now()-x.t>3000))flush()},2000);
+draw();status();sync();
+})();
+</script>
+<script>/* Pengunjung tanpa akun / belum instal: hanya Beranda, Kamar, Reservasi, Ulasan & obrolan. Chat, panggilan, Smart Room, Kamar Saya terbuka setelah daftar/masuk akun, instal aplikasi, atau punya reservasi. */
+(()=>{const q=new URLSearchParams(location.search),st=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone}catch(e){return false}};
+function un(){try{{const m=window.OBACC&&OBACC.me();if(m&&m.st!=='wait'&&m.st!=='no')return true}if(st())return true;if(q.get('token')||q.get('room'))return true;if(typeof stay!='undefined'&&stay)return true;if(typeof sess!='undefined'&&sess)return true;if(typeof getPend=='function'&&getPend())return true}catch(e){}return false}
+function ap(){document.documentElement.classList.toggle('vis-lock',!un())}
+ap();setInterval(ap,1500);window.addEventListener('obacc',ap)})();
+</script>
+</body></html>
